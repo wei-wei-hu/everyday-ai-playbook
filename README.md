@@ -6,7 +6,11 @@
 
 📄 [Download PDF](25-Practical-Ways-to-Use-AI.pdf) · 🖨️ Print-ready: [Letter](25-Practical-Ways-to-Use-AI-Letter.pdf) | [A4](25-Practical-Ways-to-Use-AI-A4.pdf)
 
-Most of us started using AI for simple things like drafting an email or summarizing a document. AI becomes far more useful when you give it a specific task, enough context, and an outcome you can act on. This playbook collects 25 practical applications across work, time, decisions, everyday life, and personal goals. Click any title below to open its full prompt, with an example and next steps, ready to copy.
+Much of my work involves AI transformation, data and analytics, and improving business processes and workflows. Along the way, I’ve also been exploring how AI can help us in our everyday work and life.
+
+Most of us started using AI for simple things, like drafting an email or summarizing a document. I’ve found it becomes far more useful when you give it a specific task, enough context, and a clear outcome you can act on. I put together this playbook to share 25 practical applications across work, time, decisions, everyday life, and personal goals.
+
+Click any title below to open its full prompt, with an example and next steps. Each prompt is ready to copy into ChatGPT, Claude, Gemini, or any AI assistant.
 
 <img src="assets/section-1.png" alt="1. Get Things Done at Work" width="100%">
 
