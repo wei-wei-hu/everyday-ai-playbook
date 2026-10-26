@@ -437,9 +437,13 @@ Available working hours: [hours].
 
 Personal commitments I want to protect: [list].
 
-Create a realistic weekly plan.
+When I usually have the most and least energy: [for example, strong mornings, slower afternoons].
 
-Reserve uninterrupted time for important tasks, group related activities where possible, and include breaks.
+Create a weekly plan that fits both my time and my energy.
+
+Schedule demanding work during my highest-energy hours and lighter tasks when my energy dips. Batch similar activities, such as calls, email, and errands, and include breaks.
+
+Add a short note on how to adjust the plan if a meeting moves or something new comes up.
 
 If everything cannot fit, identify what should be postponed, delegated, or renegotiated. Do not schedule overlapping commitments.`,
   example: "Your week includes back-to-back operating reviews, an executive presentation due Thursday, and three hours you want to protect for writing your newsletter.",
@@ -523,8 +527,8 @@ Sort each task into one of four groups:
 
 1. AI can produce a first draft that I review.
 2. Someone else can own it fully.
-3. It can be simplified, batched, or dropped.
-4. Only I should do it, and why.
+3. It can be deferred, simplified, batched, or dropped.
+4. It still needs my personal judgment, and why.
 
 For each task I hand off, suggest a short handoff note covering the outcome, the deadline, and what “done” looks like.
 
@@ -555,7 +559,7 @@ Identify the strongest option under each criterion.
 
 Separate verified facts from assumptions and tell me what additional information would help me decide.`,
   example: "Your team needs a forecasting capability, and you’re weighing three paths: build it with your own team, buy a vendor tool, or extend an existing model.",
-  next: ["Verify the costs and assumptions, then evaluate which option best fits your actual priorities."] },
+  next: ["Verify the costs and assumptions, then evaluate which option best fits your actual priorities.", "To go further, use #12 to check your leading option for risks."] },
 
 { area: "decide", title: "Find risks you may have overlooked",
   when: "You’re confident in a proposal but want to test it before committing significant resources.",
@@ -577,7 +581,7 @@ Identify:
 
 Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
   example: "You’re about to roll out an AI assistant to a few thousand employees.",
-  next: ["Assign someone to investigate the highest-priority risks before launch."] },
+  next: ["Assign someone to investigate the highest-priority risks before launch.", "Then use #13 to see how the plan holds up under different assumptions."] },
 
 { area: "decide", title: "Explore what-if scenarios",
   when: "You’re making a decision where future outcomes depend on uncertain assumptions.",
@@ -599,7 +603,7 @@ Show calculations where sufficient data is provided. Do not invent precise forec
 
 Identify which assumptions have the greatest influence on the result.`,
   example: "You’re estimating the return on a new technology investment that depends on how many teams adopt it.",
-  next: ["Replace assumptions with actual customer, pricing, and cost data wherever possible."] },
+  next: ["Replace assumptions with real figures wherever possible.", "If the results change how your options compare, revisit #11."] },
 
 { area: "decide", title: "Get unstuck on a decision you keep postponing",
   when: "You’ve been going back and forth on a decision for weeks, and gathering more information isn’t making it easier.",
@@ -617,16 +621,17 @@ My deadline, if any: [date].
 
 Help me:
 
-1. Restate the decision in one clear sentence.
-2. Identify the three to five criteria that matter most, and ask me to rank them.
-3. Score each option against those criteria, explaining your reasoning.
-4. Name the information that would actually change my choice, and what is just noise.
-5. Describe what each option could look like a year from now.
-6. Suggest one small, reversible step I could take this week.
+1. Restate the decision in one clear sentence, including my objective and constraints.
+2. Point out any option I may be overlooking.
+3. Identify the three to five criteria that matter most, and ask me to rank them.
+4. Score each option against those criteria, explaining your reasoning.
+5. Name the information that would actually change my choice, and what is just noise.
+6. Describe what each option could look like a year from now.
+7. Suggest one small, reversible step I could take this week.
 
 Ask me clarifying questions before scoring if anything important is unclear.`,
   example: "You’ve been weighing whether to go back to school part-time for months.",
-  next: ["Set a date to decide, take the small step, and revisit the scores once you see how it went."] },
+  next: ["Set a date to decide, take the small step, and revisit the scores once you see how it went.", "Once your options are clear, use #11 to compare them side by side."] },
 
 { area: "decide", title: "Solve a problem that keeps coming back",
   when: "The same problem shows up again and again, and quick fixes only hold for a little while.",
@@ -650,7 +655,7 @@ Please:
 
 Base your suggestions on the details I provide, and avoid generic advice.`,
   example: "Your team’s monthly report goes out late almost every time.",
-  next: ["Run the test, track the result, and keep a short note of what you learned for next time."] },
+  next: ["Run the test, track the result, and keep a short note of what you learned for next time.", "If the fix involves a bigger choice, start with #14 to work through it."] },
 
 { area: "life", title: "Understand where your money goes",
   when: "You want to review your spending, identify recurring expenses, and see where you might save money.",
@@ -846,7 +851,9 @@ Teach me one lesson at a time. After each lesson, ask me to demonstrate my under
 
 When I make a mistake, explain what went wrong and give me another opportunity to practice.
 
-Adapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.`,
+Adapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.
+
+At the end of each week, summarize what I practiced, the feedback you gave, and the focus for the following week.`,
   exampleTitle: "Improving public speaking in four weeks",
   exampleIntro: "Suppose your goal is to deliver a confident, five-minute presentation to senior executives. A four-week plan could look like this:",
   table: { head: ["Week", "Focus", "Practice assignment"], rows: [
@@ -879,9 +886,11 @@ I want to accomplish it by [target date].
 
 My current starting point is [current situation].
 
-My motivation for pursuing this goal is [reason].
+Why this goal matters to me, and the values it connects to: [reason].
 
 My available time is [hours per week].
+
+My current capacity: [energy, other commitments, what else is happening in my life right now].
 
 My available resources are [budget, tools, experience, support].
 
@@ -899,6 +908,7 @@ Include:
 6. Likely obstacles and practical ways to address them.
 7. A simple method for measuring progress.
 8. A minimum-effort version of the plan for particularly busy weeks.
+9. How to adjust the plan if my circumstances change, without abandoning the goal.
 
 If my deadline appears unrealistic, explain why and suggest a more achievable alternative.
 
@@ -919,7 +929,7 @@ I want to publish something useful within 30 days, and I only have three hours p
 
 Recommend what I should complete now, what can wait, and what I can simplify without compromising the quality of the first article.`,
     after: "This is especially useful for people who tend to spend too much time preparing and too little time completing the first version." },
-  next: ["Choose one goal you’ve been postponing. Write down your desired outcome, deadline, and the amount of time you can realistically dedicate to it each week.", "Use the prompt to create a seven-day starting plan. Then put the first two actions on your calendar."],
+  next: ["Choose one goal you’ve been postponing. Write down your desired outcome, deadline, and the amount of time you can realistically dedicate to it each week.", "Use the prompt to create a seven-day starting plan. Then put the first two actions on your calendar.", "Each Friday, bring this plan into #25 to review your progress against it."],
   useful: "It connects an ambitious goal to your actual time and resources. The plan also gives you a way to keep making progress during busy weeks without needing to start over." },
 
 { area: "goals", title: "Review your progress and decide what to do next",
@@ -950,6 +960,10 @@ My available time next week is:
 
 [Hours and existing commitments]
 
+If I have a goal plan, here are its milestones:
+
+[Paste milestones, or leave blank]
+
 Help me review the week and prepare for the next one.
 
 Please provide:
@@ -961,7 +975,9 @@ Please provide:
 5. Recommendations for what to continue, simplify, delegate, or postpone.
 6. Three realistic priorities for next week.
 7. A practical first action for each priority.
-8. One question I should reflect on before finalizing my plan.
+8. A short reflection: what gave me energy this week, what drained it, and what I would do differently.
+9. Progress against my goal plan milestones, if I shared them, with any adjustments to the plan.
+10. One question I should reflect on before finalizing my plan.
 
 Be constructive and specific. Avoid generic motivational advice.
 
