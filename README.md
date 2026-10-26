@@ -52,3 +52,7 @@ Most of us started using AI for simple things like drafting an email or summariz
 ## Want more?
 
 I write about tech, leadership, and the operations that connect them in my LinkedIn newsletter, **[The Second Draft](https://www.linkedin.com/newsletters/the-second-draft-7433145050123026432)**.
+
+---
+
+© 2026 Weiwei Hu · Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may share this with credit; commercial use and modified versions are not permitted.
