@@ -4,7 +4,7 @@
 
 🔗 [25 Practical Ways to Use AI Beyond Writing Emails](https://wei-wei-hu.github.io/everyday-ai-playbook/)
 
-📄 [Download PDF](25-Practical-Ways-to-Use-AI.pdf)
+📄 [Download PDF](25-Practical-Ways-to-Use-AI.pdf) · 🖨️ Print-ready: [Letter](25-Practical-Ways-to-Use-AI-Letter.pdf) | [A4](25-Practical-Ways-to-Use-AI-A4.pdf)
 
 Most of us started using AI for simple things like drafting an email or summarizing a document. AI becomes far more useful when you give it a specific task, enough context, and an outcome you can act on. This playbook collects 25 practical applications across work, time, decisions, everyday life, and personal goals. Click any title below to open its full prompt, with an example and next steps, ready to copy.
 

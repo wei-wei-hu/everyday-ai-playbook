@@ -234,6 +234,30 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .step:hover { filter: brightness(.93); }
 @media (max-width: 980px) { .howto .grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 620px) { .howto .grid { grid-template-columns: 1fr; } }
+@media print {
+  @page { margin: 0.25in; }
+  html, body { background: #F1F1F1 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: linear-gradient(180deg, #F1F1F1 0%, #CDD0D1 70%, #9AA0A2 100%) !important; }
+  .wrap { zoom: 0.5; max-width: none; padding: 12px 24px 0; }
+  .footer, .strip { zoom: 0.5; }
+  .how, .byline, .tile ul, .tile .open, .scrim, .panel { display: none !important; }
+  h1 .heavy { font-size: 88px; }
+  header { padding-bottom: 18px; gap: 10px; }
+  .areas { gap: 12px; }
+  .tile .bar { min-height: 52px; padding: 8px; }
+  .tile .body { padding: 10px 10px 12px; gap: 8px; }
+  .tile .ico { font-size: 38px; }
+  .howto { margin-top: 12px; }
+  .footer { margin-top: 12px; }
+  .footer-inner { padding-block: 14px; }
+  .areas .grid { grid-template-columns: repeat(var(--n), minmax(0, 1fr)) !important; }
+  .areas .tile:last-child:nth-child(odd) { grid-column: auto !important; }
+  .howto .grid { grid-template-columns: 1.3fr 1fr 1fr 1fr !important; }
+  .area-label .tag { margin-left: auto !important; padding: 12px 18px 12px 0 !important; flex-basis: auto !important; }
+  .tile .ico { font-size: 34px !important; }
+  .tile .bar { font-size: 16px !important; }
+  .area, .howto { break-inside: avoid; }
+}
 </style>
 
 </head>
