@@ -55,9 +55,9 @@ p { margin: 0; }
 svg.lucide { width: 1em; height: 1em; flex: none; }
 
 .wrap {
-  max-width: 1240px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 1340px; margin: 0 auto;
+  padding-left: max(clamp(16px, 6vw, 80px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(16px, 6vw, 80px), env(safe-area-inset-right, 0px));
   padding-block: 48px 0;
 }
 
