@@ -4,7 +4,11 @@
 
 **By Weiwei Hu** · [LinkedIn](https://www.linkedin.com/in/weiweihu)
 
-📄 [One-page overview (PDF)](20-Practical-Ways-to-Use-AI.pdf) · 🌐 [Interactive page](https://wei-wei-hu.github.io/everyday-ai-playbook/)
+### 👉 [Open the interactive page](https://wei-wei-hu.github.io/everyday-ai-playbook/)
+
+**https://wei-wei-hu.github.io/everyday-ai-playbook/** · Tap any tile to open its prompt and copy it.
+
+📄 [One-page overview (PDF)](20-Practical-Ways-to-Use-AI.pdf)
 
 Most of us started using AI for simple things: drafting an email, summarizing a document, rewriting a message. AI becomes far more useful when you give it a specific task, enough context, and an outcome you can actually use. Below are 20 practical applications in five areas. Each comes with a prompt you can copy, customize, and try. Replace every `[placeholder]` with your own details.
 
