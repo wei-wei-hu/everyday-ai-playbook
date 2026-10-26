@@ -51,7 +51,7 @@ Most of us started using AI for simple things: drafting an email, summarizing a 
 
 ---
 
-## Area 1: Get Things Done at Work
+## 1. Get Things Done at Work
 
 ### 1. Break a complicated project into manageable tasks
 
@@ -207,7 +207,7 @@ Finish with the three actions I should focus on first.
 
 ---
 
-## Area 2: Take Control of Your Time
+## 2. Take Control of Your Time
 
 ### 6. Plan your week around your priorities
 
@@ -329,7 +329,7 @@ Suggest which parts could be automated and which require my review.
 
 ---
 
-## Area 3: Make Better Decisions
+## 3. Make Better Decisions
 
 ### 10. Compare several options side by side
 
@@ -426,7 +426,7 @@ Identify which assumptions have the greatest influence on the result.
 
 ---
 
-## Area 4: Make Everyday Life Easier
+## 4. Make Everyday Life Easier
 
 ### 13. Understand where your money goes
 
@@ -580,7 +580,7 @@ Role-play two possible responses, including one where the other person disagrees
 
 ---
 
-## Area 5: Make Progress on Your Personal Goals
+## 5. Make Progress on Your Personal Goals
 
 ### 18. Learn a new skill with a structured practice plan
 
