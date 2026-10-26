@@ -51,7 +51,7 @@ Most of us started using AI for simple things like drafting an email or summariz
 
 ## Want more?
 
-I write about tech, leadership, and the operations that connect them in my LinkedIn newsletter, **[The Second Draft](https://www.linkedin.com/newsletters/the-second-draft-7433145050123026432)**.
+I write about tech, leadership, and the operations that connect them in my LinkedIn newsletter, **[The Second Draft](https://www.linkedin.com/newsletters/7433145050123026432/)**.
 
 ---
 
