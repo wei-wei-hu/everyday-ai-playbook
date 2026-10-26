@@ -50,9 +50,17 @@ Most of us started using AI for simple things like drafting an email or summariz
 
 ## How to use it
 
-1. Pick one application that matches something already on your list this week.
-2. Open its prompt, replace each `[placeholder]` with your real details, and paste it into ChatGPT, Claude, Gemini, or any AI assistant.
-3. Review the result, correct what needs correcting, and verify any facts that affect money, health, or your business.
+**Start with one thing you already need to do**
+
+1. Pick one task already on your list.
+2. Open its card and fill in the [brackets].
+3. Paste it into your AI assistant, review the result, and check key facts.
+
+**Put them together**
+
+- **Complete a complex project:** [#1 Project plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-1) → [#7 Prioritize](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-7) → [#9 Delegation plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-9) → [#25 Weekly review](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-25)
+- **Make an important decision:** [#11 Side-by-side](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-11) → [#12 Risk review](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-12) → [#13 Scenarios](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-13)
+- **Make progress on a personal goal:** [#24 Goal plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-24) → [#6 Weekly plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-6) → [#23 Learning plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-23) → [#25 Weekly review](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-25)
 
 ## Want more?
 
