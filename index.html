@@ -220,17 +220,20 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .cta a { color: var(--chip-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 .cta a:hover { color: #C9E5F7; }
 .strip a { color: inherit; font-weight: 700; }
-.paths { margin-top: 22px; }
-.paths .grid { --n: 3; }
+.howto { margin-top: 22px; }
+.howto .grid { grid-template-columns: 1.3fr 1fr 1fr 1fr; }
 .path { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
-.path .bar { background: #FFFFFF; padding: 13px 16px; font-weight: 800; font-size: 17px; text-align: center; }
-.path .body { padding: 18px 18px 20px; display: grid; gap: 12px; align-content: start; justify-items: center; text-align: center; }
+.path .bar { background: #FFFFFF; padding: 12px 14px; font-weight: 800; font-size: 16px; text-align: center; display: grid; place-items: center; }
+.path .body { padding: 16px 16px 18px; display: grid; align-content: start; justify-items: center; }
+.path ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.path li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-weight: 600; font-size: 15px; }
+.path li b { width: 24px; height: 24px; border-radius: 50%; background: var(--chip); color: var(--chip-ink); display: grid; place-items: center; font-size: 12px; }
 .path .steps { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.path .steps .arrow { color: var(--muted); font-weight: 700; }
+.path .arrow { color: var(--muted); font-weight: 700; }
 .step { appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 14px; color: var(--ink); background: var(--accent); padding: 6px 10px; border-radius: 2px; }
 .step:hover { filter: brightness(.93); }
-.path p { font-size: 14.5px; font-weight: 500; color: var(--muted); }
-@media (max-width: 980px) { .paths .grid { grid-template-columns: 1fr; } }
+@media (max-width: 980px) { .howto .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .howto .grid { grid-template-columns: 1fr; } }
 </style>
 
 </head>
@@ -247,27 +250,13 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 
   <main class="areas" id="bands"></main>
 
-  <section class="paths" aria-label="Suggested sequences">
-    <div class="area-label"><span class="n" style="background:#FFFFFF">→</span><h2>Put them together</h2><span class="tag">Optional sequences for bigger tasks</span></div>
-    <div class="grid" id="paths"></div>
-  </section>
-
-  <section class="closing" aria-label="Getting started">
+  <section class="howto" aria-label="How to use">
+    <div class="area-label"><span class="n" style="background:#FFFFFF">→</span><h2>How to use it</h2></div>
     <div class="grid">
-      <div class="cellx"><div class="bar">Start with one thing you already need to do</div>
-        <div class="body">
-          <p>You don’t need to try all twenty-five. Pick something already on your to-do list: a meeting tomorrow, a decision you keep revisiting, or a goal you’ve been postponing. Tell your AI assistant your situation, explain what you’re trying to accomplish, and ask for the outputs on the matching card. Then review the result, correct what needs correcting, and put it into practice.</p>
-          <p class="pull">The most useful AI prompt is often the one that helps you finish something you’ve already been meaning to do.</p>
-        </div></div>
-      <div class="cellx"><div class="bar">A small challenge for this week</div>
-        <div class="body">
-          <ol>
-            <li><b>1</b><span>Choose one application that matches a task already on your list.</span></li>
-            <li><b>2</b><span>Open its prompt, add your real details, and ask your AI assistant for the outputs on the card.</span></li>
-            <li><b>3</b><span>Evaluate the result. Did it save time, improve your preparation, surface another option, or make the next action easier?</span></li>
-          </ol>
-          <p>If the result felt generic, add more context or name the exact output you need. For anything that affects your health, finances, or business, verify the facts before you act.</p>
-        </div></div>
+      <div class="path start"><div class="bar">Start with one thing you already need to do</div><div class="body"><ol><li><b>1</b><span>Pick one task already on your list.</span></li><li><b>2</b><span>Open its card and fill in the [brackets].</span></li><li><b>3</b><span>Paste it into your AI assistant, review the result, and check key facts.</span></li></ol></div></div>
+      <div class="path"><div class="bar">Complete a complex project</div><div class="body"><div class="steps"><button class="step" type="button" data-open="1" style="--accent:var(--c-work)">#1 Project plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="7" style="--accent:var(--c-time)">#7 Prioritize</button><span class="arrow">↓</span><button class="step" type="button" data-open="10" style="--accent:var(--c-time)">#10 Delegation plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="25" style="--accent:var(--c-goals)">#25 Weekly review</button></div></div></div>
+      <div class="path"><div class="bar">Make an important decision</div><div class="body"><div class="steps"><button class="step" type="button" data-open="14" style="--accent:var(--c-decide)">#14 Decision reset</button><span class="arrow">↓</span><button class="step" type="button" data-open="11" style="--accent:var(--c-decide)">#11 Side-by-side</button><span class="arrow">↓</span><button class="step" type="button" data-open="12" style="--accent:var(--c-decide)">#12 Risk review</button><span class="arrow">↓</span><button class="step" type="button" data-open="13" style="--accent:var(--c-decide)">#13 Scenarios</button></div></div></div>
+      <div class="path"><div class="bar">Make progress on a personal goal</div><div class="body"><div class="steps"><button class="step" type="button" data-open="24" style="--accent:var(--c-goals)">#24 Goal plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="6" style="--accent:var(--c-time)">#6 Weekly plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="23" style="--accent:var(--c-goals)">#23 Learning plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="25" style="--accent:var(--c-goals)">#25 Weekly review</button></div></div></div>
     </div>
   </section>
 </div>
@@ -1052,12 +1041,6 @@ AREAS.forEach((a, ai) => {
       <span class="open">Open prompt ${ico("arrow-right")}</span></span></button>`).join("")}</div></section>`;
 });
 document.getElementById("bands").innerHTML = html;
-const PATHS = [
-  ["Complete a complex project", [1, 7, 10, 25], "From defining the work to reviewing the results."],
-  ["Make an important decision", [14, 11, 12, 13], "From what’s unresolved to how each option could play out."],
-  ["Make progress on a personal goal", [24, 6, 23, 25], "From choosing a goal to learning and reviewing progress."]
-];
-document.getElementById("paths").innerHTML = PATHS.map(([t, ns, d]) => `<div class="path"><div class="bar">${t}</div><div class="body"><div class="steps">${ns.map(n => { const it = ITEMS[n - 1]; return `<button class="step" type="button" data-open="${n}" style="--accent:var(--c-${it.area})" aria-label="Open prompt ${n}: ${it.title}">#${n} ${it.sub}</button>`; }).join('<span class="arrow">↓</span>')}</div><p>${d}</p></div></div>`).join("");
 
 const PROMPTS = {};
 function promptBlock(text, label, id) {
