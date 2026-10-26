@@ -6,255 +6,257 @@
 <title>20 Practical Ways to Use AI</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: an overview poster — five pastel area bands of icon tiles; each tile opens a side panel with the full prompt. */
+/* Layout: an infographic poster — light-to-charcoal ground, a ruled grid of cells with lime header bars, dark area labels, dark footer band. Single deliberate light look. */
 :root {
-  --bg: #FBFBFD;
-  --surface: #FFFFFF;
-  --ink: #1A1D29;
-  --muted: #5E6475;
-  --line: #E1E4EC;
-  --brand: #3B3FA8;
-  --prompt-bg: #F6F7FA;
-  --ph-bg: #FFF0C2;
-  --ph-fg: #6B4A00;
-  --scrim: rgba(20, 22, 36, .42);
-  --work: #2F5FB3;   --work-band: #EDF3FD;  --work-edge: #C3D5F3;
-  --time: #A2620F;   --time-band: #FDF5E7;  --time-edge: #EFD7AE;
-  --decide: #5E46B0; --decide-band: #F1EEFC; --decide-edge: #D3CBF2;
-  --life: #1E7D62;   --life-band: #E8F7F1;  --life-edge: #B7E3D3;
-  --goals: #B23A58;  --goals-band: #FCEEF1; --goals-edge: #F0C9D2;
-  --f-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --ground-top: #F1F1F1;
+  --ground-mid: #C9CCCD;
+  --ground-low: #2A3134;
+  --ink: #111416;
+  --cell: #E7E8E8;
+  --rule: #FFFFFF;
+  --lime: #9BD45C;
+  --lime-soft: #C6E3A6;
+  --navy: #26246B;
+  --chip: #1C2326;
+  --chip-ink: #FFFFFF;
+  --muted: #4A5154;
+  --footer: #1B2124;
+  --footer-ink: #F2F3F3;
+  --strip: #E9EAEA;
+  --prompt-bg: #FFFFFF;
+  --ph-bg: #E3F4CF;
+  --ph-fg: #2D4A0E;
+  --scrim: rgba(17, 20, 22, .5);
+  --f-light: "Poppins", "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  --f-heavy: "Archivo Black", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #12141C; --surface: #1A1D28; --ink: #E8EAF2; --muted: #A0A6B8; --line: #2C3040; --brand: #A9ADF5;
-    --prompt-bg: #151821; --ph-bg: #40341A; --ph-fg: #FFD978; --scrim: rgba(0,0,0,.6);
-    --work: #8DB2F2; --work-band: #18223A; --work-edge: #2D3F66;
-    --time: #E6AE5C; --time-band: #2A2216; --time-edge: #4E3D22;
-    --decide: #B9A6F2; --decide-band: #211D36; --decide-edge: #3E3566;
-    --life: #6FD0AE; --life-band: #14281F; --life-edge: #24503F;
-    --goals: #F08DA4; --goals-band: #2C1920; --goals-edge: #5A2E3B;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #12141C; --surface: #1A1D28; --ink: #E8EAF2; --muted: #A0A6B8; --line: #2C3040; --brand: #A9ADF5;
-  --prompt-bg: #151821; --ph-bg: #40341A; --ph-fg: #FFD978; --scrim: rgba(0,0,0,.6);
-  --work: #8DB2F2; --work-band: #18223A; --work-edge: #2D3F66;
-  --time: #E6AE5C; --time-band: #2A2216; --time-edge: #4E3D22;
-  --decide: #B9A6F2; --decide-band: #211D36; --decide-edge: #3E3566;
-  --life: #6FD0AE; --life-band: #14281F; --life-edge: #24503F;
-  --goals: #F08DA4; --goals-band: #2C1920; --goals-edge: #5A2E3B;
-  color-scheme: dark;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+html { background: var(--ground-low); }
+body {
+  background: linear-gradient(180deg, var(--ground-top) 0%, var(--ground-mid) 38%, #8E9496 70%, var(--ground-low) 100%);
+  color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased;
+}
 body.locked { overflow: hidden; }
-h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
 p { margin: 0; }
-:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
-svg.lucide { width: 1em; height: 1em; stroke-width: 2; flex: none; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+svg.lucide { width: 1em; height: 1em; flex: none; }
 
 .wrap {
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1240px; margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 40px 48px;
-  display: grid; gap: 20px;
+  padding-block: 48px 0;
 }
 
-/* Header */
-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
-.titles { display: grid; gap: 10px; min-width: 0; flex: 1 1 520px; }
-h1 { font-size: clamp(34px, 5.4vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
-.dek { font-size: clamp(18px, 2.2vw, 23px); color: var(--muted); }
-.stats { display: grid; gap: 4px; justify-items: end; text-align: right; font-size: 19px; color: var(--muted); }
-.stats b { color: var(--brand); font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; }
-.stats .row { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
-.how { font-size: 15px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.how code { font-family: var(--f-mono); font-size: 12.5px; background: var(--ph-bg); color: var(--ph-fg); padding: 1px 6px; border-radius: 4px; }
-
-/* Area bands */
-.band {
-  background: var(--band); border: 1px solid var(--edge); border-radius: 18px;
-  padding: 18px clamp(12px, 1.6vw, 20px) clamp(12px, 1.6vw, 20px); display: grid; gap: 14px;
+/* Title block */
+header { display: grid; gap: 18px; padding: 0 clamp(4px, 2.5vw, 34px) 34px; }
+h1 { line-height: .98; }
+h1 .light { display: block; font-family: var(--f-light); font-weight: 300; font-size: clamp(30px, 5vw, 62px); letter-spacing: -0.005em; }
+h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-size: clamp(42px, 8.4vw, 106px); letter-spacing: -0.035em; margin-top: 6px; }
+.dek { font-size: clamp(17px, 2vw, 21px); font-weight: 600; max-width: 52ch; }
+.byline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.byline .by { font-weight: 700; font-size: 16px; margin-right: 4px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; text-decoration: none;
+  color: var(--chip-ink); background: var(--chip); border-radius: 3px; padding: 6px 12px 6px 10px;
 }
-.band-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--c); padding-inline: 6px; }
-.band-head .ico { font-size: 26px; display: inline-flex; }
-.band-head h2 { font-size: clamp(22px, 2.6vw, 28px); font-weight: 800; }
-.band-head .n { font-size: 15px; font-weight: 600; opacity: .8; }
-.band-head .sep { width: 1px; height: 20px; background: var(--edge); }
-.band-head .tag { font-size: 18px; font-weight: 500; }
-.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.pill:hover { background: var(--navy); }
+.pill svg { width: 15px; height: 15px; }
+.how { font-size: 14.5px; font-weight: 600; color: var(--muted); }
+
+/* Areas */
+.areas { display: grid; gap: 22px; }
+.area { display: grid; }
+.area-label {
+  display: flex; align-items: stretch; gap: 0; background: var(--chip); color: var(--chip-ink); flex-wrap: wrap;
+}
+.area-label .n {
+  background: var(--lime); color: var(--ink); font-family: var(--f-heavy); font-size: 22px;
+  min-width: 56px; display: grid; place-items: center; padding: 8px 12px;
+}
+.area-label h2 { font-family: var(--f-body); font-weight: 800; font-size: clamp(18px, 2.2vw, 23px); padding: 12px 16px 12px 18px; align-self: center; }
+.area-label .tag { font-weight: 500; font-size: 15px; opacity: .78; padding: 12px 18px 12px 0; align-self: center; margin-left: auto; }
+
+.grid {
+  display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 4px; background: var(--rule); padding: 4px; border-top: 0;
+}
 .tile {
-  appearance: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
-  background: var(--surface); border: 1px solid var(--edge); border-radius: 12px;
-  padding: 14px 14px 16px; display: grid; gap: 4px; align-content: start; min-width: 0;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  appearance: none; border: 0; font: inherit; color: inherit; text-align: center; cursor: pointer;
+  background: var(--cell); padding: 0; display: grid; grid-template-rows: auto 1fr; min-width: 0;
 }
-.tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -8px var(--c); border-color: var(--c); }
-.tile-top { display: flex; align-items: center; gap: 8px; }
-.tile-top .ico { color: var(--c); font-size: 21px; display: inline-flex; }
-.tile-top .num { margin-left: auto; font-family: var(--f-mono); font-size: 12px; color: var(--c); opacity: .85; font-variant-numeric: tabular-nums; }
-.tile h3 { font-size: 18px; font-weight: 700; margin-top: 4px; }
-.tile .sub { color: var(--c); font-size: 15px; font-weight: 500; }
-.tile ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14.5px; color: var(--ink); }
-.tile li::marker { color: var(--ink); }
-.tile .open { margin-top: 10px; font-size: 13.5px; font-weight: 600; color: var(--c); display: inline-flex; align-items: center; gap: 4px; }
+.tile .bar {
+  background: var(--lime); padding: 13px 12px; font-weight: 800; font-size: 16.5px; line-height: 1.22;
+  display: grid; place-items: center; min-height: 66px; text-wrap: balance;
+}
+.tile .body { padding: 18px 16px 18px; display: grid; gap: 12px; justify-items: center; align-content: start; }
+.tile .ico { color: var(--navy); font-size: 50px; display: inline-flex; }
+.tile .ico svg { stroke-width: 1.3; }
+.tile .sub {
+  background: var(--chip); color: var(--chip-ink); font-weight: 800; font-size: 13px; letter-spacing: .02em;
+  padding: 5px 10px; border-radius: 2px;
+}
+.tile ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-weight: 600; font-size: 14.5px; line-height: 1.3; }
+.tile .open { font-size: 13px; font-weight: 800; color: var(--navy); display: inline-flex; gap: 4px; align-items: center; margin-top: 2px; letter-spacing: .02em; text-transform: uppercase; }
+.grid > .tile { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+.tile:hover .bar, .tile:focus-visible .bar { background: #8BC94A; }
+.tile:hover { background: #DFE1E1; }
 .tile:hover .open svg { transform: translateX(3px); }
 .tile .open svg { transition: transform .15s ease; }
 
-.connector { text-align: center; font-size: 14px; color: var(--muted); display: flex; justify-content: center; align-items: center; gap: 8px; }
+/* Closing cells reuse the grid */
+.closing { margin-top: 22px; }
+.closing .grid { --n: 2; }
+.cellx { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
+.cellx .bar { background: var(--lime-soft); padding: 13px 16px; font-weight: 800; font-size: 18px; text-align: center; }
+.cellx .body { padding: 20px 24px 24px; display: grid; gap: 12px; align-content: start; font-weight: 500; font-size: 15.5px; }
+.cellx ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.cellx li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; font-weight: 600; }
+.cellx li b { width: 28px; height: 28px; border-radius: 50%; background: var(--chip); color: var(--chip-ink); display: grid; place-items: center; font-size: 13px; }
+.cellx .pull { font-weight: 800; font-size: 18px; line-height: 1.35; color: var(--navy); }
 
-/* Footer */
-.foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 14.5px; color: var(--muted); padding-top: 6px; }
-.legend { display: flex; gap: 16px; flex-wrap: wrap; }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 13px; height: 13px; border-radius: 3px; background: var(--band); border: 1px solid var(--c); }
-.closing {
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; background: var(--surface); border: 1px solid var(--line);
-  border-radius: 18px; padding: clamp(18px, 3vw, 30px);
+/* Footer band */
+.footer { background: var(--footer); color: var(--footer-ink); margin-top: 22px; }
+.footer-inner {
+  max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: clamp(20px, 6vw, 80px); flex-wrap: wrap;
+  padding: 26px max(16px, env(safe-area-inset-right, 0px)) 26px max(16px, env(safe-area-inset-left, 0px));
 }
-.closing h2 { font-size: 24px; font-weight: 800; }
-.closing .col { display: grid; gap: 10px; align-content: start; min-width: 0; }
-.closing p, .closing li { font-size: 15.5px; color: var(--muted); }
-.closing ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
-.closing .pull { color: var(--brand); font-weight: 700; font-size: 19px; line-height: 1.35; }
+.footer a { color: inherit; text-decoration: none; font-family: var(--f-light); font-size: 19px; }
+.footer a:hover { text-decoration: underline; }
+.mark { border-left: 2px solid var(--footer-ink); border-bottom: 2px solid var(--footer-ink); padding: 4px 12px 6px; display: grid; line-height: 1.05; position: relative; }
+.mark::before { content: ""; position: absolute; left: -2px; top: 0; width: 60%; height: 2px; background: var(--footer-ink); }
+.mark small { font-size: 12px; letter-spacing: .14em; font-weight: 600; padding-top: 6px; }
+.mark strong { font-family: var(--f-heavy); font-size: 22px; letter-spacing: -0.03em; font-weight: 400; }
+.mark em { font-style: normal; font-size: 12px; letter-spacing: .14em; font-weight: 600; text-align: right; }
+.strip { background: var(--strip); color: var(--ink); text-align: center; font-size: 15px; font-weight: 500; padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
 
 /* Detail panel */
 .scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 40; opacity: 0; transition: opacity .2s ease; }
 .scrim.on { opacity: 1; }
 .panel {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(760px, 100%);
-  background: var(--surface); border-left: 1px solid var(--line); box-shadow: -20px 0 50px -20px rgba(0,0,0,.35);
-  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); transform: translateX(100%); transition: transform .25s ease;
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(760px, 100%); background: var(--cell);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr);
+  transform: translateX(100%); transition: transform .25s ease; box-shadow: -20px 0 50px -20px rgba(0,0,0,.45);
 }
 .panel.on { transform: none; }
 .panel-top {
-  display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); background: var(--band);
-  padding: calc(12px + env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) 12px 20px;
-  color: var(--c); font-weight: 700; font-size: 14px;
+  display: flex; align-items: stretch; background: var(--chip); color: var(--chip-ink);
+  padding-top: env(safe-area-inset-top, 0px); padding-right: env(safe-area-inset-right, 0px);
 }
-.panel-top .ico { font-size: 18px; display: inline-flex; }
+.panel-top .n { background: var(--lime); color: var(--ink); font-family: var(--f-heavy); font-size: 20px; min-width: 56px; display: grid; place-items: center; }
+.panel-top .t { padding: 13px 16px; font-weight: 700; font-size: 15px; align-self: center; }
 .iconbtn {
-  margin-left: auto; appearance: none; border: 1px solid var(--edge); background: var(--surface); color: var(--ink);
-  width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 18px;
+  margin: 8px 10px 8px auto; appearance: none; border: 0; background: transparent; color: var(--chip-ink);
+  width: 38px; height: 38px; display: grid; place-items: center; cursor: pointer; font-size: 20px;
 }
-.panel-body { overflow-y: auto; padding: 24px max(24px, env(safe-area-inset-right, 0px)) 32px 24px; display: block; min-height: 0; overscroll-behavior: contain; }
-.panel-body > * + * { margin-top: 20px; }
-.prompt { flex: none; }
-.panel-foot {
-  display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line);
-  padding: 12px max(18px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) 18px;
-}
+.iconbtn:hover { background: rgba(255,255,255,.12); }
+.panel-body { overflow-y: auto; min-height: 0; padding: 0 max(0px, env(safe-area-inset-right, 0px)) 28px 0; overscroll-behavior: contain; }
+.panel-body > .d-bar { background: var(--lime); padding: 18px 24px; display: grid; gap: 4px; }
+.panel-body > .inner { padding: 22px 24px 0; }
+.panel-body > .inner > * + * { margin-top: 20px; }
+.d-bar .num { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.d-bar h2 { font-weight: 800; font-size: clamp(22px, 3.2vw, 28px); line-height: 1.15; }
+.panel-foot { display: flex; justify-content: space-between; gap: 10px; background: var(--rule); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) 16px; }
 .navbtn {
-  appearance: none; font: inherit; font-size: 14.5px; font-weight: 600; color: var(--ink); background: var(--surface);
-  border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 48%;
+  appearance: none; font: inherit; font-size: 14px; font-weight: 700; color: var(--chip-ink); background: var(--chip);
+  border: 0; border-radius: 3px; padding: 9px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 48%;
 }
 .navbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.navbtn:hover { border-color: var(--c); color: var(--c); }
+.navbtn:hover { background: var(--navy); }
 .navbtn[disabled] { visibility: hidden; }
-
-.d-head { display: grid; gap: 6px; }
-.d-head .num { font-family: var(--f-mono); font-size: 12px; color: var(--c); letter-spacing: .08em; text-transform: uppercase; }
-.d-head h2 { font-size: clamp(24px, 3.4vw, 30px); font-weight: 800; }
-.label { font-family: var(--f-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--c); display: block; margin-bottom: 4px; }
+.label { font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--navy); display: block; margin-bottom: 4px; }
 .block { display: grid; gap: 10px; min-width: 0; }
-.block p, .pair p { font-size: 16px; }
-.prompt { border: 1px solid var(--edge); border-radius: 10px; background: var(--prompt-bg); min-width: 0; overflow: hidden; }
-.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; border-bottom: 1px solid var(--edge); background: var(--band); }
-.prompt-bar .label { margin: 0; }
+.block p, .pair p { font-size: 16px; font-weight: 500; }
+.prompt { background: var(--prompt-bg); border: 4px solid var(--rule); min-width: 0; }
+.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--lime-soft); }
+.prompt-bar .label { margin: 0; color: var(--ink); }
 .copy {
-  font-family: var(--f-body); font-weight: 700; font-size: 14px; background: var(--c); color: var(--surface);
-  border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; min-width: 92px; display: inline-flex; gap: 6px; align-items: center; justify-content: center;
+  font-family: var(--f-body); font-weight: 800; font-size: 14px; background: var(--chip); color: var(--chip-ink);
+  border: 0; border-radius: 3px; padding: 7px 14px; cursor: pointer; min-width: 92px; display: inline-flex; gap: 6px; align-items: center; justify-content: center;
 }
-.copy:hover { filter: brightness(1.08); }
+.copy:hover { background: var(--navy); }
 .prompt pre { margin: 0; padding: 16px; font-family: var(--f-mono); font-size: 13.5px; line-height: 1.65; white-space: pre-wrap; word-wrap: break-word; color: var(--ink); }
-.ph { background: var(--ph-bg); color: var(--ph-fg); border-radius: 3px; padding: 0 3px; }
+.ph { background: var(--ph-bg); color: var(--ph-fg); border-radius: 2px; padding: 0 3px; }
 .lead { color: var(--muted); font-style: italic; }
-.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--rule); padding: 4px; }
 .pair.one { grid-template-columns: 1fr; }
-.pair > div { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; min-width: 0; display: grid; gap: 8px; align-content: start; }
-.pair > div.next { border-left-color: var(--c); }
-.useful { font-size: 15.5px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 14px; }
+.pair > div { background: var(--cell); padding: 14px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.useful { font-size: 15.5px; font-weight: 500; color: var(--muted); }
 .useful strong { color: var(--ink); }
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
-table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 440px; }
-th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--prompt-bg); }
-tr:last-child td { border-bottom: 0; }
-td:first-child { font-family: var(--f-mono); font-size: 12.5px; color: var(--c); white-space: nowrap; }
+.table-wrap { overflow-x: auto; background: var(--rule); padding: 4px; }
+table { border-collapse: separate; border-spacing: 0 4px; width: 100%; font-size: 14.5px; min-width: 440px; }
+th, td { text-align: left; padding: 9px 12px; vertical-align: top; background: var(--cell); font-weight: 500; }
+th { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; background: var(--lime-soft); }
+td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 800; white-space: nowrap; }
 
-@media (max-width: 1020px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 720px) {
-  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .stats { justify-items: start; text-align: left; }
-  .stats .row { justify-content: flex-start; }
-  .closing { grid-template-columns: 1fr; }
-  .band-head .sep { display: none; }
-  .band-head .tag { flex-basis: 100%; font-size: 16px; }
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .areas .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .area-label .tag { margin-left: 0; padding: 0 18px 12px 74px; flex-basis: 100%; }
 }
-@media (max-width: 560px) {
+@media (max-width: 620px) {
+  .closing .grid { grid-template-columns: 1fr; }
   .pair { grid-template-columns: 1fr; }
   .tile ul { display: none; }
-  .tile h3 { font-size: 16.5px; }
-  .tile .sub { font-size: 14px; }
+  .tile .bar { font-size: 15px; min-height: 76px; padding: 10px 8px; }
+  .tile .ico { font-size: 40px; }
+  .area-label .tag { padding-left: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; } }
-.byline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-.byline .by { font-size: 17px; color: var(--ink); font-weight: 600; margin-right: 4px; }
-.pill { display: inline-flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 600; text-decoration: none; color: var(--brand); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px 5px 10px; }
-.pill:hover { border-color: var(--brand); }
-.pill svg { width: 16px; height: 16px; }
 </style>
 
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="titles">
-      <h1>20 Practical Ways to Use AI Beyond Writing Emails</h1>
-      <p class="dek">20 practical applications for ChatGPT, Claude, Gemini, and other AI assistants.</p>
-      <div class="byline"><span class="by">By Weiwei Hu</span>
-        <a class="pill" href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
-        <a class="pill" href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>GitHub</a></div>
-    </div>
+    <h1><span class="light">20 Practical Ways to Use AI</span><span class="heavy">Beyond Writing Emails</span></h1>
+    <p class="dek">20 practical applications for ChatGPT, Claude, Gemini, and other AI assistants.</p>
+    <div class="byline"><span class="by">By Weiwei Hu</span>
+      <a class="pill" href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
+      <a class="pill" href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>GitHub</a></div>
+    <p class="how">Tap any tile to open its prompt.</p>
   </header>
-  <p class="how">Tap any tile to open its prompt.</p>
 
-  <main id="bands" style="display:grid;gap:14px"></main>
+  <main class="areas" id="bands"></main>
 
-  <div class="foot">
-    <div class="legend" id="legend"></div>
-    <span>Save it and come back whenever a task needs a better starting point.</span>
-  </div>
-
-  <section class="closing">
-    <div class="col">
-      <h2>Start with one thing you already need to do</h2>
-      <p>You don’t need to try all twenty. Pick something already on your to-do list: a meeting tomorrow, a decision you keep revisiting, or a goal you’ve been postponing. Give your AI assistant the context, explain what you’re trying to accomplish, and ask for an output you can actually use. Then review the result, correct what needs correcting, and put it into practice.</p>
-      <p class="pull">The most useful AI prompt is often the one that helps you finish something you’ve already been meaning to do.</p>
-    </div>
-    <div class="col">
-      <h2>A small challenge for this week</h2>
-      <ol>
-        <li>Choose one tile that matches a task or responsibility you already have.</li>
-        <li>Copy the prompt and customize it with your actual circumstances.</li>
-        <li>Evaluate the result. Did it save time, improve your preparation, surface another option, or make the next action easier?</li>
-      </ol>
-      <p>If it worked, save the prompt. If the result felt generic, add more context or specify the output you need. For anything that affects your health, finances, or business, verify the facts before you act.</p>
+  <section class="closing" aria-label="Getting started">
+    <div class="grid">
+      <div class="cellx"><div class="bar">Start with one thing you already need to do</div>
+        <div class="body">
+          <p>You don’t need to try all twenty. Pick something already on your to-do list: a meeting tomorrow, a decision you keep revisiting, or a goal you’ve been postponing. Tell your AI assistant your situation, explain what you’re trying to accomplish, and ask for the outputs on the matching card. Then review the result, correct what needs correcting, and put it into practice.</p>
+          <p class="pull">The most useful AI prompt is often the one that helps you finish something you’ve already been meaning to do.</p>
+        </div></div>
+      <div class="cellx"><div class="bar">A small challenge for this week</div>
+        <div class="body">
+          <ol>
+            <li><b>1</b><span>Choose one application that matches a task already on your list.</span></li>
+            <li><b>2</b><span>Open its prompt, add your real details, and ask your AI assistant for the outputs on the card.</span></li>
+            <li><b>3</b><span>Evaluate the result. Did it save time, improve your preparation, surface another option, or make the next action easier?</span></li>
+          </ol>
+          <p>If the result felt generic, add more context or name the exact output you need. For anything that affects your health, finances, or business, verify the facts before you act.</p>
+        </div></div>
     </div>
   </section>
 </div>
 
+<div class="footer"><div class="footer-inner">
+  <a href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener">in/weiweihu</a>
+  <div class="mark" aria-label="Everyday AI Playbook"><small>EVERYDAY</small><strong>AI PLAYBOOK</strong><em>VOL. 1</em></div>
+  <a href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener">github/everyday-ai-playbook</a>
+</div></div>
+<div class="strip">Created by Weiwei Hu · Full copy-ready prompts at github.com/wei-wei-hu/everyday-ai-playbook</div>
+
 <div class="scrim" id="scrim" hidden></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="d-title" hidden>
-  <div class="panel-top"><span class="ico" id="p-ico"></span><span id="p-area"></span>
-    <button class="iconbtn" type="button" id="p-close" aria-label="Close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="panel-top"><span class="n" id="p-n"></span><span class="t" id="p-area"></span>
+    <button class="iconbtn" type="button" id="p-close" aria-label="Close"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
   <div class="panel-body" id="p-body"></div>
   <div class="panel-foot">
     <button class="navbtn" type="button" id="p-prev"><i data-lucide="arrow-left"></i><span></span></button>
@@ -265,11 +267,11 @@ td:first-child { font-family: var(--f-mono); font-size: 12.5px; color: var(--c);
 <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
 <script>
 const AREAS = [
-  { id: "work", title: "Get Things Done at Work", tag: "Plan, prepare, and follow through", icon: "briefcase" },
-  { id: "time", title: "Take Control of Your Time", tag: "Protect hours for the work that matters", icon: "clock-3" },
-  { id: "decide", title: "Make Better Decisions", tag: "Test your choices before you commit", icon: "scale" },
-  { id: "life", title: "Make Everyday Life Easier", tag: "Money, meals, travel, home, and people", icon: "sun" },
-  { id: "goals", title: "Make Progress on Your Personal Goals", tag: "Learn, plan, and review your progress", icon: "target" }
+  { id: "work", title: "Get Things Done at Work", tag: "Plan, prepare, and follow through" },
+  { id: "time", title: "Take Control of Your Time", tag: "Protect hours for the work that matters" },
+  { id: "decide", title: "Make Better Decisions", tag: "Test your choices before you commit" },
+  { id: "life", title: "Make Everyday Life Easier", tag: "Money, meals, travel, home, and people" },
+  { id: "goals", title: "Make Progress on Your Personal Goals", tag: "Learn, plan, and review your progress" }
 ];
 const TILES = [
   ["list-tree", "Project plan", ["Deliverables and tasks", "Dependencies and owners", "Milestone timeline"]],
@@ -849,29 +851,24 @@ Support your conclusions with examples from the reviews. Avoid inferring motives
 
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const hl = s => esc(s).replace(/\[[^\]\n]+\]/g, m => `<span class="ph">${m}</span>`);
-const areaOf = id => AREAS.find(a => a.id === id);
-const styleFor = id => `--c:var(--${id});--band:var(--${id}-band);--edge:var(--${id}-edge)`;
 const ico = name => `<i data-lucide="${name}"></i>`;
+const pad = n => String(n).padStart(2, "0");
 ITEMS.forEach((it, i) => { it.n = i + 1; [it.icon, it.sub, it.bullets] = TILES[i]; });
 
-/* Overview */
 let html = "";
 AREAS.forEach((a, ai) => {
   const items = ITEMS.filter(x => x.area === a.id);
-  html += `<section class="band" style="${styleFor(a.id)}" aria-labelledby="h-${a.id}">
-    <div class="band-head"><span class="ico">${ico(a.icon)}</span><h2 id="h-${a.id}">${a.title}</h2>
-      <span class="sep"></span><span class="tag">${a.tag}</span></div>
-    <div class="tiles">${items.map(it => `<button class="tile" type="button" data-open="${it.n}" aria-label="Prompt ${it.n}: ${it.title}">
-      <span class="tile-top"><span class="ico">${ico(it.icon)}</span><span class="num">${String(it.n).padStart(2, "0")}</span></span>
-      <h3>${it.title}</h3><span class="sub">${it.sub}</span>
+  a.num = ai + 1;
+  html += `<section class="area" aria-labelledby="h-${a.id}">
+    <div class="area-label"><span class="n">${ai + 1}</span><h2 id="h-${a.id}">${a.title}</h2><span class="tag">${a.tag}</span></div>
+    <div class="grid" style="--n:${items.length}">${items.map(it => `<button class="tile" type="button" data-open="${it.n}" aria-label="Prompt ${it.n}: ${it.title}">
+      <span class="bar">${it.title}</span>
+      <span class="body"><span class="ico">${ico(it.icon)}</span><span class="sub">${pad(it.n)} · ${it.sub}</span>
       <ul>${it.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
-      <span class="open">Open prompt ${ico("arrow-right")}</span></button>`).join("")}</div></section>`;
+      <span class="open">Open prompt ${ico("arrow-right")}</span></span></button>`).join("")}</div></section>`;
 });
 document.getElementById("bands").innerHTML = html;
-const SHORT={work:"Work",time:"Time",decide:"Decisions",life:"Everyday life",goals:"Personal goals"};
-document.getElementById("legend").innerHTML = AREAS.map(a => `<span style="${styleFor(a.id)}"><i></i>${SHORT[a.id]}</span>`).join("");
 
-/* Detail */
 const PROMPTS = {};
 function promptBlock(text, label, id) {
   PROMPTS[id] = text;
@@ -880,20 +877,20 @@ function promptBlock(text, label, id) {
     <pre id="${id}-text">${hl(text)}</pre></div>`;
 }
 const table = t => `<div class="table-wrap"><table><thead><tr>${t.head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-const nextBlock = (it, one) => `<div class="pair ${one ? "one" : ""}">${one ? "" : `<div><span class="label">Example</span><p>${it.example}</p></div>`}<div class="next"><span class="label">What to do next</span>${it.next.map(p => `<p>${p}</p>`).join("")}</div></div>`;
+const nextBlock = (it, one) => `<div class="pair ${one ? "one" : ""}">${one ? "" : `<div><span class="label">Example</span><p>${it.example}</p></div>`}<div><span class="label">What to do next</span>${it.next.map(p => `<p>${p}</p>`).join("")}</div></div>`;
 
 function detail(it) {
-  const a = areaOf(it.area);
   let fu = "";
   if (it.followup) fu = `<p class="lead">${it.followup.lead}</p>${promptBlock(it.followup.prompt, it.followup.label, "f" + it.n)}${it.followup.after ? `<p>${it.followup.after}</p>` : ""}`;
   const ex = it.table
     ? `<div class="block"><span class="label">Example: ${it.exampleTitle}</span><p>${it.exampleIntro}</p>${table(it.table)}${it.tableAfter ? `<p>${it.tableAfter}</p>` : ""}${fu}</div>${nextBlock(it, true)}`
     : nextBlock(it, false);
-  return `<div class="d-head"><span class="num">Prompt ${String(it.n).padStart(2, "0")} of 20 · ${it.sub}</span><h2 id="d-title">${it.title}</h2></div>
+  return `<div class="d-bar"><span class="num">Prompt ${pad(it.n)} of 20 · ${it.sub}</span><h2 id="d-title">${it.title}</h2></div>
+    <div class="inner">
     <div class="block"><span class="label">When to use it</span><p>${it.when}</p>${(it.intro || []).map(p => `<p>${p}</p>`).join("")}</div>
     ${promptBlock(it.prompt, "Try this prompt", "p" + it.n)}
     ${ex}
-    ${it.useful ? `<p class="useful"><strong>What makes this useful:</strong> ${it.useful}</p>` : ""}`;
+    ${it.useful ? `<p class="useful"><strong>What makes this useful:</strong> ${it.useful}</p>` : ""}</div>`;
 }
 
 const panel = document.getElementById("panel"), scrim = document.getElementById("scrim"), body = document.getElementById("p-body");
@@ -905,9 +902,8 @@ function open(n) {
   const it = ITEMS[n - 1]; if (!it) return;
   if (!current) lastFocus = document.activeElement;
   current = n;
-  const a = areaOf(it.area);
-  panel.setAttribute("style", styleFor(a.id));
-  document.getElementById("p-ico").innerHTML = ico(a.icon);
+  const a = AREAS.find(x => x.id === it.area);
+  document.getElementById("p-n").textContent = a.num;
   document.getElementById("p-area").textContent = a.title;
   body.innerHTML = detail(it); body.scrollTop = 0;
   const p = ITEMS[n - 2], q = ITEMS[n];
@@ -927,7 +923,6 @@ function close() {
   try { history.replaceState(null, "", location.pathname + location.search); } catch {}
   if (lastFocus) lastFocus.focus({ preventScroll: true });
 }
-
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-open]"); if (t) return open(+t.dataset.open);
   const c = e.target.closest("[data-copy]");
@@ -945,8 +940,8 @@ nextB.addEventListener("click", () => open(current + 1));
 document.addEventListener("keydown", e => {
   if (!current) return;
   if (e.key === "Escape") close();
-  if (e.key === "ArrowRight" && !e.target.closest("pre")) open(current + 1 <= 20 ? current + 1 : current);
-  if (e.key === "ArrowLeft" && !e.target.closest("pre")) open(current - 1 >= 1 ? current - 1 : current);
+  if (e.key === "ArrowRight") open(Math.min(20, current + 1));
+  if (e.key === "ArrowLeft") open(Math.max(1, current - 1));
 });
 draw();
 const m = /^#prompt-(\d+)$/.exec(location.hash); if (m) open(+m[1]);
