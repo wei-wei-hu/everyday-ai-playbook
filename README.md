@@ -1,20 +1,12 @@
 <a href="https://wei-wei-hu.github.io/everyday-ai-playbook/"><img src="assets/banner.png" alt="20 Practical Ways to Use AI Beyond Writing Emails" width="100%"></a>
 
-**By Weiwei Hu**
+**By Weiwei Hu** · [LinkedIn](https://www.linkedin.com/in/weiweihu)
 
-[![Open the interactive page](https://img.shields.io/badge/Open_the_interactive_page-1C2326?style=for-the-badge&logo=googlechrome&logoColor=white)](https://wei-wei-hu.github.io/everyday-ai-playbook/)
-[![One-page PDF](https://img.shields.io/badge/One--page_PDF-1C2326?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](20-Practical-Ways-to-Use-AI.pdf)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-1C2326?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/weiweihu)
+🔗 [20 Practical Ways to Use AI Beyond Writing Emails](https://wei-wei-hu.github.io/everyday-ai-playbook/)
 
-Interactive page: **https://wei-wei-hu.github.io/everyday-ai-playbook/** · Tap any tile to open its prompt and copy it.
+📄 [Download PDF](20-Practical-Ways-to-Use-AI.pdf)
 
 Most of us started using AI for simple things: drafting an email, summarizing a document, rewriting a message. AI becomes far more useful when you give it a specific task, enough context, and an outcome you can actually use. Below are 20 practical applications in five areas. Each comes with a prompt you can copy, customize, and try. Replace every `[placeholder]` with your own details.
-
-<details>
-<summary><b>See the one-page infographic</b></summary>
-<br>
-<a href="https://wei-wei-hu.github.io/everyday-ai-playbook/"><img src="assets/infographic.png" alt="One-page infographic of all 20 applications in five color-coded sections" width="100%"></a>
-</details>
 
 ## Contents
 
