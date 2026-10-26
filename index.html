@@ -220,6 +220,17 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .cta a { color: var(--chip-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 .cta a:hover { color: #C9E5F7; }
 .strip a { color: inherit; font-weight: 700; }
+.paths { margin-top: 22px; }
+.paths .grid { --n: 3; }
+.path { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
+.path .bar { background: #FFFFFF; padding: 13px 16px; font-weight: 800; font-size: 17px; text-align: center; }
+.path .body { padding: 18px 18px 20px; display: grid; gap: 12px; align-content: start; justify-items: center; text-align: center; }
+.path .steps { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.path .steps .arrow { color: var(--muted); font-weight: 700; }
+.step { appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 14px; color: var(--ink); background: var(--accent); padding: 6px 10px; border-radius: 2px; }
+.step:hover { filter: brightness(.93); }
+.path p { font-size: 14.5px; font-weight: 500; color: var(--muted); }
+@media (max-width: 980px) { .paths .grid { grid-template-columns: 1fr; } }
 </style>
 
 </head>
@@ -235,6 +246,11 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
   </header>
 
   <main class="areas" id="bands"></main>
+
+  <section class="paths" aria-label="Suggested sequences">
+    <div class="area-label"><span class="n" style="background:#FFFFFF">→</span><h2>Put them together</h2><span class="tag">Optional sequences for bigger tasks</span></div>
+    <div class="grid" id="paths"></div>
+  </section>
 
   <section class="closing" aria-label="Getting started">
     <div class="grid">
@@ -439,13 +455,15 @@ Personal commitments I want to protect: [list].
 
 When I usually have the most and least energy: [for example, strong mornings, slower afternoons].
 
+Tasks that need uninterrupted concentration: [list].
+
 Create a weekly plan that fits both my time and my energy.
 
-Schedule demanding work during my highest-energy hours and lighter tasks when my energy dips. Batch similar activities, such as calls, email, and errands, and include breaks.
+Schedule demanding work during my highest-energy hours and lighter tasks when my energy dips. Batch similar activities, such as calls, email, and errands, and leave buffer time between commitments.
 
 Add a short note on how to adjust the plan if a meeting moves or something new comes up.
 
-If everything cannot fit, identify what should be postponed, delegated, or renegotiated. Do not schedule overlapping commitments.`,
+Show the total hours planned compared with the hours available. If the week is overloaded, name the trade-offs and what should be postponed, delegated, or renegotiated rather than squeezing everything in. Do not schedule overlapping commitments.`,
   example: "Your week includes back-to-back operating reviews, an executive presentation due Thursday, and three hours you want to protect for writing your newsletter.",
   next: ["Put the important work sessions on your calendar and review the plan when new commitments arrive."] },
 
@@ -532,7 +550,9 @@ Sort each task into one of four groups:
 
 For each task I hand off, suggest a short handoff note covering the outcome, the deadline, and what “done” looks like.
 
-Estimate the hours per week this could free up, and flag any task where handing it off carries real risk.`,
+Estimate the hours per week this could free up, and flag any task where handing it off carries real risk.
+
+Do not assume an AI tool has access to my systems, or that another person has agreed to take something on. Mark proposed handoffs as suggestions until I confirm them.`,
   example: "You spend about six hours a week on status updates, meeting recaps, and scheduling.",
   next: ["Start with one task from each group this week, and check after two weeks whether the quality held up."] },
 
@@ -542,7 +562,7 @@ Estimate the hours per week this could free up, and flag any task where handing 
 
 My objective is [goal].
 
-My priorities are [criteria].
+My priorities, ranked from most to least important: [criteria].
 
 My constraints are [budget, time, resources].
 
@@ -555,7 +575,7 @@ Compare the options in a table showing:
 * Short-term implications.
 * Long-term implications.
 
-Identify the strongest option under each criterion.
+Identify the strongest option under each criterion, giving more weight to the criteria I ranked highest. If I haven’t ranked them, ask me to before comparing.
 
 Separate verified facts from assumptions and tell me what additional information would help me decide.`,
   example: "Your team needs a forecasting capability, and you’re weighing three paths: build it with your own team, buy a vendor tool, or extend an existing model.",
@@ -579,7 +599,7 @@ Identify:
 4. Dependencies I may have overlooked.
 5. Questions a decision-maker would likely ask.
 
-Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
+Separate risks supported by evidence from those that are speculative. Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
   example: "You’re about to roll out an AI assistant to a few thousand employees.",
   next: ["Assign someone to investigate the highest-priority risks before launch.", "Then use #13 to see how the plan holds up under different assumptions."] },
 
@@ -601,7 +621,7 @@ For each, explain the assumptions, possible outcomes, risks, and actions I could
 
 Show calculations where sufficient data is provided. Do not invent precise forecasts.
 
-Identify which assumptions have the greatest influence on the result.`,
+Identify the two assumptions with the greatest influence on the result, and what I could do to test them.`,
   example: "You’re estimating the return on a new technology investment that depends on how many teams adopt it.",
   next: ["Replace assumptions with real figures wherever possible.", "If the results change how your options compare, revisit #11."] },
 
@@ -625,7 +645,7 @@ Help me:
 2. Point out any option I may be overlooking.
 3. Identify the three to five criteria that matter most, and ask me to rank them.
 4. Score each option against those criteria, explaining your reasoning.
-5. Name the information that would actually change my choice, and what is just noise.
+5. Name the missing fact or unresolved trade-off that is really holding me back, and what is just noise.
 6. Describe what each option could look like a year from now.
 7. Suggest one small, reversible step I could take this week.
 
@@ -645,15 +665,16 @@ What I’ve already tried: [past fixes and results].
 
 People, tools, or processes involved: [list].
 
-Please:
+Before recommending a solution:
 
-1. Describe the pattern you see in what I’ve shared.
-2. List the most likely root causes, separating what my information supports from what is a guess.
-3. Ask me up to five questions that would narrow down the cause.
-4. Suggest one change to test for two weeks, and how I’ll know whether it worked.
-5. Note what to try next if the first change doesn’t help.
+1. Separate what I’ve observed from possible explanations.
+2. Ask me up to five questions about what happens, when, and how often.
+3. List the possible causes, with the evidence that supports or contradicts each one.
+4. Suggest one small test that could tell the leading explanations apart.
+5. Explain which result would support or weaken each explanation.
+6. Note what to try next if the test is inconclusive.
 
-Base your suggestions on the details I provide, and avoid generic advice.`,
+Do not present a possible cause as confirmed without supporting evidence. Base your suggestions on the details I provide, and avoid generic advice.`,
   example: "Your team’s monthly report goes out late almost every time.",
   next: ["Run the test, track the result, and keep a short note of what you learned for next time.", "If the fix involves a bigger choice, start with #14 to work through it."] },
 
@@ -836,7 +857,9 @@ My objective is [specific outcome].
 
 I have [number] minutes per day, [number] days per week, for [number] weeks.
 
-Design a practical learning plan that includes:
+Before creating the plan, give me a short exercise to assess my starting level, and use the result to set the first week’s activities.
+
+Then design a practical learning plan that includes:
 
 1. The most important concepts I should understand first.
 2. A weekly learning objective.
@@ -853,7 +876,7 @@ When I make a mistake, explain what went wrong and give me another opportunity t
 
 Adapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.
 
-At the end of each week, summarize what I practiced, the feedback you gave, and the focus for the following week.`,
+At the end of each week, reassess my level, summarize what I practiced and the feedback you gave, and set the focus for the following week.`,
   exampleTitle: "Improving public speaking in four weeks",
   exampleIntro: "Suppose your goal is to deliver a confident, five-minute presentation to senior executives. A four-week plan could look like this:",
   table: { head: ["Week", "Focus", "Practice assignment"], rows: [
@@ -912,6 +935,8 @@ Include:
 
 If my deadline appears unrealistic, explain why and suggest a more achievable alternative.
 
+If the goal competes with my other priorities or commitments, explain the trade-offs and help me decide what to reduce.
+
 Ask me questions about any important information that is missing before finalizing the plan.`,
   exampleTitle: "Launching a LinkedIn newsletter in 30 days",
   exampleIntro: "Imagine you’re a professional who wants to start publishing thoughtful articles on LinkedIn, but you’ve never published a newsletter before. You have three hours each week to work on it. A four-week plan might look like this:",
@@ -968,7 +993,7 @@ Help me review the week and prepare for the next one.
 
 Please provide:
 
-1. A summary of my most important accomplishments.
+1. A short accomplishment record: what I completed, my contribution, and any measurable result I reported. Do not invent outcomes or numbers.
 2. A comparison between planned and completed priorities.
 3. An explanation of possible reasons some tasks remained unfinished, distinguishing evidence from assumptions.
 4. Any recurring obstacles worth addressing.
@@ -977,7 +1002,8 @@ Please provide:
 7. A practical first action for each priority.
 8. A short reflection: what gave me energy this week, what drained it, and what I would do differently.
 9. Progress against my goal plan milestones, if I shared them, with any adjustments to the plan.
-10. One question I should reflect on before finalizing my plan.
+10. If I include earlier weekly reviews, recurring obstacles supported by those records, and one adjustment to test next week.
+11. One question I should reflect on before finalizing my plan.
 
 Be constructive and specific. Avoid generic motivational advice.
 
@@ -1026,6 +1052,12 @@ AREAS.forEach((a, ai) => {
       <span class="open">Open prompt ${ico("arrow-right")}</span></span></button>`).join("")}</div></section>`;
 });
 document.getElementById("bands").innerHTML = html;
+const PATHS = [
+  ["Complete a complex project", [1, 7, 10, 25], "From defining the work to reviewing the results."],
+  ["Make an important decision", [14, 11, 12, 13], "From what’s unresolved to how each option could play out."],
+  ["Make progress on a personal goal", [24, 6, 23, 25], "From choosing a goal to learning and reviewing progress."]
+];
+document.getElementById("paths").innerHTML = PATHS.map(([t, ns, d]) => `<div class="path"><div class="bar">${t}</div><div class="body"><div class="steps">${ns.map(n => { const it = ITEMS[n - 1]; return `<button class="step" type="button" data-open="${n}" style="--accent:var(--c-${it.area})" aria-label="Open prompt ${n}: ${it.title}">#${n} ${it.sub}</button>`; }).join('<span class="arrow">↓</span>')}</div><p>${d}</p></div></div>`).join("");
 
 const PROMPTS = {};
 function promptBlock(text, label, id) {
