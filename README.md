@@ -18,18 +18,18 @@ Most of us started using AI for simple things like drafting an email or summariz
 
 <img src="assets/section-2.png" alt="2. Take Control of Your Time" width="100%">
 
-6. [Plan your week around your priorities](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-6)
+6. [Plan your week and adjust when plans change](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-6)
 7. [Decide what to do first](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-7)
-8. [Reorganize your day when plans fall apart](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-8)
-9. [Manage recurring responsibilities](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-9)
-10. [Decide what to hand off](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-10)
+8. [Manage recurring responsibilities](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-8)
+9. [Decide what to hand off](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-9)
+10. [Create a personal health and wellness plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-10)
 
 <img src="assets/section-3.png" alt="3. Make Better Decisions" width="100%">
 
 11. [Compare several options side by side](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-11)
 12. [Find risks you may have overlooked](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-12)
 13. [Explore what-if scenarios](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-13)
-14. [Get unstuck on a decision you keep postponing](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-14)
+14. [Evaluate a business idea](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-14)
 15. [Solve a problem that keeps coming back](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-15)
 
 <img src="assets/section-4.png" alt="4. Make Everyday Life Easier" width="100%">
@@ -38,7 +38,7 @@ Most of us started using AI for simple things like drafting an email or summariz
 17. [Plan meals using what you already have](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-17)
 18. [Plan a trip around your interests and budget](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-18)
 19. [Organize home maintenance and responsibilities](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-19)
-20. [Prepare for a personal conversation](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-20)
+20. [Support children’s learning](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-20)
 
 <img src="assets/section-5.png" alt="5. Make Progress on Your Personal Goals" width="100%">
 

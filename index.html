@@ -254,8 +254,8 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
     <div class="area-label"><span class="n" style="background:#FFFFFF">→</span><h2>How to use it</h2></div>
     <div class="grid">
       <div class="path start"><div class="bar">Start with one thing you already need to do</div><div class="body"><ol><li><b>1</b><span>Pick one task already on your list.</span></li><li><b>2</b><span>Open its card and fill in the [brackets].</span></li><li><b>3</b><span>Paste it into your AI assistant, review the result, and check key facts.</span></li></ol></div></div>
-      <div class="path"><div class="bar">Complete a complex project</div><div class="body"><div class="steps"><button class="step" type="button" data-open="1" style="--accent:var(--c-work)">#1 Project plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="7" style="--accent:var(--c-time)">#7 Prioritize</button><span class="arrow">↓</span><button class="step" type="button" data-open="10" style="--accent:var(--c-time)">#10 Delegation plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="25" style="--accent:var(--c-goals)">#25 Weekly review</button></div></div></div>
-      <div class="path"><div class="bar">Make an important decision</div><div class="body"><div class="steps"><button class="step" type="button" data-open="14" style="--accent:var(--c-decide)">#14 Decision reset</button><span class="arrow">↓</span><button class="step" type="button" data-open="11" style="--accent:var(--c-decide)">#11 Side-by-side</button><span class="arrow">↓</span><button class="step" type="button" data-open="12" style="--accent:var(--c-decide)">#12 Risk review</button><span class="arrow">↓</span><button class="step" type="button" data-open="13" style="--accent:var(--c-decide)">#13 Scenarios</button></div></div></div>
+      <div class="path"><div class="bar">Complete a complex project</div><div class="body"><div class="steps"><button class="step" type="button" data-open="1" style="--accent:var(--c-work)">#1 Project plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="7" style="--accent:var(--c-time)">#7 Prioritize</button><span class="arrow">↓</span><button class="step" type="button" data-open="9" style="--accent:var(--c-time)">#9 Delegation plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="25" style="--accent:var(--c-goals)">#25 Weekly review</button></div></div></div>
+      <div class="path"><div class="bar">Make an important decision</div><div class="body"><div class="steps"><button class="step" type="button" data-open="11" style="--accent:var(--c-decide)">#11 Side-by-side</button><span class="arrow">↓</span><button class="step" type="button" data-open="12" style="--accent:var(--c-decide)">#12 Risk review</button><span class="arrow">↓</span><button class="step" type="button" data-open="13" style="--accent:var(--c-decide)">#13 Scenarios</button></div></div></div>
       <div class="path"><div class="bar">Make progress on a personal goal</div><div class="body"><div class="steps"><button class="step" type="button" data-open="24" style="--accent:var(--c-goals)">#24 Goal plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="6" style="--accent:var(--c-time)">#6 Weekly plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="23" style="--accent:var(--c-goals)">#23 Learning plan</button><span class="arrow">↓</span><button class="step" type="button" data-open="25" style="--accent:var(--c-goals)">#25 Weekly review</button></div></div></div>
     </div>
   </section>
@@ -285,743 +285,417 @@ const AREAS = [
   { id: "work", title: "Get Things Done at Work", tag: "Plan, prepare, and follow through" },
   { id: "time", title: "Take Control of Your Time", tag: "Protect hours for the work that matters" },
   { id: "decide", title: "Make Better Decisions", tag: "Test your choices before you commit" },
-  { id: "life", title: "Make Everyday Life Easier", tag: "Money, meals, travel, home, and people" },
+  { id: "life", title: "Make Everyday Life Easier", tag: "Money, meals, travel, home, and family" },
   { id: "goals", title: "Make Progress on Your Personal Goals", tag: "Learn, plan, and review your progress" }
 ];
 const TILES = [
   ["list-tree", "Project plan", ["Deliverables and tasks", "Dependencies and owners", "Milestone timeline"]],
   ["file-search", "Document brief", ["Key findings and numbers", "Decisions and actions", "Source references"]],
   ["presentation", "Meeting prep", ["Opening and key points", "Likely questions", "Evidence gaps"]],
-  ["messages-square", "Role-play", ["Natural opening", "Realistic responses", "Feedback on tone"]],
+  ["messages-square", "Role-play", ["Natural opening", "Realistic responses", "Feedback and follow-up"]],
   ["notebook-pen", "Notes to actions", ["Actions and waiting-on", "Owners and deadlines", "Top three to start"]],
-  ["calendar-range", "Weekly plan", ["Protected focus time", "Grouped activities", "What to postpone"]],
+  ["calendar-range", "Weekly plan", ["Focus time and buffers", "Hours vs. capacity", "What moves if plans shift"]],
   ["list-ordered", "Prioritize", ["Ranked task table", "Today’s top three", "Delegate or drop"]],
-  ["calendar-clock", "Re-plan the day", ["What still fits", "What moves", "Deadlines to renegotiate"]],
   ["repeat", "Checklist", ["Prep and materials", "Completion criteria", "Automate vs. review"]],
   ["users", "Delegation plan", ["What AI can draft", "What others can own", "Hours freed up"]],
-  ["columns-3", "Side-by-side", ["Benefits, costs, risks", "Short- and long-term", "Facts vs. assumptions"]],
+  ["heart-pulse", "Wellness plan", ["Weekly activity schedule", "Sleep and rest routine", "Simple progress check"]],
+  ["columns-3", "Side-by-side", ["Criteria that matter", "Facts vs. assumptions", "One step forward"]],
   ["shield-alert", "Risk review", ["What could go wrong", "Early warning signs", "Questions to expect"]],
   ["git-branch", "Scenarios", ["Conservative to optimistic", "Assumptions that matter most", "Calculations shown"]],
-  ["signpost", "Decision reset", ["Criteria that matter", "What would change your mind", "One small next step"]],
-  ["wrench", "Root cause", ["Pattern and triggers", "Likely causes", "One fix to test"]],
-  ["wallet", "Spending review", ["Spend by category", "Recurring payments", "Ways to save"]],
+  ["lightbulb", "Idea check", ["Customer problem", "Key assumptions", "30-day validation plan"]],
+  ["wrench", "Root cause", ["Facts vs. explanations", "Evidence for each cause", "One test to run"]],
+  ["wallet", "Money review", ["Spending by category", "Budget and savings", "Debt repayment options"]],
   ["utensils", "Meal plan", ["Five weekday dinners", "Uses what you have", "One shopping list"]],
   ["map", "Trip itinerary", ["Day-by-day plan", "Costs and transport", "What to verify"]],
   ["home", "Home upkeep", ["Monthly to annual tasks", "DIY vs. professional", "Reminders"]],
-  ["heart-handshake", "Personal talk", ["Warm opening", "Clear, kind framing", "Questions to ask"]],
+  ["book-open", "Child’s learning", ["Simple explanations", "Guided practice", "Short quiz"]],
   ["handshake", "Offer negotiation", ["Total package review", "Your ask and script", "Practice the conversation"]],
   ["compass", "Career roadmap", ["Roles that fit you", "Skills to build", "Quarterly milestones"]],
-  ["graduation-cap", "Learning plan", ["Weekly objectives", "Daily exercises", "Tutor-style feedback"]],
+  ["graduation-cap", "Learning plan", ["Starting-level check", "Daily exercises", "Tutor-style feedback"]],
   ["flag", "Goal plan", ["Milestones and timeline", "First seven days", "Busy-week version"]],
-  ["clipboard-check", "Weekly review", ["Planned vs. done", "Recurring obstacles", "Next week’s top three"]]
+  ["clipboard-check", "Weekly review", ["Planned vs. done", "Accomplishment record", "Next week’s top three"]]
 ];
 const ITEMS = [
-{ area: "work", title: "Break a complicated project into manageable tasks",
-  when: "You have a large project with several deliverables, multiple people involved, and an approaching deadline. You know what the project needs to accomplish, but figuring out where to start takes time.",
-  prompt: `I’m responsible for [project], which needs to be completed by [date].
-
-The objective is [desired outcome].
-
-The people or teams involved are [list].
-
-The main constraints are [budget, time, resources, or other limitations].
-
-Break this project into:
-
-1. Major deliverables.
-2. Tasks required for each deliverable.
-3. Dependencies between tasks.
-4. Suggested owners or roles.
-5. A realistic timeline with milestones.
-6. The five most important actions to take this week.
-
-Identify any missing information that could affect the plan. Do not assume that resources or approvals are available unless I have confirmed them.`,
-  example: "You’re leading a program for a large community, with training sessions in several regions, a pilot group of early adopters, and a leadership readout at the end of the quarter.",
-  next: ["Review the dependencies with the people responsible, confirm deadlines, and transfer agreed actions into your project tracker."] },
-
-{ area: "work", title: "Extract important information from long documents",
-  when: "You receive a long report, meeting transcript, proposal, or research document and need to understand the key information quickly.",
-  prompt: `Review the attached document.
-
-Extract:
-
-1. The five most important findings.
-2. Important numbers, dates, and evidence.
-3. Decisions already made.
-4. Actions required, including owners and deadlines when stated.
-5. Risks or unresolved questions.
-
-Separate facts explicitly stated in the document from interpretations or recommendations.
-
-Include page or section references for important findings. If information is missing, say so rather than making assumptions.
-
-Present the result as a concise executive brief.`,
-  example: "The night before a quarterly business review, you receive a long deck and a market research report.",
-  next: ["Open the original document and verify the figures and statements you plan to use."] },
-
-{ area: "work", title: "Prepare for an important meeting",
-  when: "You have a meeting where you need to explain a recommendation, secure agreement, or make an important decision.",
-  prompt: `Help me prepare for a [30-minute] meeting with [audience].
-
-The meeting objective is [outcome].
-
-Background: [context].
-
-My recommendation is [proposal].
-
-The concerns I anticipate are [list].
-
-Prepare:
-
-1. A concise opening that explains why we’re meeting.
-2. Three key points I should communicate.
-3. Supporting evidence I should bring.
-4. Five difficult questions I may receive.
-5. Suggested responses based only on the information provided.
-6. A closing that identifies the decision or next action needed.
-
-Highlight any evidence I still need before the meeting.`,
-  example: "You’re asking a senior executive to fund a predictive model that would guide where the business invests next year. Finance will ask about payback, IT about data access, and the business about accuracy.",
-  next: ["Practice the opening aloud and make sure your recommendation and requested decision can be explained in under one minute."] },
-
-{ area: "work", title: "Practice an important conversation",
-  when: "You need to discuss a missed commitment, give feedback, negotiate responsibilities, or raise a concern.",
-  prompt: `I need to have an important conversation with [person or role].
-
-The situation is [describe facts].
-
-My concern is [concern].
-
-What I hope to accomplish is [outcome].
-
-Help me prepare a respectful, direct conversation.
-
-First, suggest a natural opening.
-
-Then role-play the other person. Respond realistically, including possible disagreement.
-
-Ask me to respond before continuing.
-
-After the role-play, give feedback on where I was effective, where I could be clearer, and how I could communicate more constructively.`,
-  example: "A senior stakeholder expects a forecast model next week, and your team has found data quality problems that will delay it by a month.",
-  next: ["Practice two possible responses to disagreement. Use your own words in the actual conversation."] },
-
-{ area: "work", title: "Organize scattered notes into useful actions",
-  when: "You have notes from meetings, messages, reminders, and unfinished ideas spread across different places.",
-  prompt: `Organize the following notes into a practical action plan.
-
-[Paste notes]
-
-Group the information into:
-
-* Actions requiring my attention.
-* Items waiting on someone else.
-* Decisions to make.
-* Information to follow up on.
-* Ideas worth saving for later.
-
-For each action, identify the deadline and owner if mentioned.
-
-Suggest a priority order based on urgency and importance. Mark missing deadlines or ownership as unconfirmed.
-
-Finish with the three actions I should focus on first.`,
-  example: "You support a business leader and finish the week with notes from a staff meeting, two operating reviews, and several hallway requests.",
-  next: ["Review the list, confirm commitments, and put the important actions into the system you actually use."] },
-
-{ area: "time", title: "Plan your week around your priorities",
-  when: "Your calendar fills up with meetings and obligations before you have time for the work you wanted to accomplish.",
-  prompt: `Help me plan my coming week.
-
-My three most important goals are [goals].
-
-Existing commitments: [meetings and appointments].
-
-Tasks to complete: [list with deadlines].
-
-Available working hours: [hours].
-
-Personal commitments I want to protect: [list].
-
-When I usually have the most and least energy: [for example, strong mornings, slower afternoons].
-
-Tasks that need uninterrupted concentration: [list].
-
-Create a weekly plan that fits both my time and my energy.
-
-Schedule demanding work during my highest-energy hours and lighter tasks when my energy dips. Batch similar activities, such as calls, email, and errands, and leave buffer time between commitments.
-
-Add a short note on how to adjust the plan if a meeting moves or something new comes up.
-
-Show the total hours planned compared with the hours available. If the week is overloaded, name the trade-offs and what should be postponed, delegated, or renegotiated rather than squeezing everything in. Do not schedule overlapping commitments.`,
-  example: "Your week includes back-to-back operating reviews, an executive presentation due Thursday, and three hours you want to protect for writing your newsletter.",
-  next: ["Put the important work sessions on your calendar and review the plan when new commitments arrive."] },
-
-{ area: "time", title: "Decide what to do first",
-  when: "Everything feels urgent, and you’re spending more time deciding what to work on than doing the work.",
-  prompt: `Here are the tasks I need to complete: [list].
-
-For each task, consider:
-
-* Deadline.
-* Business or personal importance.
-* Consequences of delaying it.
-* Estimated effort.
-* Whether someone else is waiting on it.
-
-Rank the tasks in a table.
-
-Recommend the three I should complete today, what I should schedule later, and what I could delegate or eliminate.
-
-Explain the reasoning briefly. Ask me for missing information if it could materially affect the order.`,
-  example: "You have multiple open items, including a budget input due tomorrow, a document review, and a request from your manager, and only a few free hours.",
-  next: ["Select your first task and begin. Revisit the ranking only when priorities or deadlines genuinely require it."] },
-
-{ area: "time", title: "Reorganize your day when plans fall apart",
-  when: "An unexpected meeting, urgent request, or personal responsibility disrupts your schedule.",
-  prompt: `My original plan for today was [schedule].
-
-Something unexpected happened: [event].
-
-I now have [available hours].
-
-These commitments cannot move: [list].
-
-Help me revise my schedule.
-
-Identify:
-
-1. What I can still complete today.
-2. What should move to another day.
-3. Any deadlines or commitments I need to renegotiate.
-4. A realistic revised schedule.
-
-Leave some buffer time and avoid assuming that every task can still be completed.`,
-  example: "Your leader asks for a revised deck for an urgent two-hour session, on a day you planned to finish a monthly report and leave early for a personal appointment.",
-  next: ["Update your calendar and communicate any affected deadlines promptly."] },
-
-{ area: "time", title: "Manage recurring responsibilities",
-  when: "You repeatedly spend time remembering what needs to happen every week or month.",
-  prompt: `I regularly need to manage [responsibility].
-
-The tasks involved are [list].
-
-The frequency is [daily, weekly, monthly].
-
-Create a reusable checklist that includes:
-
-* Preparation.
-* Actions to complete.
-* Deadlines.
-* Information or materials required.
-* Completion criteria.
-* Reminders that would be useful.
-
-Suggest which parts could be automated and which require my review.`,
-  example: "Each month you assemble a business performance pack for leadership.",
-  next: ["Save the checklist and schedule the reminders in your preferred task or calendar tool."] },
-
-{ area: "time", title: "Decide what to hand off",
-  when: "Your week is full of small recurring tasks, and you suspect some of them don’t need you at all.",
-  prompt: `I want to free up time by delegating more of my recurring work.
-
-Here are the tasks I handle in a typical week: [list, with rough time for each].
-
-My role and main priorities: [description].
-
-People or tools that could take on work: [team members, family, assistants, AI tools].
-
-Sort each task into one of four groups:
-
-1. AI can produce a first draft that I review.
-2. Someone else can own it fully.
-3. It can be deferred, simplified, batched, or dropped.
-4. It still needs my personal judgment, and why.
-
-For each task I hand off, suggest a short handoff note covering the outcome, the deadline, and what “done” looks like.
-
-Estimate the hours per week this could free up, and flag any task where handing it off carries real risk.
-
-Do not assume an AI tool has access to my systems, or that another person has agreed to take something on. Mark proposed handoffs as suggestions until I confirm them.`,
-  example: "You spend about six hours a week on status updates, meeting recaps, and scheduling.",
-  next: ["Start with one task from each group this week, and check after two weeks whether the quality held up."] },
-
-{ area: "decide", title: "Compare several options side by side",
-  when: "You have multiple reasonable choices and need to evaluate them against the same criteria.",
-  prompt: `I’m deciding between [Option A], [Option B], and [Option C].
-
-My objective is [goal].
-
-My priorities, ranked from most to least important: [criteria].
-
-My constraints are [budget, time, resources].
-
-Compare the options in a table showing:
-
-* Benefits.
-* Costs.
-* Risks.
-* Effort required.
-* Short-term implications.
-* Long-term implications.
-
-Identify the strongest option under each criterion, giving more weight to the criteria I ranked highest. If I haven’t ranked them, ask me to before comparing.
-
-Separate verified facts from assumptions and tell me what additional information would help me decide.`,
-  example: "Your team needs a forecasting capability, and you’re weighing three paths: build it with your own team, buy a vendor tool, or extend an existing model.",
-  next: ["Verify the costs and assumptions, then evaluate which option best fits your actual priorities.", "To go further, use #12 to check your leading option for risks."] },
-
-{ area: "decide", title: "Find risks you may have overlooked",
-  when: "You’re confident in a proposal but want to test it before committing significant resources.",
-  prompt: `Act as a constructive reviewer of my plan.
-
-The plan is [description].
-
-The expected result is [outcome].
-
-The assumptions are [list].
-
-Identify:
-
-1. Five ways the plan could go off track.
-2. Early warning signs for each risk.
-3. Actions that could reduce the risks.
-4. Dependencies I may have overlooked.
-5. Questions a decision-maker would likely ask.
-
-Separate risks supported by evidence from those that are speculative. Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
-  example: "You’re about to roll out an AI assistant to a few thousand employees.",
-  next: ["Assign someone to investigate the highest-priority risks before launch.", "Then use #13 to see how the plan holds up under different assumptions."] },
-
-{ area: "decide", title: "Explore what-if scenarios",
-  when: "You’re making a decision where future outcomes depend on uncertain assumptions.",
-  prompt: `Help me evaluate three scenarios for [decision].
-
-Current situation: [details].
-
-Important variables: [list].
-
-Create:
-
-* A conservative scenario.
-* A baseline scenario.
-* An optimistic scenario.
-
-For each, explain the assumptions, possible outcomes, risks, and actions I could take.
-
-Show calculations where sufficient data is provided. Do not invent precise forecasts.
-
-Identify the two assumptions with the greatest influence on the result, and what I could do to test them.`,
-  example: "You’re estimating the return on a new technology investment that depends on how many teams adopt it.",
-  next: ["Replace assumptions with real figures wherever possible.", "If the results change how your options compare, revisit #11."] },
-
-{ area: "decide", title: "Get unstuck on a decision you keep postponing",
-  when: "You’ve been going back and forth on a decision for weeks, and gathering more information isn’t making it easier.",
-  prompt: `I keep postponing a decision and want help moving forward.
-
-The decision is: [describe it].
-
-The options I’m considering: [list].
-
-What matters most to me here: [values or priorities].
-
-What’s making it hard: [concerns, trade-offs, missing information].
-
-My deadline, if any: [date].
-
-Help me:
-
-1. Restate the decision in one clear sentence, including my objective and constraints.
-2. Point out any option I may be overlooking.
-3. Identify the three to five criteria that matter most, and ask me to rank them.
-4. Score each option against those criteria, explaining your reasoning.
-5. Name the missing fact or unresolved trade-off that is really holding me back, and what is just noise.
-6. Describe what each option could look like a year from now.
-7. Suggest one small, reversible step I could take this week.
-
-Ask me clarifying questions before scoring if anything important is unclear.`,
-  example: "You’ve been weighing whether to go back to school part-time for months.",
-  next: ["Set a date to decide, take the small step, and revisit the scores once you see how it went.", "Once your options are clear, use #11 to compare them side by side."] },
-
-{ area: "decide", title: "Solve a problem that keeps coming back",
-  when: "The same problem shows up again and again, and quick fixes only hold for a little while.",
-  prompt: `Help me find the root cause of a recurring problem.
-
-The problem: [describe what happens].
-
-How often it occurs and when: [frequency, timing, triggers].
-
-What I’ve already tried: [past fixes and results].
-
-People, tools, or processes involved: [list].
-
-Before recommending a solution:
-
-1. Separate what I’ve observed from possible explanations.
-2. Ask me up to five questions about what happens, when, and how often.
-3. List the possible causes, with the evidence that supports or contradicts each one.
-4. Suggest one small test that could tell the leading explanations apart.
-5. Explain which result would support or weaken each explanation.
-6. Note what to try next if the test is inconclusive.
-
-Do not present a possible cause as confirmed without supporting evidence. Base your suggestions on the details I provide, and avoid generic advice.`,
-  example: "Your team’s monthly report goes out late almost every time.",
-  next: ["Run the test, track the result, and keep a short note of what you learned for next time.", "If the fix involves a bigger choice, start with #14 to work through it."] },
-
-{ area: "life", title: "Understand where your money goes",
-  when: "You want to review your spending, identify recurring expenses, and see where you might save money.",
-  prompt: `Help me review my household spending using the transaction information I provide.
-
-Categorize expenses into housing, groceries, transportation, subscriptions, dining, shopping, and other categories.
-
-Show:
-
-1. Total spending by category.
-2. Recurring payments.
-3. Unusually large expenses.
-4. Categories where spending has increased.
-5. Potential opportunities to reduce expenses.
-
-Identify any transactions that are ambiguous rather than guessing.
-
-Do not assume the data represents all of my accounts.`,
-  example: "You review three months of spending and discover several subscriptions you rarely use.",
-  next: ["Confirm recurring charges and cancel or downgrade services that no longer provide enough value.", "Use a secure financial-data connection rather than pasting sensitive banking information into an ordinary prompt."] },
-
-{ area: "life", title: "Plan meals using what you already have",
-  when: "You want to avoid unnecessary grocery purchases and spend less time deciding what to cook.",
-  prompt: `Help me plan five weekday dinners.
-
-Ingredients I already have: [list].
-
-Number of people: [number].
-
-Dietary preferences or restrictions: [details].
-
-Maximum cooking time: [minutes].
-
-Additional grocery budget: [amount].
-
-Suggest five meals that reuse ingredients where practical.
-
-For each meal, include ingredients, quantities, cooking steps, and estimated preparation time.
-
-Create one combined shopping list, excluding ingredients I already have.
-
-Flag any nutrition or allergy information that needs verification.`,
-  example: "You have chicken, rice, broccoli, eggs, and canned beans.",
-  next: ["Check what you actually have, adjust portions, and shop only for missing items."] },
-
-{ area: "life", title: "Plan a trip around your interests and budget",
-  when: "You want a trip that fits your preferences without spending hours researching every detail.",
-  prompt: `Help me plan a [number]-day trip to [destination].
-
-Dates: [dates].
-
-Travelers: [number and relevant needs].
-
-Total budget: [amount].
-
-Interests: [food, art, history, nature, etc.].
-
-Preferred pace: [relaxed, moderate, busy].
-
-Create a day-by-day itinerary that groups nearby attractions together.
-
-Include estimated costs, transportation considerations, meal suggestions, and backup options.
-
-Identify which opening hours, prices, availability, and reservations need current verification.`,
-  example: "You’re visiting Paris for four days and want a mix of museums, local food, walking, and time to relax.",
-  next: ["Verify opening hours, transportation, current prices, and reservations before committing to the itinerary."] },
-
-{ area: "life", title: "Organize home maintenance and responsibilities",
-  when: "You want to stay ahead of household tasks without remembering every maintenance deadline yourself.",
-  prompt: `Help me create a home maintenance plan.
-
-Home type: [house, apartment, etc.].
-
-Relevant features: [HVAC, yard, appliances, etc.].
-
-Location and climate: [general region].
-
-Available time each month: [hours].
-
-Budget constraints: [details].
-
-Organize tasks into monthly, quarterly, and annual activities.
-
-Identify which tasks I can reasonably do myself and which should be handled by a qualified professional.
-
-Include a checklist and suggested reminders.`,
-  example: "You want to manage HVAC filter replacement, gutter inspection, appliance maintenance, and seasonal yard work.",
-  next: ["Verify manufacturer recommendations and schedule the tasks requiring professional service."] },
-
-{ area: "life", title: "Prepare for a personal conversation",
-  when: "You need to discuss boundaries, expectations, misunderstandings, or responsibilities with someone important to you.",
-  prompt: `Help me prepare for a personal conversation.
-
-The situation is [facts].
-
-My perspective is [thoughts].
-
-The other person’s perspective may be [what I know, separating facts from assumptions].
-
-My desired outcome is [goal].
-
-Suggest a warm, respectful way to begin.
-
-Help me explain my concerns without blaming the other person.
-
-Suggest three questions that could help me understand their perspective.
-
-Role-play two possible responses, including one where the other person disagrees.`,
-  example: "You missed an important event and want to apologize to your friend without making excuses.",
-  next: ["Focus on listening to the actual response rather than trying to follow a script word for word."] },
-
-{ area: "goals", title: "Negotiate a job offer with confidence",
-  when: "You’ve received a job offer and want to ask for a better compensation package while keeping the conversation positive.",
-  prompt: `Help me prepare to negotiate a job offer.
-
-The role and company: [title, company, location].
-
-The offer: [base salary, bonus, equity, benefits, start date, other terms].
-
-What I’m hoping for: [targets for each element].
-
-My strengths for this role: [experience, results, skills].
-
-Other factors: [competing offers, timeline, what matters most to me].
-
-Please:
-
-1. Summarize the total value of the offer and note what I should verify.
-2. Identify the two or three items with the most room to negotiate.
-3. Draft a short, warm script for making my request.
-4. Draft a follow-up email that confirms my request in writing.
-5. Role-play the recruiter or hiring manager, including realistic responses, and wait for my replies.
-6. After the role-play, give feedback on my tone and suggest stronger wording.
-
-Do not invent salary data. If I need market benchmarks, tell me what to look up and where.`,
-  example: "You have an offer you’re excited about, but the base salary is lower than you expected.",
-  next: ["Check salary benchmarks from reliable sources, practice your opening aloud, and decide in advance what you would accept."] },
-
-{ area: "goals", title: "Map your next career move",
-  when: "You know you want to grow, but you’re unsure which direction to take or what to work on first.",
-  prompt: `Help me map my next career move.
-
-My current role and experience: [summary].
-
-Strengths and skills I’m known for: [list].
-
-Work I enjoy most and least: [details].
-
-Where I’d like to be in [two or three] years: [goal, or a few possibilities].
-
-Constraints: [location, time, finances, family].
-
-Please provide:
-
-1. Three to five roles or directions that fit my background, with the reasoning for each.
-2. The skill or experience gaps for my top choice.
-3. A 12-month plan with quarterly milestones.
-4. Two or three people or types of roles I could talk to for advice.
-5. One action to take in the next seven days.
-
-Tell me where your suggestions depend on assumptions about my industry or job market.`,
-  example: "You’ve led projects for years and wonder whether to move into people management or deepen your technical expertise.",
-  next: ["Book one advice conversation this month, and test your top direction with a small project or stretch assignment."] },
-
-{ area: "goals", title: "Learn a new skill with a structured practice plan",
-  when: "You want to learn something new, such as public speaking, negotiation, financial analysis, a foreign language, or a technical skill, but you’re unsure where to begin or how to fit learning into an already busy schedule.",
-  intro: [
-    "One useful approach is to treat your AI assistant as an interactive tutor. You can ask for explanations, practice exercises, feedback, and progressively more difficult assignments.",
-    "Imagine you’re a senior professional who wants to become more comfortable speaking in front of an audience. You have a presentation in four weeks and only 20 minutes a day to prepare. Rather than spending hours collecting random advice, you can organize your practice around that specific goal."
+ {
+  "area": "work",
+  "title": "Break a complicated project into manageable tasks",
+  "when": "You have a large project with several deliverables, multiple people involved, and an approaching deadline. You know what the project needs to accomplish, but figuring out where to start takes time.",
+  "prompt": "I’m responsible for [project], which needs to be completed by [date].\n\nThe objective is [desired outcome].\n\nThe people or teams involved are [list].\n\nThe main constraints are [budget, time, resources, or other limitations].\n\nBreak this project into:\n\n1. Major deliverables.\n2. Tasks required for each deliverable.\n3. Dependencies between tasks.\n4. Suggested owners or roles.\n5. A realistic timeline with milestones.\n6. The five most important actions to take this week.\n\nIdentify any missing information that could affect the plan. Do not assume that resources or approvals are available unless I have confirmed them.",
+  "example": "You’re leading a program for a large community, with training sessions in several regions, a pilot group of early adopters, and a leadership readout at the end of the quarter.",
+  "next": [
+   "Review the dependencies with the people responsible, confirm deadlines, and transfer agreed actions into your project tracker."
+  ]
+ },
+ {
+  "area": "work",
+  "title": "Extract important information from long documents",
+  "when": "You receive a long report, meeting transcript, proposal, or research document and need to understand the key information quickly.",
+  "prompt": "Review the attached document.\n\nExtract:\n\n1. The five most important findings.\n2. Important numbers, dates, and evidence.\n3. Decisions already made.\n4. Actions required, including owners and deadlines when stated.\n5. Risks or unresolved questions.\n\nSeparate facts explicitly stated in the document from interpretations or recommendations.\n\nInclude page or section references for important findings. If information is missing, say so rather than making assumptions.\n\nPresent the result as a concise executive brief.",
+  "example": "The night before a quarterly business review, you receive a long deck and a market research report.",
+  "next": [
+   "Open the original document and verify the figures and statements you plan to use."
+  ]
+ },
+ {
+  "area": "work",
+  "title": "Prepare for an important meeting",
+  "when": "You have a meeting where you need to explain a recommendation, secure agreement, or make an important decision.",
+  "prompt": "Help me prepare for a [30-minute] meeting with [audience].\n\nThe meeting objective is [outcome].\n\nBackground: [context].\n\nMy recommendation is [proposal].\n\nThe concerns I anticipate are [list].\n\nPrepare:\n\n1. A concise opening that explains why we’re meeting.\n2. Three key points I should communicate.\n3. Supporting evidence I should bring.\n4. Five difficult questions I may receive.\n5. Suggested responses based only on the information provided.\n6. A closing that identifies the decision or next action needed.\n\nHighlight any evidence I still need before the meeting.",
+  "example": "You’re asking a senior executive to fund a predictive model that would guide where the business invests next year. Finance will ask about payback, IT about data access, and the business about accuracy.",
+  "next": [
+   "Practice the opening aloud and make sure your recommendation and requested decision can be explained in under one minute."
+  ]
+ },
+ {
+  "area": "work",
+  "title": "Practice an important conversation",
+  "when": "You need to give feedback, discuss a disagreement, set a boundary, or raise a concern with a colleague, manager, friend, or family member.",
+  "prompt": "I need to have an important conversation with [person or role].\n\nThe situation is [describe facts].\n\nMy concern is [concern].\n\nWhat I hope to accomplish is [outcome].\n\nThe conversation may involve a colleague, manager, friend, partner, or family member.\n\nHelp me prepare a respectful, direct conversation.\n\nFirst, suggest a natural opening.\n\nThen role-play the other person:\n\n1. Respond as they might, without assuming you know their actual thoughts.\n2. Include realistic disagreement or misunderstanding.\n3. Give me chances to ask questions and listen.\n\nAsk me to respond before continuing.\n\nAfter the role-play, give feedback on where I was effective, whether I acknowledged the other person’s perspective, and how I could explain my concerns more constructively. Then help me plan a follow-up.\n\nKeep the wording natural and appropriate for the relationship.",
+  "example": "A senior stakeholder expects a forecast model next week, and your team has found data quality problems that will delay it by a month.",
+  "next": [
+   "Practice the opening and two possible responses before the actual conversation. Use your own words when it happens."
+  ]
+ },
+ {
+  "area": "work",
+  "title": "Organize scattered notes into useful actions",
+  "when": "You have notes from meetings, messages, reminders, and unfinished ideas spread across different places.",
+  "prompt": "Organize the following notes into a practical action plan.\n\n[Paste notes]\n\nGroup the information into:\n\n* Actions requiring my attention.\n* Items waiting on someone else.\n* Decisions to make.\n* Information to follow up on.\n* Ideas worth saving for later.\n\nFor each action, identify the deadline and owner if mentioned.\n\nSuggest a priority order based on urgency and importance. Mark missing deadlines or ownership as unconfirmed.\n\nFinish with the three actions I should focus on first.",
+  "example": "You support a business leader and finish the week with notes from a staff meeting, two operating reviews, and several hallway requests.",
+  "next": [
+   "Review the list, confirm commitments, and put the important actions into the system you actually use."
+  ]
+ },
+ {
+  "area": "time",
+  "title": "Plan your week and adjust when plans change",
+  "when": "You need to organize your week around important priorities, or an unexpected commitment has disrupted your schedule.",
+  "prompt": "Help me plan or revise my week.\n\nMy three most important goals: [goals].\n\nExisting commitments: [meetings and appointments].\n\nTasks and deadlines: [list].\n\nAvailable working hours: [hours].\n\nPersonal commitments I want to protect: [list].\n\nWhen I usually have the most and least energy: [for example, strong mornings, slower afternoons].\n\nUnexpected events, if any: [details].\n\nCreate a weekly schedule that fits both my time and my energy:\n\n1. Protect uninterrupted time for important tasks.\n2. Schedule demanding work during my highest-energy hours.\n3. Group similar activities, such as calls, email, and errands.\n4. Include breaks and buffer time between commitments.\n5. Compare the total hours planned with the hours available.\n6. If something unexpected has disrupted my week, show what can still be completed and what needs to move.\n7. If everything cannot fit, recommend what to postpone, delegate, or renegotiate.\n\nPresent a day-by-day schedule and a short list of trade-offs. Do not assume commitments can be moved without my confirmation.",
+  "example": "You have an important presentation due Thursday, several meetings, and time set aside for a personal project. An urgent request arrives Wednesday, leaving less time than planned.",
+  "next": [
+   "Put confirmed activities on your calendar, and let people know early about any deadlines that need to move."
+  ]
+ },
+ {
+  "area": "time",
+  "title": "Decide what to do first",
+  "when": "Everything feels urgent, and you’re spending more time deciding what to work on than doing the work.",
+  "prompt": "Here are the tasks I need to complete: [list].\n\nFor each task, consider:\n\n* Deadline.\n* Business or personal importance.\n* Consequences of delaying it.\n* Estimated effort.\n* Whether someone else is waiting on it.\n\nRank the tasks in a table.\n\nRecommend the three I should complete today, what I should schedule later, and what I could delegate or eliminate.\n\nExplain the reasoning briefly. Ask me for missing information if it could materially affect the order.",
+  "example": "You have multiple open items, including a budget input due tomorrow, a document review, and a request from your manager, and only a few free hours.",
+  "next": [
+   "Select your first task and begin. Revisit the ranking only when priorities or deadlines genuinely require it."
+  ]
+ },
+ {
+  "area": "time",
+  "title": "Manage recurring responsibilities",
+  "when": "You repeatedly spend time remembering what needs to happen every week or month.",
+  "prompt": "I regularly need to manage [responsibility].\n\nThe tasks involved are [list].\n\nThe frequency is [daily, weekly, monthly].\n\nCreate a reusable checklist that includes:\n\n* Preparation.\n* Actions to complete.\n* Deadlines.\n* Information or materials required.\n* Completion criteria.\n* Reminders that would be useful.\n\nSuggest which parts could be automated and which require my review.",
+  "example": "Each month you assemble a business performance pack for leadership.",
+  "next": [
+   "Save the checklist and schedule the reminders in your preferred task or calendar tool."
+  ]
+ },
+ {
+  "area": "time",
+  "title": "Decide what to hand off",
+  "when": "Your week is full of small recurring tasks, and you suspect some of them don’t need you at all.",
+  "prompt": "I want to free up time by delegating more of my recurring work.\n\nHere are the tasks I handle in a typical week: [list, with rough time for each].\n\nMy role and main priorities: [description].\n\nPeople or tools that could take on work: [team members, family, assistants, AI tools].\n\nSort each task into one of four groups:\n\n1. AI can produce a first draft that I review.\n2. Someone else can own it fully.\n3. It can be deferred, simplified, batched, or dropped.\n4. It still needs my personal judgment, and why.\n\nFor each task I hand off, suggest a short handoff note covering the outcome, the deadline, and what “done” looks like.\n\nEstimate the hours per week this could free up, and flag any task where handing it off carries real risk.\n\nDo not assume an AI tool has access to my systems, or that another person has agreed to take something on. Mark proposed handoffs as suggestions until I confirm them.",
+  "example": "You spend about six hours a week on status updates, meeting recaps, and scheduling.",
+  "next": [
+   "Start with one task from each group this week, and check after two weeks whether the quality held up."
+  ]
+ },
+ {
+  "area": "time",
+  "title": "Create a personal health and wellness plan",
+  "when": "You want to fit exercise, sleep, and rest into your actual schedule in a way you can keep up.",
+  "prompt": "Help me create a realistic personal wellness plan.\n\nMy goals: [for example, more movement, better sleep, more energy, less stress].\n\nWhat I do now: [current activities and routines].\n\nMy typical week: [work hours, travel, family commitments].\n\nTime available: [hours per week].\n\nActivities I enjoy: [list].\n\nPreferences or limitations: [details].\n\nCreate a four-week plan that includes:\n\n1. A realistic weekly activity schedule.\n2. Movement options that fit my preferences.\n3. A consistent sleep and wind-down routine.\n4. Recovery time and flexibility for busy days.\n5. Small activities I can fit into a normal workday.\n6. A simple weekly checklist to track progress.\n7. A short weekly review to adjust the plan.\n\nKeep the recommendations moderate and sustainable. Do not diagnose conditions or recommend medical treatment, and tell me when it would make sense to check with a doctor or other professional.",
+  "example": "You work full-time, travel now and then, and want a steady routine for movement and sleep that fits around your week.",
+  "next": [
+   "Pick two or three activities for the first week, and adjust the plan after seeing how they fit."
+  ]
+ },
+ {
+  "area": "decide",
+  "title": "Compare several options side by side",
+  "when": "You have several reasonable choices to weigh against the same criteria, or you keep going back and forth without deciding.",
+  "prompt": "I’m deciding between [Option A], [Option B], and [Option C].\n\nMy objective is [goal].\n\nMy priorities, ranked from most to least important: [criteria].\n\nMy constraints are [budget, time, resources].\n\nCompare the options in a table showing:\n\n* Benefits.\n* Costs.\n* Risks.\n* Effort required.\n* Short-term implications.\n* Long-term implications.\n\nIdentify the strongest option under each criterion, giving more weight to the criteria I ranked highest. If I haven’t ranked them, ask me to before comparing.\n\nSeparate verified facts from assumptions and tell me what additional information would help me decide.\n\nIf I’m struggling to decide:\n\n1. Ask what is making the decision difficult.\n2. Identify the missing fact or unresolved trade-off that matters most.\n3. Explain the main trade-offs in plain language.\n4. Suggest one small step that would help me move forward.\n\nDo not force a recommendation when important information is missing.",
+  "example": "Your team needs a forecasting capability, and you’re weighing three paths: build it with your own team, buy a vendor tool, or extend an existing model.",
+  "next": [
+   "Verify the most important missing fact before committing.",
+   "To go further, use #12 to check your leading option for risks."
+  ]
+ },
+ {
+  "area": "decide",
+  "title": "Find risks you may have overlooked",
+  "when": "You’re confident in a proposal but want to test it before committing significant resources.",
+  "prompt": "Act as a constructive reviewer of my plan.\n\nThe plan is [description].\n\nThe expected result is [outcome].\n\nThe assumptions are [list].\n\nIdentify:\n\n1. Five ways the plan could go off track.\n2. Early warning signs for each risk.\n3. Actions that could reduce the risks.\n4. Dependencies I may have overlooked.\n5. Questions a decision-maker would likely ask.\n\nSeparate risks supported by evidence from those that are speculative. Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.",
+  "example": "You’re about to roll out an AI assistant to a few thousand employees.",
+  "next": [
+   "Assign someone to investigate the highest-priority risks before launch.",
+   "Then use #13 to see how the plan holds up under different assumptions."
+  ]
+ },
+ {
+  "area": "decide",
+  "title": "Explore what-if scenarios",
+  "when": "You’re making a decision where future outcomes depend on uncertain assumptions.",
+  "prompt": "Help me evaluate three scenarios for [decision].\n\nCurrent situation: [details].\n\nImportant variables: [list].\n\nCreate:\n\n* A conservative scenario.\n* A baseline scenario.\n* An optimistic scenario.\n\nFor each, explain the assumptions, possible outcomes, risks, and actions I could take.\n\nShow calculations where sufficient data is provided. Do not invent precise forecasts.\n\nIdentify the two assumptions with the greatest influence on the result, and what I could do to test them.",
+  "example": "You’re estimating the return on a new technology investment that depends on how many teams adopt it.",
+  "next": [
+   "Replace assumptions with real figures wherever possible.",
+   "If the results change how your options compare, revisit #11."
+  ]
+ },
+ {
+  "area": "decide",
+  "title": "Evaluate a business idea",
+  "when": "You’re considering a new business, product, or service and want to test its potential before investing significant time or money.",
+  "prompt": "Help me evaluate a business idea.\n\nThe idea: [description].\n\nTarget customers: [audience].\n\nThe problem it solves: [problem].\n\nProposed product or service: [description].\n\nAvailable resources: [budget, people, experience].\n\nKnown competitors or alternatives: [list].\n\nCurrent evidence of demand: [details, or none yet].\n\nEvaluate the idea across:\n\n1. The customer problem and why customers might care.\n2. Target customer segments.\n3. Existing alternatives and how this could stand out.\n4. Possible ways to earn revenue.\n5. Major costs and resource needs.\n6. Practical and technical feasibility.\n7. Key assumptions and risks.\n8. Evidence needed to confirm customer demand.\n9. Three low-cost ways to test the idea.\n10. A 30-day validation plan.\n\nSeparate verified information from assumptions. Do not invent market size, demand, revenue forecasts, or competitor facts.\n\nFinish with the three most important questions to answer before investing further.",
+  "example": "You’re considering a subscription service for small businesses and want to know whether the problem it solves matters enough to customers.",
+  "next": [
+   "Test the most important demand assumption with real potential customers before committing significant resources."
+  ]
+ },
+ {
+  "area": "decide",
+  "title": "Solve a problem that keeps coming back",
+  "when": "The same problem shows up again and again, and quick fixes only hold for a little while.",
+  "prompt": "Help me find the root cause of a recurring problem.\n\nThe problem: [describe what happens].\n\nHow often it occurs and when: [frequency, timing, triggers].\n\nWhat I’ve already tried: [past fixes and results].\n\nPeople, tools, or processes involved: [list].\n\nBefore recommending a solution:\n\n1. Separate what I’ve observed from possible explanations.\n2. Ask me up to five questions about what happens, when, and how often.\n3. List the possible causes, with the evidence that supports or contradicts each one.\n4. Suggest one small test that could tell the leading explanations apart.\n5. Explain which result would support or weaken each explanation.\n6. Note what to try next if the test is inconclusive.\n\nDo not present a possible cause as confirmed without supporting evidence. Base your suggestions on the details I provide, and avoid generic advice.",
+  "example": "Your team’s monthly report goes out late almost every time.",
+  "next": [
+   "Run the test, track the result, and keep a short note of what you learned for next time.",
+   "If the fix involves a bigger choice, use #11 to work through it."
+  ]
+ },
+ {
+  "area": "life",
+  "title": "Understand where your money goes",
+  "when": "You want to review your spending, build a budget, or see how quickly you can reach a savings goal or pay down debt.",
+  "prompt": "Help me review my household spending using the transaction information I provide.\n\nCategorize expenses into housing, groceries, transportation, subscriptions, dining, shopping, and other categories.\n\nShow:\n\n1. Total spending by category.\n2. Recurring payments.\n3. Unusually large expenses.\n4. Categories where spending has increased.\n5. Potential opportunities to reduce expenses.\n\nIdentify any transactions that are ambiguous rather than guessing.\n\nDo not assume the data represents all of my accounts.\n\nIf I also share income, savings goals, or debt details:\n\n1. Create a monthly budget from the figures I provide.\n2. Compare planned spending with actual spending.\n3. Estimate the monthly amount available for savings or debt repayment.\n4. Compare repayment options using the balances, interest rates, and payments I provide.\n5. Estimate timelines toward my savings goals.\n6. List missing information and assumptions that affect the results.\n\nShow your calculations and separate results from recommendations. Do not treat missing expenses as zero, and do not present projections as guaranteed. Share only the financial details you’re comfortable with, and use protected data sources.",
+  "example": "You review three months of spending and discover several subscriptions you rarely use.",
+  "next": [
+   "Confirm recurring charges and cancel or downgrade services that no longer provide enough value.",
+   "Use a secure financial-data connection rather than pasting sensitive banking information into an ordinary prompt."
+  ]
+ },
+ {
+  "area": "life",
+  "title": "Plan meals using what you already have",
+  "when": "You want to avoid unnecessary grocery purchases and spend less time deciding what to cook.",
+  "prompt": "Help me plan five weekday dinners.\n\nIngredients I already have: [list].\n\nNumber of people: [number].\n\nDietary preferences or restrictions: [details].\n\nMaximum cooking time: [minutes].\n\nAdditional grocery budget: [amount].\n\nSuggest five meals that reuse ingredients where practical.\n\nFor each meal, include ingredients, quantities, cooking steps, and estimated preparation time.\n\nCreate one combined shopping list, excluding ingredients I already have.\n\nFlag any nutrition or allergy information that needs verification.",
+  "example": "You have chicken, rice, broccoli, eggs, and canned beans.",
+  "next": [
+   "Check what you actually have, adjust portions, and shop only for missing items."
+  ]
+ },
+ {
+  "area": "life",
+  "title": "Plan a trip around your interests and budget",
+  "when": "You want a trip that fits your preferences without spending hours researching every detail.",
+  "prompt": "Help me plan a [number]-day trip to [destination].\n\nDates: [dates].\n\nTravelers: [number and relevant needs].\n\nTotal budget: [amount].\n\nInterests: [food, art, history, nature, etc.].\n\nPreferred pace: [relaxed, moderate, busy].\n\nCreate a day-by-day itinerary that groups nearby attractions together.\n\nInclude estimated costs, transportation considerations, meal suggestions, and backup options.\n\nIdentify which opening hours, prices, availability, and reservations need current verification.",
+  "example": "You’re visiting Paris for four days and want a mix of museums, local food, walking, and time to relax.",
+  "next": [
+   "Verify opening hours, transportation, current prices, and reservations before committing to the itinerary."
+  ]
+ },
+ {
+  "area": "life",
+  "title": "Organize home maintenance and responsibilities",
+  "when": "You want to stay ahead of household tasks without remembering every maintenance deadline yourself.",
+  "prompt": "Help me create a home maintenance plan.\n\nHome type: [house, apartment, etc.].\n\nRelevant features: [HVAC, yard, appliances, etc.].\n\nLocation and climate: [general region].\n\nAvailable time each month: [hours].\n\nBudget constraints: [details].\n\nOrganize tasks into monthly, quarterly, and annual activities.\n\nIdentify which tasks I can reasonably do myself and which should be handled by a qualified professional.\n\nInclude a checklist and suggested reminders.",
+  "example": "You want to manage HVAC filter replacement, gutter inspection, appliance maintenance, and seasonal yard work.",
+  "next": [
+   "Verify manufacturer recommendations and schedule the tasks requiring professional service."
+  ]
+ },
+ {
+  "area": "life",
+  "title": "Support children’s learning",
+  "when": "You’re a parent, caregiver, or educator helping a child understand a subject, practice a skill, or feel more confident with schoolwork.",
+  "prompt": "Act as a patient learning tutor for a child.\n\nChild’s age or grade: [details].\n\nSubject: [topic].\n\nWhere they’re having trouble: [description].\n\nLearning goal: [goal].\n\nPractice time available: [minutes].\n\nHelp the child understand the topic:\n\n1. Explain the concept in age-appropriate language.\n2. Use a familiar everyday example.\n3. Ask one question at a time to check understanding.\n4. Guide practice instead of giving answers right away.\n5. Explain mistakes kindly and specifically.\n6. Increase difficulty gradually as understanding improves.\n7. Create a short practice quiz.\n8. Summarize what the child learned and what needs more practice.\n\nAvoid asking for unnecessary personal information about the child. Encourage independent thinking, involve a parent or teacher when needed, and flag anything you’re unsure about.",
+  "example": "A child is finding fractions confusing and wants to understand them, beyond just finishing the homework.",
+  "next": [
+   "Try one short session, check the explanations for accuracy, and review progress together."
+  ]
+ },
+ {
+  "area": "goals",
+  "title": "Negotiate a job offer with confidence",
+  "when": "You’ve received a job offer and want to ask for a better compensation package while keeping the conversation positive.",
+  "prompt": "Help me prepare to negotiate a job offer.\n\nThe role and company: [title, company, location].\n\nThe offer: [base salary, bonus, equity, benefits, start date, other terms].\n\nWhat I’m hoping for: [targets for each element].\n\nMy strengths for this role: [experience, results, skills].\n\nOther factors: [competing offers, timeline, what matters most to me].\n\nPlease:\n\n1. Summarize the total value of the offer and note what I should verify.\n2. Identify the two or three items with the most room to negotiate.\n3. Draft a short, warm script for making my request.\n4. Draft a follow-up email that confirms my request in writing.\n5. Role-play the recruiter or hiring manager, including realistic responses, and wait for my replies.\n6. After the role-play, give feedback on my tone and suggest stronger wording.\n\nDo not invent salary data. If I need market benchmarks, tell me what to look up and where.",
+  "example": "You have an offer you’re excited about, but the base salary is lower than you expected.",
+  "next": [
+   "Check salary benchmarks from reliable sources, practice your opening aloud, and decide in advance what you would accept."
+  ]
+ },
+ {
+  "area": "goals",
+  "title": "Map your next career move",
+  "when": "You know you want to grow, but you’re unsure which direction to take or what to work on first.",
+  "prompt": "Help me map my next career move.\n\nMy current role and experience: [summary].\n\nStrengths and skills I’m known for: [list].\n\nWork I enjoy most and least: [details].\n\nWhere I’d like to be in [two or three] years: [goal, or a few possibilities].\n\nConstraints: [location, time, finances, family].\n\nPlease provide:\n\n1. Three to five roles or directions that fit my background, with the reasoning for each.\n2. The skill or experience gaps for my top choice.\n3. A 12-month plan with quarterly milestones.\n4. Two or three people or types of roles I could talk to for advice.\n5. One action to take in the next seven days.\n\nTell me where your suggestions depend on assumptions about my industry or job market.",
+  "example": "You’ve led projects for years and wonder whether to move into people management or deepen your technical expertise.",
+  "next": [
+   "Book one advice conversation this month, and test your top direction with a small project or stretch assignment."
+  ]
+ },
+ {
+  "area": "goals",
+  "title": "Learn a new skill with a structured practice plan",
+  "when": "You want to learn something new, such as public speaking, negotiation, financial analysis, a foreign language, or a technical skill, but you’re unsure where to begin or how to fit learning into an already busy schedule.",
+  "intro": [
+   "One useful approach is to treat your AI assistant as an interactive tutor. You can ask for explanations, practice exercises, feedback, and progressively more difficult assignments.",
+   "Imagine you’re a senior professional who wants to become more comfortable speaking in front of an audience. You have a presentation in four weeks and only 20 minutes a day to prepare. Rather than spending hours collecting random advice, you can organize your practice around that specific goal."
   ],
-  prompt: `Act as an experienced learning coach and tutor.
-
-I want to improve my skills in [specific skill].
-
-My current experience level is [beginner, intermediate, advanced].
-
-My objective is [specific outcome].
-
-I have [number] minutes per day, [number] days per week, for [number] weeks.
-
-Before creating the plan, give me a short exercise to assess my starting level, and use the result to set the first week’s activities.
-
-Then design a practical learning plan that includes:
-
-1. The most important concepts I should understand first.
-2. A weekly learning objective.
-3. Specific daily exercises that fit my available time.
-4. Real-world examples that demonstrate how to apply each concept.
-5. Short quizzes or practice assignments to test my understanding.
-6. Common mistakes beginners make and how to avoid them.
-7. A weekly assessment to measure progress.
-8. A final practical exercise that demonstrates what I’ve learned.
-
-Teach me one lesson at a time. After each lesson, ask me to demonstrate my understanding before continuing.
-
-When I make a mistake, explain what went wrong and give me another opportunity to practice.
-
-Adapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.
-
-At the end of each week, reassess my level, summarize what I practiced and the feedback you gave, and set the focus for the following week.`,
-  exampleTitle: "Improving public speaking in four weeks",
-  exampleIntro: "Suppose your goal is to deliver a confident, five-minute presentation to senior executives. A four-week plan could look like this:",
-  table: { head: ["Week", "Focus", "Practice assignment"], rows: [
-    ["1", "Organize your message", "Prepare a 60-second explanation of one business recommendation"],
-    ["2", "Communicate with confidence", "Practice a three-minute presentation and review the transcript"],
-    ["3", "Handle challenging questions", "Role-play five challenging executive questions"],
-    ["4", "Deliver the complete presentation", "Rehearse a five-minute presentation and evaluate its structure, timing, and responses"]
-  ]},
-  followup: { lead: "You could also ask the AI to act as a busy executive during your practice:", label: "Follow-up prompt",
-    prompt: `I’m going to present a recommendation to you. Act as a senior executive who has limited time, questions my assumptions, and wants to understand the business implications.
-
-After I finish, ask me one challenging question at a time.
-
-Evaluate whether my responses are concise, supported by evidence, and relevant to the decision.`,
-    after: "This gives you opportunities to practice situations that might otherwise be difficult to arrange." },
-  next: ["Choose one skill that would make a meaningful difference in your work or personal life. Set aside 15–20 minutes for the first session and complete one exercise.", "At the end of the week, ask the AI to review your completed exercises, identify areas that need more practice, and recommend the next assignment."],
-  useful: "You receive a learning plan suited to your starting level, available time, and desired outcome. You can also practice through conversation and receive immediate feedback, while checking important technical or factual instruction against authoritative sources." },
-
-{ area: "goals", title: "Turn a personal goal into an action plan",
-  when: "You have a goal you’ve been thinking about for months, perhaps learning a language, writing a book, improving your fitness, starting a side business, or completing a personal project. You know what you want to accomplish, but everyday responsibilities keep taking priority.",
-  intro: [
-    "One of the most practical uses of AI is translating an ambitious goal into smaller commitments that fit your actual circumstances.",
-    "Imagine you’ve wanted to launch a personal newsletter for months. You have ideas, but between your job, meetings, and family responsibilities, you never seem to find time to start. Instead of asking for a generic plan, provide your available time, resources, and constraints."
+  "prompt": "Act as an experienced learning coach and tutor.\n\nI want to improve my skills in [specific skill].\n\nMy current experience level is [beginner, intermediate, advanced].\n\nMy objective is [specific outcome].\n\nI have [number] minutes per day, [number] days per week, for [number] weeks.\n\nBefore creating the plan, ask me three to five questions or give me a short exercise to assess my starting level. Tell me what I already understand and where I need practice, and use that to set the first week’s activities.\n\nThen design a practical learning plan that includes:\n\n1. The most important concepts I should understand first.\n2. A weekly learning objective.\n3. Specific daily exercises that fit my available time.\n4. Real-world examples that demonstrate how to apply each concept.\n5. Short quizzes or practice assignments to test my understanding.\n6. Common mistakes beginners make and how to avoid them.\n7. A weekly assessment to measure progress.\n8. A final practical exercise that demonstrates what I’ve learned.\n\nTeach me one lesson at a time. After each lesson, ask me to demonstrate my understanding before continuing.\n\nWhen I make a mistake, explain what went wrong and give me another opportunity to practice.\n\nAdapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.\n\nAt the end of each week, reassess my level, summarize what I practiced and the feedback you gave, and set the focus for the following week. Do not move to harder material just because a scheduled week has ended.",
+  "exampleTitle": "Improving public speaking in four weeks",
+  "exampleIntro": "Suppose your goal is to deliver a confident, five-minute presentation to senior executives. A four-week plan could look like this:",
+  "table": {
+   "head": [
+    "Week",
+    "Focus",
+    "Practice assignment"
+   ],
+   "rows": [
+    [
+     "1",
+     "Organize your message",
+     "Prepare a 60-second explanation of one business recommendation"
+    ],
+    [
+     "2",
+     "Communicate with confidence",
+     "Practice a three-minute presentation and review the transcript"
+    ],
+    [
+     "3",
+     "Handle challenging questions",
+     "Role-play five challenging executive questions"
+    ],
+    [
+     "4",
+     "Deliver the complete presentation",
+     "Rehearse a five-minute presentation and evaluate its structure, timing, and responses"
+    ]
+   ]
+  },
+  "followup": {
+   "lead": "You could also ask the AI to act as a busy executive during your practice:",
+   "label": "Follow-up prompt",
+   "prompt": "I’m going to present a recommendation to you. Act as a senior executive who has limited time, questions my assumptions, and wants to understand the business implications.\n\nAfter I finish, ask me one challenging question at a time.\n\nEvaluate whether my responses are concise, supported by evidence, and relevant to the decision.",
+   "after": "This gives you opportunities to practice situations that might otherwise be difficult to arrange."
+  },
+  "next": [
+   "Complete the initial assessment before committing to the full schedule.",
+   "Choose one skill that would make a meaningful difference in your work or personal life. Set aside 15–20 minutes for the first session and complete one exercise.",
+   "At the end of the week, ask the AI to review your completed exercises, identify areas that need more practice, and recommend the next assignment."
   ],
-  prompt: `Act as a practical goal-planning coach.
-
-My goal is [describe your goal].
-
-I want to accomplish it by [target date].
-
-My current starting point is [current situation].
-
-Why this goal matters to me, and the values it connects to: [reason].
-
-My available time is [hours per week].
-
-My current capacity: [energy, other commitments, what else is happening in my life right now].
-
-My available resources are [budget, tools, experience, support].
-
-My biggest obstacles are [list].
-
-Help me create a realistic action plan.
-
-Include:
-
-1. A specific definition of what successful completion looks like.
-2. The major milestones required to reach the goal.
-3. A timeline for completing each milestone.
-4. Weekly actions that fit my available time.
-5. The three most important actions to take during the first seven days.
-6. Likely obstacles and practical ways to address them.
-7. A simple method for measuring progress.
-8. A minimum-effort version of the plan for particularly busy weeks.
-9. How to adjust the plan if my circumstances change, without abandoning the goal.
-
-If my deadline appears unrealistic, explain why and suggest a more achievable alternative.
-
-If the goal competes with my other priorities or commitments, explain the trade-offs and help me decide what to reduce.
-
-Ask me questions about any important information that is missing before finalizing the plan.`,
-  exampleTitle: "Launching a LinkedIn newsletter in 30 days",
-  exampleIntro: "Imagine you’re a professional who wants to start publishing thoughtful articles on LinkedIn, but you’ve never published a newsletter before. You have three hours each week to work on it. A four-week plan might look like this:",
-  table: { head: ["Week", "Objective", "Specific deliverable"], rows: [
-    ["1", "Decide on the audience and subject", "Newsletter description and 10 potential topics"],
-    ["2", "Prepare the first article", "Completed draft with supporting examples"],
-    ["3", "Review and prepare for publication", "Edited article, headline, and publication checklist"],
-    ["4", "Publish and evaluate", "First published article and a plan for the next issue"]
-  ]},
-  tableAfter: "The value comes from identifying what you need to do this week, instead of constantly thinking about the entire project.",
-  followup: { lead: "You can also ask the AI to identify unnecessary tasks:", label: "Follow-up prompt",
-    prompt: `Review this plan and identify any activities that are optional for the first publication.
-
-I want to publish something useful within 30 days, and I only have three hours per week.
-
-Recommend what I should complete now, what can wait, and what I can simplify without compromising the quality of the first article.`,
-    after: "This is especially useful for people who tend to spend too much time preparing and too little time completing the first version." },
-  next: ["Choose one goal you’ve been postponing. Write down your desired outcome, deadline, and the amount of time you can realistically dedicate to it each week.", "Use the prompt to create a seven-day starting plan. Then put the first two actions on your calendar.", "Each Friday, bring this plan into #25 to review your progress against it."],
-  useful: "It connects an ambitious goal to your actual time and resources. The plan also gives you a way to keep making progress during busy weeks without needing to start over." },
-
-{ area: "goals", title: "Review your progress and decide what to do next",
-  when: "You finish another busy week and realize you’ve completed dozens of tasks, but you’re unsure how much progress you’ve made toward your most important goals.",
-  intro: [
-    "A weekly review helps you see what you accomplished, what remains unfinished, and what deserves attention next. AI can organize this review by comparing your original plan with your actual results.",
-    "Imagine you started the week with three priorities: finish a business proposal, prepare for an important presentation, and spend two hours developing a new skill. By Friday, meetings, urgent requests, and unexpected assignments have filled your days. Your presentation is half finished, and you haven’t touched the learning plan."
+  "useful": "You receive a learning plan suited to your starting level, available time, and desired outcome. You can also practice through conversation and receive immediate feedback, while checking important technical or factual instruction against authoritative sources."
+ },
+ {
+  "area": "goals",
+  "title": "Turn a personal goal into an action plan",
+  "when": "You have a goal you’ve been thinking about for months, perhaps learning a language, writing a book, improving your fitness, starting a side business, or completing a personal project. You know what you want to accomplish, but everyday responsibilities keep taking priority.",
+  "intro": [
+   "One of the most practical uses of AI is translating an ambitious goal into smaller commitments that fit your actual circumstances.",
+   "Imagine you’ve wanted to launch a personal newsletter for months. You have ideas, but between your job, meetings, and family responsibilities, you never seem to find time to start. Instead of asking for a generic plan, provide your available time, resources, and constraints."
   ],
-  prompt: `Act as my weekly planning and review assistant.
-
-Here were my priorities for the week:
-
-[List original priorities]
-
-Here is what I completed:
-
-[List completed activities]
-
-Here is what remains unfinished:
-
-[List incomplete tasks]
-
-Here are the unexpected responsibilities or obstacles I encountered:
-
-[List]
-
-My available time next week is:
-
-[Hours and existing commitments]
-
-If I have a goal plan, here are its milestones:
-
-[Paste milestones, or leave blank]
-
-Help me review the week and prepare for the next one.
-
-Please provide:
-
-1. A short accomplishment record: what I completed, my contribution, and any measurable result I reported. Do not invent outcomes or numbers.
-2. A comparison between planned and completed priorities.
-3. An explanation of possible reasons some tasks remained unfinished, distinguishing evidence from assumptions.
-4. Any recurring obstacles worth addressing.
-5. Recommendations for what to continue, simplify, delegate, or postpone.
-6. Three realistic priorities for next week.
-7. A practical first action for each priority.
-8. A short reflection: what gave me energy this week, what drained it, and what I would do differently.
-9. Progress against my goal plan milestones, if I shared them, with any adjustments to the plan.
-10. If I include earlier weekly reviews, recurring obstacles supported by those records, and one adjustment to test next week.
-11. One question I should reflect on before finalizing my plan.
-
-Be constructive and specific. Avoid generic motivational advice.
-
-If my plan appears unrealistic given the time available, tell me what should be reduced.`,
-  exampleTitle: "A 15-minute Friday review",
-  exampleIntro: "You could make this a recurring Friday activity.",
-  table: { head: ["Time", "Activity", "Outcome"], rows: [
-    ["First 5 min", "Record completed and unfinished work", "A factual account of the week"],
-    ["Next 5 min", "Review priorities and obstacles with your AI assistant", "Identify what needs attention"],
-    ["Final 5 min", "Select next week’s three priorities", "A short, realistic action plan"]
-  ]},
-  tableAfter: "Over several weeks, these reviews can surface recurring issues. Perhaps you consistently underestimate how long certain tasks take, urgent requests keep consuming time you reserved for important work, or some goals need smaller weekly commitments. These observations become more useful when you compare them against actual calendars, completed work, and recorded commitments.",
-  followup: { lead: "After a month, ask the AI to look across your reviews:", label: "Follow-up prompt",
-    prompt: `Compare my weekly reviews from the past four weeks.
-
-Identify:
-
-* Goals I’ve consistently made progress toward.
-* Tasks I’ve repeatedly postponed.
-* Recurring obstacles.
-* Areas where my time estimates were inaccurate.
-* Two practical adjustments worth testing next month.
-
-Support your conclusions with examples from the reviews. Avoid inferring motives or personal traits from limited information.` },
-  next: ["Reserve 15 minutes at the end of your workweek. Use the prompt to review what happened, identify unfinished priorities, and choose the three most important outcomes for the following week.", "Save each review in the same place so you can compare progress over time. For an automatic reminder, use a calendar event or your assistant’s scheduled-task feature if it has one."],
-  useful: "It gives you a repeatable process for evaluating your commitments, using evidence from your actual week, and making the next plan more realistic." }
+  "prompt": "Act as a practical goal-planning coach.\n\nMy goal is [describe your goal].\n\nI want to accomplish it by [target date].\n\nMy current starting point is [current situation].\n\nWhy this goal matters to me, and the values it connects to: [reason].\n\nMy available time is [hours per week].\n\nMy current capacity: [energy, other commitments, what else is happening in my life right now].\n\nMy available resources are [budget, tools, experience, support].\n\nMy biggest obstacles are [list].\n\nHelp me create a realistic action plan.\n\nInclude:\n\n1. A specific definition of what successful completion looks like.\n2. The major milestones required to reach the goal.\n3. A timeline for completing each milestone.\n4. Weekly actions that fit my available time.\n5. The three most important actions to take during the first seven days.\n6. Likely obstacles and practical ways to address them.\n7. A simple method for measuring progress.\n8. A minimum-effort version of the plan for particularly busy weeks.\n9. How to adjust the plan if my circumstances change, without abandoning the goal.\n\nIf my deadline appears unrealistic, explain why and suggest a more achievable alternative.\n\nIf the goal competes with my other priorities or commitments, explain the trade-offs and help me decide what to reduce.\n\nAsk me questions about any important information that is missing before finalizing the plan.",
+  "exampleTitle": "Launching a LinkedIn newsletter in 30 days",
+  "exampleIntro": "Imagine you’re a professional who wants to start publishing thoughtful articles on LinkedIn, but you’ve never published a newsletter before. You have three hours each week to work on it. A four-week plan might look like this:",
+  "table": {
+   "head": [
+    "Week",
+    "Objective",
+    "Specific deliverable"
+   ],
+   "rows": [
+    [
+     "1",
+     "Decide on the audience and subject",
+     "Newsletter description and 10 potential topics"
+    ],
+    [
+     "2",
+     "Prepare the first article",
+     "Completed draft with supporting examples"
+    ],
+    [
+     "3",
+     "Review and prepare for publication",
+     "Edited article, headline, and publication checklist"
+    ],
+    [
+     "4",
+     "Publish and evaluate",
+     "First published article and a plan for the next issue"
+    ]
+   ]
+  },
+  "tableAfter": "The value comes from identifying what you need to do this week, instead of constantly thinking about the entire project.",
+  "followup": {
+   "lead": "You can also ask the AI to identify unnecessary tasks:",
+   "label": "Follow-up prompt",
+   "prompt": "Review this plan and identify any activities that are optional for the first publication.\n\nI want to publish something useful within 30 days, and I only have three hours per week.\n\nRecommend what I should complete now, what can wait, and what I can simplify without compromising the quality of the first article.",
+   "after": "This is especially useful for people who tend to spend too much time preparing and too little time completing the first version."
+  },
+  "next": [
+   "Choose one goal you’ve been postponing. Write down your desired outcome, deadline, and the amount of time you can realistically dedicate to it each week.",
+   "Use the prompt to create a seven-day starting plan. Then put the first two actions on your calendar.",
+   "Each Friday, bring this plan into #25 to review your progress against it."
+  ],
+  "useful": "It connects an ambitious goal to your actual time and resources. The plan also gives you a way to keep making progress during busy weeks without needing to start over."
+ },
+ {
+  "area": "goals",
+  "title": "Review your progress and decide what to do next",
+  "when": "You finish another busy week and realize you’ve completed dozens of tasks, but you’re unsure how much progress you’ve made toward your most important goals.",
+  "intro": [
+   "A weekly review helps you see what you accomplished, what remains unfinished, and what deserves attention next. AI can organize this review by comparing your original plan with your actual results.",
+   "Imagine you started the week with three priorities: finish a business proposal, prepare for an important presentation, and spend two hours developing a new skill. By Friday, meetings, urgent requests, and unexpected assignments have filled your days. Your presentation is half finished, and you haven’t touched the learning plan."
+  ],
+  "prompt": "Act as my weekly planning and review assistant.\n\nHere were my priorities for the week:\n\n[List original priorities]\n\nHere is what I completed:\n\n[List completed activities]\n\nHere is what remains unfinished:\n\n[List incomplete tasks]\n\nHere are the unexpected responsibilities or obstacles I encountered:\n\n[List]\n\nMy available time next week is:\n\n[Hours and existing commitments]\n\nIf I have a goal plan, here are its milestones:\n\n[Paste milestones, or leave blank]\n\nHelp me review the week and prepare for the next one.\n\nPlease provide:\n\n1. A short accomplishment record: what I completed, my contribution, and any measurable result I reported. Do not invent outcomes or numbers.\n2. A comparison between planned and completed priorities, separating finished work from work still in progress.\n3. An explanation of possible reasons some tasks remained unfinished, distinguishing evidence from assumptions.\n4. Any recurring obstacles worth addressing.\n5. Recommendations for what to continue, simplify, delegate, or postpone.\n6. Three realistic priorities for next week.\n7. A practical first action for each priority.\n8. A short reflection: what gave me energy this week, what drained it, and what I would do differently.\n9. Progress against my goal plan milestones, if I shared them, with any adjustments to the plan.\n10. Recurring obstacles, using earlier weekly reviews if I include them, and one improvement to test next week.\n11. One question I should reflect on before finalizing my plan.\n\nFormat the accomplishment record so I can save it for future reviews, career conversations, or personal reflection.\n\nBe constructive and specific. Avoid generic motivational advice.\n\nIf my plan appears unrealistic given the time available, tell me what should be reduced.",
+  "exampleTitle": "A 15-minute Friday review",
+  "exampleIntro": "You could make this a recurring Friday activity.",
+  "table": {
+   "head": [
+    "Time",
+    "Activity",
+    "Outcome"
+   ],
+   "rows": [
+    [
+     "First 5 min",
+     "Record completed and unfinished work",
+     "A factual account of the week"
+    ],
+    [
+     "Next 5 min",
+     "Review priorities and obstacles with your AI assistant",
+     "Identify what needs attention"
+    ],
+    [
+     "Final 5 min",
+     "Select next week’s three priorities",
+     "A short, realistic action plan"
+    ]
+   ]
+  },
+  "tableAfter": "Over several weeks, these reviews can surface recurring issues. Perhaps you consistently underestimate how long certain tasks take, urgent requests keep consuming time you reserved for important work, or some goals need smaller weekly commitments. These observations become more useful when you compare them against actual calendars, completed work, and recorded commitments.",
+  "followup": {
+   "lead": "After a month, ask the AI to look across your reviews:",
+   "label": "Follow-up prompt",
+   "prompt": "Compare my weekly reviews from the past four weeks.\n\nIdentify:\n\n* Goals I’ve consistently made progress toward.\n* Tasks I’ve repeatedly postponed.\n* Recurring obstacles.\n* Areas where my time estimates were inaccurate.\n* Two practical adjustments worth testing next month.\n\nSupport your conclusions with examples from the reviews. Avoid inferring motives or personal traits from limited information."
+  },
+  "next": [
+   "Save the accomplishment record, confirm any measurable results, and use the review to plan the following week.",
+   "Save each review in the same place so you can compare progress over time. For an automatic reminder, use a calendar event or your assistant’s scheduled-task feature if it has one."
+  ],
+  "useful": "It gives you a repeatable process for evaluating your commitments, using evidence from your actual week, and making the next plan more realistic."
+ }
 ];
-
-
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const hl = s => esc(s).replace(/\[[^\]\n]+\]/g, m => `<span class="ph">${m}</span>`);
 const ico = name => `<i data-lucide="${name}"></i>`;
