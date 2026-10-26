@@ -13,7 +13,7 @@ Most of us started using AI for simple things like drafting an email or summariz
 1. [Break a complicated project into manageable tasks](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-1)
 2. [Extract important information from long documents](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-2)
 3. [Prepare for an important meeting](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-3)
-4. [Practice a difficult conversation](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-4)
+4. [Practice an important conversation](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-4)
 5. [Organize scattered notes into useful actions](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-5)
 
 <img src="assets/section-2.png" alt="2. Take Control of Your Time" width="100%">
@@ -38,14 +38,14 @@ Most of us started using AI for simple things like drafting an email or summariz
 17. [Plan meals using what you already have](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-17)
 18. [Plan a trip around your interests and budget](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-18)
 19. [Organize home maintenance and responsibilities](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-19)
-20. [Prepare for a sensitive personal conversation](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-20)
+20. [Prepare for a personal conversation](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-20)
 
 <img src="assets/section-5.png" alt="5. Make Progress on Your Personal Goals" width="100%">
 
 21. [Negotiate a job offer with confidence](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-21)
 22. [Map your next career move](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-22)
 23. [Learn a new skill with a structured practice plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-23)
-24. [Turn a personal goal into a realistic action plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-24)
+24. [Turn a personal goal into an action plan](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-24)
 25. [Review your progress and decide what to do next](https://wei-wei-hu.github.io/everyday-ai-playbook/#prompt-25)
 
 ## How to use it

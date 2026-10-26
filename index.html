@@ -286,8 +286,8 @@ const AREAS = [
 const TILES = [
   ["list-tree", "Project plan", ["Deliverables and tasks", "Dependencies and owners", "Milestone timeline"]],
   ["file-search", "Document brief", ["Key findings and numbers", "Decisions and actions", "Source references"]],
-  ["presentation", "Meeting prep", ["Opening and key points", "Tough questions", "Evidence gaps"]],
-  ["messages-square", "Role-play", ["Natural opening", "Realistic pushback", "Feedback on tone"]],
+  ["presentation", "Meeting prep", ["Opening and key points", "Likely questions", "Evidence gaps"]],
+  ["messages-square", "Role-play", ["Natural opening", "Realistic responses", "Feedback on tone"]],
   ["notebook-pen", "Notes to actions", ["Actions and waiting-on", "Owners and deadlines", "Top three to start"]],
   ["calendar-range", "Weekly plan", ["Protected focus time", "Grouped activities", "What to postpone"]],
   ["list-ordered", "Prioritize", ["Ranked task table", "Today’s top three", "Delegate or drop"]],
@@ -295,7 +295,7 @@ const TILES = [
   ["repeat", "Checklist", ["Prep and materials", "Completion criteria", "Automate vs. review"]],
   ["users", "Delegation plan", ["What AI can draft", "What others can own", "Hours freed up"]],
   ["columns-3", "Side-by-side", ["Benefits, costs, risks", "Short- and long-term", "Facts vs. assumptions"]],
-  ["shield-alert", "Risk review", ["Five ways it could fail", "Early warning signs", "Skeptic’s questions"]],
+  ["shield-alert", "Risk review", ["What could go wrong", "Early warning signs", "Questions to expect"]],
   ["git-branch", "Scenarios", ["Conservative to optimistic", "Assumptions that matter most", "Calculations shown"]],
   ["signpost", "Decision reset", ["Criteria that matter", "What would change your mind", "One small next step"]],
   ["wrench", "Root cause", ["Pattern and triggers", "Likely causes", "One fix to test"]],
@@ -303,8 +303,8 @@ const TILES = [
   ["utensils", "Meal plan", ["Five weekday dinners", "Uses what you have", "One shopping list"]],
   ["map", "Trip itinerary", ["Day-by-day plan", "Costs and transport", "What to verify"]],
   ["home", "Home upkeep", ["Monthly to annual tasks", "DIY vs. professional", "Reminders"]],
-  ["heart-handshake", "Personal talk", ["Warm opening", "Blame-free framing", "Questions to ask"]],
-  ["handshake", "Offer negotiation", ["Total package review", "Your ask and script", "Practice with pushback"]],
+  ["heart-handshake", "Personal talk", ["Warm opening", "Clear, kind framing", "Questions to ask"]],
+  ["handshake", "Offer negotiation", ["Total package review", "Your ask and script", "Practice the conversation"]],
   ["compass", "Career roadmap", ["Roles that fit you", "Skills to build", "Quarterly milestones"]],
   ["graduation-cap", "Learning plan", ["Weekly objectives", "Daily exercises", "Tutor-style feedback"]],
   ["flag", "Goal plan", ["Milestones and timeline", "First seven days", "Busy-week version"]],
@@ -379,9 +379,9 @@ Highlight any evidence I still need before the meeting.`,
   example: "You’re asking a senior executive to fund a predictive model that would guide where the business invests next year. Finance will ask about payback, IT about data access, and the business about accuracy.",
   next: ["Practice the opening aloud and make sure your recommendation and requested decision can be explained in under one minute."] },
 
-{ area: "work", title: "Practice a difficult conversation",
-  when: "You need to discuss a missed commitment, give feedback, negotiate responsibilities, or raise a sensitive concern.",
-  prompt: `I need to have a difficult conversation with [person or role].
+{ area: "work", title: "Practice an important conversation",
+  when: "You need to discuss a missed commitment, give feedback, negotiate responsibilities, or raise a concern.",
+  prompt: `I need to have an important conversation with [person or role].
 
 The situation is [describe facts].
 
@@ -393,11 +393,11 @@ Help me prepare a respectful, direct conversation.
 
 First, suggest a natural opening.
 
-Then role-play the other person. Respond realistically, including possible disagreement or defensiveness.
+Then role-play the other person. Respond realistically, including possible disagreement.
 
 Ask me to respond before continuing.
 
-After the role-play, give feedback on where I was effective, where I may have sounded defensive, and how I could communicate more constructively.`,
+After the role-play, give feedback on where I was effective, where I could be clearer, and how I could communicate more constructively.`,
   example: "A senior stakeholder expects a forecast model next week, and your team has found data quality problems that will delay it by a month.",
   next: ["Practice two possible responses to disagreement. Use your own words in the actual conversation."] },
 
@@ -569,11 +569,11 @@ The assumptions are [list].
 
 Identify:
 
-1. Five ways the plan could fail.
+1. Five ways the plan could go off track.
 2. Early warning signs for each risk.
 3. Actions that could reduce the risks.
 4. Dependencies I may have overlooked.
-5. Questions a skeptical decision-maker would ask.
+5. Questions a decision-maker would likely ask.
 
 Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
   example: "You’re about to roll out an AI assistant to a few thousand employees.",
@@ -611,7 +611,7 @@ The options I’m considering: [list].
 
 What matters most to me here: [values or priorities].
 
-What’s making it hard: [fears, trade-offs, missing information].
+What’s making it hard: [concerns, trade-offs, missing information].
 
 My deadline, if any: [date].
 
@@ -740,7 +740,7 @@ Include a checklist and suggested reminders.`,
   example: "You want to manage HVAC filter replacement, gutter inspection, appliance maintenance, and seasonal yard work.",
   next: ["Verify manufacturer recommendations and schedule the tasks requiring professional service."] },
 
-{ area: "life", title: "Prepare for a sensitive personal conversation",
+{ area: "life", title: "Prepare for a personal conversation",
   when: "You need to discuss boundaries, expectations, misunderstandings, or responsibilities with someone important to you.",
   prompt: `Help me prepare for a personal conversation.
 
@@ -763,7 +763,7 @@ Role-play two possible responses, including one where the other person disagrees
   next: ["Focus on listening to the actual response rather than trying to follow a script word for word."] },
 
 { area: "goals", title: "Negotiate a job offer with confidence",
-  when: "You’ve received a job offer and want to ask for a better compensation package without putting the offer at risk.",
+  when: "You’ve received a job offer and want to ask for a better compensation package while keeping the conversation positive.",
   prompt: `Help me prepare to negotiate a job offer.
 
 The role and company: [title, company, location].
@@ -782,7 +782,7 @@ Please:
 2. Identify the two or three items with the most room to negotiate.
 3. Draft a short, warm script for making my request.
 4. Draft a follow-up email that confirms my request in writing.
-5. Role-play the recruiter or hiring manager, including realistic pushback, and wait for my responses.
+5. Role-play the recruiter or hiring manager, including realistic responses, and wait for my replies.
 6. After the role-play, give feedback on my tone and suggest stronger wording.
 
 Do not invent salary data. If I need market benchmarks, tell me what to look up and where.`,
@@ -852,10 +852,10 @@ Adapt the difficulty based on my responses. If you cannot assess an aspect of my
   table: { head: ["Week", "Focus", "Practice assignment"], rows: [
     ["1", "Organize your message", "Prepare a 60-second explanation of one business recommendation"],
     ["2", "Communicate with confidence", "Practice a three-minute presentation and review the transcript"],
-    ["3", "Handle difficult questions", "Role-play five challenging executive questions"],
+    ["3", "Handle challenging questions", "Role-play five challenging executive questions"],
     ["4", "Deliver the complete presentation", "Rehearse a five-minute presentation and evaluate its structure, timing, and responses"]
   ]},
-  followup: { lead: "You could also ask the AI to act as a skeptical executive during your practice:", label: "Follow-up prompt",
+  followup: { lead: "You could also ask the AI to act as a busy executive during your practice:", label: "Follow-up prompt",
     prompt: `I’m going to present a recommendation to you. Act as a senior executive who has limited time, questions my assumptions, and wants to understand the business implications.
 
 After I finish, ask me one challenging question at a time.
@@ -865,7 +865,7 @@ Evaluate whether my responses are concise, supported by evidence, and relevant t
   next: ["Choose one skill that would make a meaningful difference in your work or personal life. Set aside 15–20 minutes for the first session and complete one exercise.", "At the end of the week, ask the AI to review your completed exercises, identify areas that need more practice, and recommend the next assignment."],
   useful: "You receive a learning plan suited to your starting level, available time, and desired outcome. You can also practice through conversation and receive immediate feedback, while checking important technical or factual instruction against authoritative sources." },
 
-{ area: "goals", title: "Turn a personal goal into a realistic action plan",
+{ area: "goals", title: "Turn a personal goal into an action plan",
   when: "You have a goal you’ve been thinking about for months, perhaps learning a language, writing a book, improving your fitness, starting a side business, or completing a personal project. You know what you want to accomplish, but everyday responsibilities keep taking priority.",
   intro: [
     "One of the most practical uses of AI is translating an ambitious goal into smaller commitments that fit your actual circumstances.",
