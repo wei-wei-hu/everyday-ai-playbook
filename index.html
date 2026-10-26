@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>20 Practical Ways to Use AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an overview poster — five pastel area bands of icon tiles; each tile opens a side panel with the full prompt. */
+:root {
+  --bg: #FBFBFD;
+  --surface: #FFFFFF;
+  --ink: #1A1D29;
+  --muted: #5E6475;
+  --line: #E1E4EC;
+  --brand: #3B3FA8;
+  --prompt-bg: #F6F7FA;
+  --ph-bg: #FFF0C2;
+  --ph-fg: #6B4A00;
+  --scrim: rgba(20, 22, 36, .42);
+  --work: #2F5FB3;   --work-band: #EDF3FD;  --work-edge: #C3D5F3;
+  --time: #A2620F;   --time-band: #FDF5E7;  --time-edge: #EFD7AE;
+  --decide: #5E46B0; --decide-band: #F1EEFC; --decide-edge: #D3CBF2;
+  --life: #1E7D62;   --life-band: #E8F7F1;  --life-edge: #B7E3D3;
+  --goals: #B23A58;  --goals-band: #FCEEF1; --goals-edge: #F0C9D2;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141C; --surface: #1A1D28; --ink: #E8EAF2; --muted: #A0A6B8; --line: #2C3040; --brand: #A9ADF5;
+    --prompt-bg: #151821; --ph-bg: #40341A; --ph-fg: #FFD978; --scrim: rgba(0,0,0,.6);
+    --work: #8DB2F2; --work-band: #18223A; --work-edge: #2D3F66;
+    --time: #E6AE5C; --time-band: #2A2216; --time-edge: #4E3D22;
+    --decide: #B9A6F2; --decide-band: #211D36; --decide-edge: #3E3566;
+    --life: #6FD0AE; --life-band: #14281F; --life-edge: #24503F;
+    --goals: #F08DA4; --goals-band: #2C1920; --goals-edge: #5A2E3B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141C; --surface: #1A1D28; --ink: #E8EAF2; --muted: #A0A6B8; --line: #2C3040; --brand: #A9ADF5;
+  --prompt-bg: #151821; --ph-bg: #40341A; --ph-fg: #FFD978; --scrim: rgba(0,0,0,.6);
+  --work: #8DB2F2; --work-band: #18223A; --work-edge: #2D3F66;
+  --time: #E6AE5C; --time-band: #2A2216; --time-edge: #4E3D22;
+  --decide: #B9A6F2; --decide-band: #211D36; --decide-edge: #3E3566;
+  --life: #6FD0AE; --life-band: #14281F; --life-edge: #24503F;
+  --goals: #F08DA4; --goals-band: #2C1920; --goals-edge: #5A2E3B;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body.locked { overflow: hidden; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+svg.lucide { width: 1em; height: 1em; stroke-width: 2; flex: none; }
+
+.wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 48px;
+  display: grid; gap: 20px;
+}
+
+/* Header */
+header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.titles { display: grid; gap: 10px; min-width: 0; flex: 1 1 520px; }
+h1 { font-size: clamp(34px, 5.4vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
+.dek { font-size: clamp(18px, 2.2vw, 23px); color: var(--muted); }
+.stats { display: grid; gap: 4px; justify-items: end; text-align: right; font-size: 19px; color: var(--muted); }
+.stats b { color: var(--brand); font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; }
+.stats .row { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+.how { font-size: 15px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.how code { font-family: var(--f-mono); font-size: 12.5px; background: var(--ph-bg); color: var(--ph-fg); padding: 1px 6px; border-radius: 4px; }
+
+/* Area bands */
+.band {
+  background: var(--band); border: 1px solid var(--edge); border-radius: 18px;
+  padding: 18px clamp(12px, 1.6vw, 20px) clamp(12px, 1.6vw, 20px); display: grid; gap: 14px;
+}
+.band-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--c); padding-inline: 6px; }
+.band-head .ico { font-size: 26px; display: inline-flex; }
+.band-head h2 { font-size: clamp(22px, 2.6vw, 28px); font-weight: 800; }
+.band-head .n { font-size: 15px; font-weight: 600; opacity: .8; }
+.band-head .sep { width: 1px; height: 20px; background: var(--edge); }
+.band-head .tag { font-size: 18px; font-weight: 500; }
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.tile {
+  appearance: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--edge); border-radius: 12px;
+  padding: 14px 14px 16px; display: grid; gap: 4px; align-content: start; min-width: 0;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.tile:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -8px var(--c); border-color: var(--c); }
+.tile-top { display: flex; align-items: center; gap: 8px; }
+.tile-top .ico { color: var(--c); font-size: 21px; display: inline-flex; }
+.tile-top .num { margin-left: auto; font-family: var(--f-mono); font-size: 12px; color: var(--c); opacity: .85; font-variant-numeric: tabular-nums; }
+.tile h3 { font-size: 18px; font-weight: 700; margin-top: 4px; }
+.tile .sub { color: var(--c); font-size: 15px; font-weight: 500; }
+.tile ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14.5px; color: var(--ink); }
+.tile li::marker { color: var(--ink); }
+.tile .open { margin-top: 10px; font-size: 13.5px; font-weight: 600; color: var(--c); display: inline-flex; align-items: center; gap: 4px; }
+.tile:hover .open svg { transform: translateX(3px); }
+.tile .open svg { transition: transform .15s ease; }
+
+.connector { text-align: center; font-size: 14px; color: var(--muted); display: flex; justify-content: center; align-items: center; gap: 8px; }
+
+/* Footer */
+.foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 14.5px; color: var(--muted); padding-top: 6px; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 13px; height: 13px; border-radius: 3px; background: var(--band); border: 1px solid var(--c); }
+.closing {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 18px; padding: clamp(18px, 3vw, 30px);
+}
+.closing h2 { font-size: 24px; font-weight: 800; }
+.closing .col { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.closing p, .closing li { font-size: 15.5px; color: var(--muted); }
+.closing ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.closing .pull { color: var(--brand); font-weight: 700; font-size: 19px; line-height: 1.35; }
+
+/* Detail panel */
+.scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 40; opacity: 0; transition: opacity .2s ease; }
+.scrim.on { opacity: 1; }
+.panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(760px, 100%);
+  background: var(--surface); border-left: 1px solid var(--line); box-shadow: -20px 0 50px -20px rgba(0,0,0,.35);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); transform: translateX(100%); transition: transform .25s ease;
+}
+.panel.on { transform: none; }
+.panel-top {
+  display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); background: var(--band);
+  padding: calc(12px + env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) 12px 20px;
+  color: var(--c); font-weight: 700; font-size: 14px;
+}
+.panel-top .ico { font-size: 18px; display: inline-flex; }
+.iconbtn {
+  margin-left: auto; appearance: none; border: 1px solid var(--edge); background: var(--surface); color: var(--ink);
+  width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 18px;
+}
+.panel-body { overflow-y: auto; padding: 24px max(24px, env(safe-area-inset-right, 0px)) 32px 24px; display: block; min-height: 0; overscroll-behavior: contain; }
+.panel-body > * + * { margin-top: 20px; }
+.prompt { flex: none; }
+.panel-foot {
+  display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line);
+  padding: 12px max(18px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) 18px;
+}
+.navbtn {
+  appearance: none; font: inherit; font-size: 14.5px; font-weight: 600; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 48%;
+}
+.navbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.navbtn:hover { border-color: var(--c); color: var(--c); }
+.navbtn[disabled] { visibility: hidden; }
+
+.d-head { display: grid; gap: 6px; }
+.d-head .num { font-family: var(--f-mono); font-size: 12px; color: var(--c); letter-spacing: .08em; text-transform: uppercase; }
+.d-head h2 { font-size: clamp(24px, 3.4vw, 30px); font-weight: 800; }
+.label { font-family: var(--f-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--c); display: block; margin-bottom: 4px; }
+.block { display: grid; gap: 10px; min-width: 0; }
+.block p, .pair p { font-size: 16px; }
+.prompt { border: 1px solid var(--edge); border-radius: 10px; background: var(--prompt-bg); min-width: 0; overflow: hidden; }
+.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; border-bottom: 1px solid var(--edge); background: var(--band); }
+.prompt-bar .label { margin: 0; }
+.copy {
+  font-family: var(--f-body); font-weight: 700; font-size: 14px; background: var(--c); color: var(--surface);
+  border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; min-width: 92px; display: inline-flex; gap: 6px; align-items: center; justify-content: center;
+}
+.copy:hover { filter: brightness(1.08); }
+.prompt pre { margin: 0; padding: 16px; font-family: var(--f-mono); font-size: 13.5px; line-height: 1.65; white-space: pre-wrap; word-wrap: break-word; color: var(--ink); }
+.ph { background: var(--ph-bg); color: var(--ph-fg); border-radius: 3px; padding: 0 3px; }
+.lead { color: var(--muted); font-style: italic; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pair.one { grid-template-columns: 1fr; }
+.pair > div { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.pair > div.next { border-left-color: var(--c); }
+.useful { font-size: 15.5px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 14px; }
+.useful strong { color: var(--ink); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 440px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--prompt-bg); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-family: var(--f-mono); font-size: 12.5px; color: var(--c); white-space: nowrap; }
+
+@media (max-width: 1020px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .stats { justify-items: start; text-align: left; }
+  .stats .row { justify-content: flex-start; }
+  .closing { grid-template-columns: 1fr; }
+  .band-head .sep { display: none; }
+  .band-head .tag { flex-basis: 100%; font-size: 16px; }
+}
+@media (max-width: 560px) {
+  .pair { grid-template-columns: 1fr; }
+  .tile ul { display: none; }
+  .tile h3 { font-size: 16.5px; }
+  .tile .sub { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; } }
+.byline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.byline .by { font-size: 17px; color: var(--ink); font-weight: 600; margin-right: 4px; }
+.pill { display: inline-flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 600; text-decoration: none; color: var(--brand); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px 5px 10px; }
+.pill:hover { border-color: var(--brand); }
+.pill svg { width: 16px; height: 16px; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="titles">
+      <h1>20 Practical Ways to Use AI Beyond Writing Emails</h1>
+      <p class="dek">20 practical applications for ChatGPT, Claude, Gemini, and other AI assistants.</p>
+      <div class="byline"><span class="by">By Weiwei Hu</span>
+        <a class="pill" href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
+        <a class="pill" href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>GitHub</a></div>
+    </div>
+  </header>
+  <p class="how">Tap any tile to open its prompt.</p>
+
+  <main id="bands" style="display:grid;gap:14px"></main>
+
+  <div class="foot">
+    <div class="legend" id="legend"></div>
+    <span>Save it and come back whenever a task needs a better starting point.</span>
+  </div>
+
+  <section class="closing">
+    <div class="col">
+      <h2>Start with one thing you already need to do</h2>
+      <p>You don’t need to try all twenty. Pick something already on your to-do list: a meeting tomorrow, a decision you keep revisiting, or a goal you’ve been postponing. Give your AI assistant the context, explain what you’re trying to accomplish, and ask for an output you can actually use. Then review the result, correct what needs correcting, and put it into practice.</p>
+      <p class="pull">The most useful AI prompt is often the one that helps you finish something you’ve already been meaning to do.</p>
+    </div>
+    <div class="col">
+      <h2>A small challenge for this week</h2>
+      <ol>
+        <li>Choose one tile that matches a task or responsibility you already have.</li>
+        <li>Copy the prompt and customize it with your actual circumstances.</li>
+        <li>Evaluate the result. Did it save time, improve your preparation, surface another option, or make the next action easier?</li>
+      </ol>
+      <p>If it worked, save the prompt. If the result felt generic, add more context or specify the output you need. For anything that affects your health, finances, or business, verify the facts before you act.</p>
+    </div>
+  </section>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="d-title" hidden>
+  <div class="panel-top"><span class="ico" id="p-ico"></span><span id="p-area"></span>
+    <button class="iconbtn" type="button" id="p-close" aria-label="Close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="panel-body" id="p-body"></div>
+  <div class="panel-foot">
+    <button class="navbtn" type="button" id="p-prev"><i data-lucide="arrow-left"></i><span></span></button>
+    <button class="navbtn" type="button" id="p-next"><span></span><i data-lucide="arrow-right"></i></button>
+  </div>
+</aside>
+
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script>
+const AREAS = [
+  { id: "work", title: "Get Things Done at Work", tag: "Plan, prepare, and follow through", icon: "briefcase" },
+  { id: "time", title: "Take Control of Your Time", tag: "Protect hours for the work that matters", icon: "clock-3" },
+  { id: "decide", title: "Make Better Decisions", tag: "Test your choices before you commit", icon: "scale" },
+  { id: "life", title: "Make Everyday Life Easier", tag: "Money, meals, travel, home, and people", icon: "sun" },
+  { id: "goals", title: "Make Progress on Your Personal Goals", tag: "Learn, plan, and review your progress", icon: "target" }
+];
+const TILES = [
+  ["list-tree", "Project plan", ["Deliverables and tasks", "Dependencies and owners", "Milestone timeline"]],
+  ["file-search", "Document brief", ["Key findings and numbers", "Decisions and actions", "Source references"]],
+  ["presentation", "Meeting prep", ["Opening and key points", "Tough questions", "Evidence gaps"]],
+  ["messages-square", "Role-play", ["Natural opening", "Realistic pushback", "Feedback on tone"]],
+  ["notebook-pen", "Notes to actions", ["Actions and waiting-on", "Owners and deadlines", "Top three to start"]],
+  ["calendar-range", "Weekly plan", ["Protected focus time", "Grouped activities", "What to postpone"]],
+  ["list-ordered", "Prioritize", ["Ranked task table", "Today’s top three", "Delegate or drop"]],
+  ["calendar-clock", "Re-plan the day", ["What still fits", "What moves", "Deadlines to renegotiate"]],
+  ["repeat", "Recurring checklist", ["Prep and materials", "Completion criteria", "Automate vs. review"]],
+  ["columns-3", "Side-by-side", ["Benefits, costs, risks", "Short- and long-term", "Facts vs. assumptions"]],
+  ["shield-alert", "Risk review", ["Five ways it could fail", "Early warning signs", "Skeptic’s questions"]],
+  ["git-branch", "Scenarios", ["Conservative to optimistic", "Assumptions that matter most", "Calculations shown"]],
+  ["wallet", "Spending review", ["Spend by category", "Recurring payments", "Ways to save"]],
+  ["utensils", "Meal plan", ["Five weekday dinners", "Uses what you have", "One shopping list"]],
+  ["map", "Trip itinerary", ["Day-by-day plan", "Costs and transport", "What to verify"]],
+  ["home", "Home upkeep", ["Monthly to annual tasks", "DIY vs. professional", "Reminders"]],
+  ["heart-handshake", "Personal talk", ["Warm opening", "Blame-free framing", "Questions to ask"]],
+  ["graduation-cap", "Learning plan", ["Weekly objectives", "Daily exercises", "Tutor-style feedback"]],
+  ["flag", "Goal plan", ["Milestones and timeline", "First seven days", "Busy-week version"]],
+  ["clipboard-check", "Weekly review", ["Planned vs. done", "Recurring obstacles", "Next week’s top three"]]
+];
+const ITEMS = [
+{ area: "work", title: "Break a complicated project into manageable tasks",
+  when: "You have a large project with several deliverables, multiple people involved, and an approaching deadline. You know what the project needs to accomplish, but figuring out where to start takes time.",
+  prompt: `I’m responsible for [project], which needs to be completed by [date].
+
+The objective is [desired outcome].
+
+The people or teams involved are [list].
+
+The main constraints are [budget, time, resources, or other limitations].
+
+Break this project into:
+
+1. Major deliverables.
+2. Tasks required for each deliverable.
+3. Dependencies between tasks.
+4. Suggested owners or roles.
+5. A realistic timeline with milestones.
+6. The five most important actions to take this week.
+
+Identify any missing information that could affect the plan. Do not assume that resources or approvals are available unless I have confirmed them.`,
+  example: "You’re coordinating a new employee training program across three regions. The AI can help organize content preparation, communications, scheduling, facilitators, training materials, and follow-up activities into a working project plan.",
+  next: ["Review the dependencies with the people responsible, confirm deadlines, and transfer agreed actions into your project tracker."] },
+
+{ area: "work", title: "Extract important information from long documents",
+  when: "You receive a long report, meeting transcript, proposal, or research document and need to understand the key information quickly.",
+  prompt: `Review the attached document.
+
+Extract:
+
+1. The five most important findings.
+2. Important numbers, dates, and evidence.
+3. Decisions already made.
+4. Actions required, including owners and deadlines when stated.
+5. Risks or unresolved questions.
+
+Separate facts explicitly stated in the document from interpretations or recommendations.
+
+Include page or section references for important findings. If information is missing, say so rather than making assumptions.
+
+Present the result as a concise executive brief.`,
+  example: "You receive a 40-page business review before a leadership meeting. Instead of reading it repeatedly to locate the key numbers, you can use AI to create an initial briefing with source references.",
+  next: ["Open the original document and verify the figures and statements you plan to use."] },
+
+{ area: "work", title: "Prepare for an important meeting",
+  when: "You have a meeting where you need to explain a recommendation, secure agreement, or make an important decision.",
+  prompt: `Help me prepare for a [30-minute] meeting with [audience].
+
+The meeting objective is [outcome].
+
+Background: [context].
+
+My recommendation is [proposal].
+
+The concerns I anticipate are [list].
+
+Prepare:
+
+1. A concise opening that explains why we’re meeting.
+2. Three key points I should communicate.
+3. Supporting evidence I should bring.
+4. Five difficult questions I may receive.
+5. Suggested responses based only on the information provided.
+6. A closing that identifies the decision or next action needed.
+
+Highlight any evidence I still need before the meeting.`,
+  example: "You’re proposing a new initiative that requires support from finance, technology, and business leadership. The AI can help anticipate how each group may evaluate the proposal.",
+  next: ["Practice the opening aloud and make sure your recommendation and requested decision can be explained in under one minute."] },
+
+{ area: "work", title: "Practice a difficult conversation",
+  when: "You need to discuss a missed commitment, give feedback, negotiate responsibilities, or raise a sensitive concern.",
+  prompt: `I need to have a difficult conversation with [person or role].
+
+The situation is [describe facts].
+
+My concern is [concern].
+
+What I hope to accomplish is [outcome].
+
+Help me prepare a respectful, direct conversation.
+
+First, suggest a natural opening.
+
+Then role-play the other person. Respond realistically, including possible disagreement or defensiveness.
+
+Ask me to respond before continuing.
+
+After the role-play, give feedback on where I was effective, where I may have sounded defensive, and how I could communicate more constructively.`,
+  example: "You need to tell a colleague that a missed deadline is affecting another team’s work, while preserving a productive working relationship.",
+  next: ["Practice two possible responses to disagreement. Use your own words in the actual conversation."] },
+
+{ area: "work", title: "Organize scattered notes into useful actions",
+  when: "You have notes from meetings, messages, reminders, and unfinished ideas spread across different places.",
+  prompt: `Organize the following notes into a practical action plan.
+
+[Paste notes]
+
+Group the information into:
+
+* Actions requiring my attention.
+* Items waiting on someone else.
+* Decisions to make.
+* Information to follow up on.
+* Ideas worth saving for later.
+
+For each action, identify the deadline and owner if mentioned.
+
+Suggest a priority order based on urgency and importance. Mark missing deadlines or ownership as unconfirmed.
+
+Finish with the three actions I should focus on first.`,
+  example: "You finish a busy week with notes from six meetings and several conversations. The AI can help consolidate them into one working list.",
+  next: ["Review the list, confirm commitments, and put the important actions into the system you actually use."] },
+
+{ area: "time", title: "Plan your week around your priorities",
+  when: "Your calendar fills up with meetings and obligations before you have time for the work you wanted to accomplish.",
+  prompt: `Help me plan my coming week.
+
+My three most important goals are [goals].
+
+Existing commitments: [meetings and appointments].
+
+Tasks to complete: [list with deadlines].
+
+Available working hours: [hours].
+
+Personal commitments I want to protect: [list].
+
+Create a realistic weekly plan.
+
+Reserve uninterrupted time for important tasks, group related activities where possible, and include breaks.
+
+If everything cannot fit, identify what should be postponed, delegated, or renegotiated. Do not schedule overlapping commitments.`,
+  example: "You have several meetings each day, a presentation due Thursday, and a personal project you want to spend three hours on.",
+  next: ["Put the important work sessions on your calendar and review the plan when new commitments arrive."] },
+
+{ area: "time", title: "Decide what to do first",
+  when: "Everything feels urgent, and you’re spending more time deciding what to work on than doing the work.",
+  prompt: `Here are the tasks I need to complete: [list].
+
+For each task, consider:
+
+* Deadline.
+* Business or personal importance.
+* Consequences of delaying it.
+* Estimated effort.
+* Whether someone else is waiting on it.
+
+Rank the tasks in a table.
+
+Recommend the three I should complete today, what I should schedule later, and what I could delegate or eliminate.
+
+Explain the reasoning briefly. Ask me for missing information if it could materially affect the order.`,
+  example: "You have 12 unfinished tasks and four hours available. The AI can help identify which tasks deserve those four hours.",
+  next: ["Select your first task and begin. Revisit the ranking only when priorities or deadlines genuinely require it."] },
+
+{ area: "time", title: "Reorganize your day when plans fall apart",
+  when: "An unexpected meeting, urgent request, or personal responsibility disrupts your schedule.",
+  prompt: `My original plan for today was [schedule].
+
+Something unexpected happened: [event].
+
+I now have [available hours].
+
+These commitments cannot move: [list].
+
+Help me revise my schedule.
+
+Identify:
+
+1. What I can still complete today.
+2. What should move to another day.
+3. Any deadlines or commitments I need to renegotiate.
+4. A realistic revised schedule.
+
+Leave some buffer time and avoid assuming that every task can still be completed.`,
+  example: "A two-hour urgent meeting appears on a day when you planned to finish a report and attend a personal appointment.",
+  next: ["Update your calendar and communicate any affected deadlines promptly."] },
+
+{ area: "time", title: "Manage recurring responsibilities",
+  when: "You repeatedly spend time remembering what needs to happen every week or month.",
+  prompt: `I regularly need to manage [responsibility].
+
+The tasks involved are [list].
+
+The frequency is [daily, weekly, monthly].
+
+Create a reusable checklist that includes:
+
+* Preparation.
+* Actions to complete.
+* Deadlines.
+* Information or materials required.
+* Completion criteria.
+* Reminders that would be useful.
+
+Suggest which parts could be automated and which require my review.`,
+  example: "You prepare a monthly business report. The AI can help create a standard checklist covering data collection, validation, review, approval, and distribution.",
+  next: ["Save the checklist and schedule the reminders in your preferred task or calendar tool."] },
+
+{ area: "decide", title: "Compare several options side by side",
+  when: "You have multiple reasonable choices and need to evaluate them against the same criteria.",
+  prompt: `I’m deciding between [Option A], [Option B], and [Option C].
+
+My objective is [goal].
+
+My priorities are [criteria].
+
+My constraints are [budget, time, resources].
+
+Compare the options in a table showing:
+
+* Benefits.
+* Costs.
+* Risks.
+* Effort required.
+* Short-term implications.
+* Long-term implications.
+
+Identify the strongest option under each criterion.
+
+Separate verified facts from assumptions and tell me what additional information would help me decide.`,
+  example: "You’re considering hiring a full-time employee, using a contractor, or keeping a task within the existing team.",
+  next: ["Verify the costs and assumptions, then evaluate which option best fits your actual priorities."] },
+
+{ area: "decide", title: "Find risks you may have overlooked",
+  when: "You’re confident in a proposal but want to test it before committing significant resources.",
+  prompt: `Act as a constructive reviewer of my plan.
+
+The plan is [description].
+
+The expected result is [outcome].
+
+The assumptions are [list].
+
+Identify:
+
+1. Five ways the plan could fail.
+2. Early warning signs for each risk.
+3. Actions that could reduce the risks.
+4. Dependencies I may have overlooked.
+5. Questions a skeptical decision-maker would ask.
+
+Prioritize the risks by likelihood and potential impact, making it explicit when these are qualitative estimates rather than measured probabilities.`,
+  example: "You’re planning to launch a new customer service process. The AI can help identify potential issues involving staffing, response times, technology, and customer expectations.",
+  next: ["Assign someone to investigate the highest-priority risks before launch."] },
+
+{ area: "decide", title: "Explore what-if scenarios",
+  when: "You’re making a decision where future outcomes depend on uncertain assumptions.",
+  prompt: `Help me evaluate three scenarios for [decision].
+
+Current situation: [details].
+
+Important variables: [list].
+
+Create:
+
+* A conservative scenario.
+* A baseline scenario.
+* An optimistic scenario.
+
+For each, explain the assumptions, possible outcomes, risks, and actions I could take.
+
+Show calculations where sufficient data is provided. Do not invent precise forecasts.
+
+Identify which assumptions have the greatest influence on the result.`,
+  example: "A founder is evaluating whether to launch a service with 20, 50, or 100 paying customers.",
+  next: ["Replace assumptions with actual customer, pricing, and cost data wherever possible."] },
+
+{ area: "life", title: "Understand where your money goes",
+  when: "You want to review your spending, identify recurring expenses, and see where you might save money.",
+  prompt: `Help me review my household spending using the transaction information I provide.
+
+Categorize expenses into housing, groceries, transportation, subscriptions, dining, shopping, and other categories.
+
+Show:
+
+1. Total spending by category.
+2. Recurring payments.
+3. Unusually large expenses.
+4. Categories where spending has increased.
+5. Potential opportunities to reduce expenses.
+
+Identify any transactions that are ambiguous rather than guessing.
+
+Do not assume the data represents all of my accounts.`,
+  example: "You review three months of spending and discover several subscriptions you rarely use.",
+  next: ["Confirm recurring charges and cancel or downgrade services that no longer provide enough value.", "Use a secure financial-data connection rather than pasting sensitive banking information into an ordinary prompt."] },
+
+{ area: "life", title: "Plan meals using what you already have",
+  when: "You want to avoid unnecessary grocery purchases and spend less time deciding what to cook.",
+  prompt: `Help me plan five weekday dinners.
+
+Ingredients I already have: [list].
+
+Number of people: [number].
+
+Dietary preferences or restrictions: [details].
+
+Maximum cooking time: [minutes].
+
+Additional grocery budget: [amount].
+
+Suggest five meals that reuse ingredients where practical.
+
+For each meal, include ingredients, quantities, cooking steps, and estimated preparation time.
+
+Create one combined shopping list, excluding ingredients I already have.
+
+Flag any nutrition or allergy information that needs verification.`,
+  example: "You have chicken, rice, broccoli, eggs, and canned beans. The AI can suggest several meals using those ingredients, plus a short shopping list.",
+  next: ["Check what you actually have, adjust portions, and shop only for missing items."] },
+
+{ area: "life", title: "Plan a trip around your interests and budget",
+  when: "You want a trip that fits your preferences without spending hours researching every detail.",
+  prompt: `Help me plan a [number]-day trip to [destination].
+
+Dates: [dates].
+
+Travelers: [number and relevant needs].
+
+Total budget: [amount].
+
+Interests: [food, art, history, nature, etc.].
+
+Preferred pace: [relaxed, moderate, busy].
+
+Create a day-by-day itinerary that groups nearby attractions together.
+
+Include estimated costs, transportation considerations, meal suggestions, and backup options.
+
+Identify which opening hours, prices, availability, and reservations need current verification.`,
+  example: "You’re visiting Paris for four days and want a mix of museums, local food, walking, and time to relax.",
+  next: ["Verify opening hours, transportation, current prices, and reservations before committing to the itinerary."] },
+
+{ area: "life", title: "Organize home maintenance and responsibilities",
+  when: "You want to stay ahead of household tasks without remembering every maintenance deadline yourself.",
+  prompt: `Help me create a home maintenance plan.
+
+Home type: [house, apartment, etc.].
+
+Relevant features: [HVAC, yard, appliances, etc.].
+
+Location and climate: [general region].
+
+Available time each month: [hours].
+
+Budget constraints: [details].
+
+Organize tasks into monthly, quarterly, and annual activities.
+
+Identify which tasks I can reasonably do myself and which should be handled by a qualified professional.
+
+Include a checklist and suggested reminders.`,
+  example: "You want to manage HVAC filter replacement, gutter inspection, appliance maintenance, and seasonal yard work.",
+  next: ["Verify manufacturer recommendations and schedule the tasks requiring professional service."] },
+
+{ area: "life", title: "Prepare for a sensitive personal conversation",
+  when: "You need to discuss boundaries, expectations, misunderstandings, or responsibilities with someone important to you.",
+  prompt: `Help me prepare for a personal conversation.
+
+The situation is [facts].
+
+My perspective is [thoughts].
+
+The other person’s perspective may be [what I know, separating facts from assumptions].
+
+My desired outcome is [goal].
+
+Suggest a warm, respectful way to begin.
+
+Help me explain my concerns without blaming the other person.
+
+Suggest three questions that could help me understand their perspective.
+
+Role-play two possible responses, including one where the other person disagrees.`,
+  example: "You want to discuss how household responsibilities are shared without making the conversation accusatory.",
+  next: ["Focus on listening to the actual response rather than trying to follow a script word for word."] },
+
+{ area: "goals", title: "Learn a new skill with a structured practice plan",
+  when: "You want to learn something new, such as public speaking, negotiation, financial analysis, a foreign language, or a technical skill, but you’re unsure where to begin or how to fit learning into an already busy schedule.",
+  intro: [
+    "One useful approach is to treat your AI assistant as an interactive tutor. You can ask for explanations, practice exercises, feedback, and progressively more difficult assignments.",
+    "Imagine you’re a senior professional who wants to become more comfortable speaking in front of an audience. You have a presentation in four weeks and only 20 minutes a day to prepare. Rather than spending hours collecting random advice, you can organize your practice around that specific goal."
+  ],
+  prompt: `Act as an experienced learning coach and tutor.
+
+I want to improve my skills in [specific skill].
+
+My current experience level is [beginner, intermediate, advanced].
+
+My objective is [specific outcome].
+
+I have [number] minutes per day, [number] days per week, for [number] weeks.
+
+Design a practical learning plan that includes:
+
+1. The most important concepts I should understand first.
+2. A weekly learning objective.
+3. Specific daily exercises that fit my available time.
+4. Real-world examples that demonstrate how to apply each concept.
+5. Short quizzes or practice assignments to test my understanding.
+6. Common mistakes beginners make and how to avoid them.
+7. A weekly assessment to measure progress.
+8. A final practical exercise that demonstrates what I’ve learned.
+
+Teach me one lesson at a time. After each lesson, ask me to demonstrate my understanding before continuing.
+
+When I make a mistake, explain what went wrong and give me another opportunity to practice.
+
+Adapt the difficulty based on my responses. If you cannot assess an aspect of my performance, explain what additional information you would need.`,
+  exampleTitle: "Improving public speaking in four weeks",
+  exampleIntro: "Suppose your goal is to deliver a confident, five-minute presentation to senior executives. The AI could organize your learning plan like this:",
+  table: { head: ["Week", "Focus", "Practice assignment"], rows: [
+    ["1", "Organize your message", "Prepare a 60-second explanation of one business recommendation"],
+    ["2", "Communicate with confidence", "Practice a three-minute presentation and review the transcript"],
+    ["3", "Handle difficult questions", "Role-play five challenging executive questions"],
+    ["4", "Deliver the complete presentation", "Rehearse a five-minute presentation and evaluate its structure, timing, and responses"]
+  ]},
+  followup: { lead: "You could also ask the AI to act as a skeptical executive during your practice:", label: "Follow-up prompt",
+    prompt: `I’m going to present a recommendation to you. Act as a senior executive who has limited time, questions my assumptions, and wants to understand the business implications.
+
+After I finish, ask me one challenging question at a time.
+
+Evaluate whether my responses are concise, supported by evidence, and relevant to the decision.`,
+    after: "This gives you opportunities to practice situations that might otherwise be difficult to arrange." },
+  next: ["Choose one skill that would make a meaningful difference in your work or personal life. Set aside 15–20 minutes for the first session and complete one exercise.", "At the end of the week, ask the AI to review your completed exercises, identify areas that need more practice, and recommend the next assignment."],
+  useful: "You receive a learning plan suited to your starting level, available time, and desired outcome. You can also practice through conversation and receive immediate feedback, while checking important technical or factual instruction against authoritative sources." },
+
+{ area: "goals", title: "Turn a personal goal into a realistic action plan",
+  when: "You have a goal you’ve been thinking about for months, perhaps learning a language, writing a book, improving your fitness, starting a side business, or completing a personal project. You know what you want to accomplish, but everyday responsibilities keep taking priority.",
+  intro: [
+    "One of the most practical uses of AI is translating an ambitious goal into smaller commitments that fit your actual circumstances.",
+    "Imagine you’ve wanted to launch a personal newsletter for months. You have ideas, but between your job, meetings, and family responsibilities, you never seem to find time to start. Instead of asking for a generic plan, provide your available time, resources, and constraints."
+  ],
+  prompt: `Act as a practical goal-planning coach.
+
+My goal is [describe your goal].
+
+I want to accomplish it by [target date].
+
+My current starting point is [current situation].
+
+My motivation for pursuing this goal is [reason].
+
+My available time is [hours per week].
+
+My available resources are [budget, tools, experience, support].
+
+My biggest obstacles are [list].
+
+Help me create a realistic action plan.
+
+Include:
+
+1. A specific definition of what successful completion looks like.
+2. The major milestones required to reach the goal.
+3. A timeline for completing each milestone.
+4. Weekly actions that fit my available time.
+5. The three most important actions to take during the first seven days.
+6. Likely obstacles and practical ways to address them.
+7. A simple method for measuring progress.
+8. A minimum-effort version of the plan for particularly busy weeks.
+
+If my deadline appears unrealistic, explain why and suggest a more achievable alternative.
+
+Ask me questions about any important information that is missing before finalizing the plan.`,
+  exampleTitle: "Launching a LinkedIn newsletter in 30 days",
+  exampleIntro: "Imagine you’re a professional who wants to start publishing thoughtful articles on LinkedIn, but you’ve never published a newsletter before. You have three hours each week to work on it. The AI might propose:",
+  table: { head: ["Week", "Objective", "Specific deliverable"], rows: [
+    ["1", "Decide on the audience and subject", "Newsletter description and 10 potential topics"],
+    ["2", "Prepare the first article", "Completed draft with supporting examples"],
+    ["3", "Review and prepare for publication", "Edited article, headline, and publication checklist"],
+    ["4", "Publish and evaluate", "First published article and a plan for the next issue"]
+  ]},
+  tableAfter: "The value comes from identifying what you need to do this week, instead of constantly thinking about the entire project.",
+  followup: { lead: "You can also ask the AI to identify unnecessary tasks:", label: "Follow-up prompt",
+    prompt: `Review this plan and identify any activities that are optional for the first publication.
+
+I want to publish something useful within 30 days, and I only have three hours per week.
+
+Recommend what I should complete now, what can wait, and what I can simplify without compromising the quality of the first article.`,
+    after: "This is especially useful for people who tend to spend too much time preparing and too little time completing the first version." },
+  next: ["Choose one goal you’ve been postponing. Write down your desired outcome, deadline, and the amount of time you can realistically dedicate to it each week.", "Use the prompt to create a seven-day starting plan. Then put the first two actions on your calendar."],
+  useful: "It connects an ambitious goal to your actual time and resources. The plan also gives you a way to keep making progress during busy weeks without needing to start over." },
+
+{ area: "goals", title: "Review your progress and decide what to do next",
+  when: "You finish another busy week and realize you’ve completed dozens of tasks, but you’re unsure how much progress you’ve made toward your most important goals.",
+  intro: [
+    "A weekly review helps you see what you accomplished, what remains unfinished, and what deserves attention next. AI can organize this review by comparing your original plan with your actual results.",
+    "Imagine you started the week with three priorities: finish a business proposal, prepare for an important presentation, and spend two hours developing a new skill. By Friday, meetings, urgent requests, and unexpected assignments have filled your days. Your presentation is half finished, and you haven’t touched the learning plan."
+  ],
+  prompt: `Act as my weekly planning and review assistant.
+
+Here were my priorities for the week:
+
+[List original priorities]
+
+Here is what I completed:
+
+[List completed activities]
+
+Here is what remains unfinished:
+
+[List incomplete tasks]
+
+Here are the unexpected responsibilities or obstacles I encountered:
+
+[List]
+
+My available time next week is:
+
+[Hours and existing commitments]
+
+Help me review the week and prepare for the next one.
+
+Please provide:
+
+1. A summary of my most important accomplishments.
+2. A comparison between planned and completed priorities.
+3. An explanation of possible reasons some tasks remained unfinished, distinguishing evidence from assumptions.
+4. Any recurring obstacles worth addressing.
+5. Recommendations for what to continue, simplify, delegate, or postpone.
+6. Three realistic priorities for next week.
+7. A practical first action for each priority.
+8. One question I should reflect on before finalizing my plan.
+
+Be constructive and specific. Avoid generic motivational advice.
+
+If my plan appears unrealistic given the time available, tell me what should be reduced.`,
+  exampleTitle: "A 15-minute Friday review",
+  exampleIntro: "You could make this a recurring Friday activity.",
+  table: { head: ["Time", "Activity", "Outcome"], rows: [
+    ["First 5 min", "Record completed and unfinished work", "A factual account of the week"],
+    ["Next 5 min", "Review priorities and obstacles with your AI assistant", "Identify what needs attention"],
+    ["Final 5 min", "Select next week’s three priorities", "A short, realistic action plan"]
+  ]},
+  tableAfter: "Over several weeks, these reviews can surface recurring issues. Perhaps you consistently underestimate how long certain tasks take, urgent requests keep consuming time you reserved for important work, or some goals need smaller weekly commitments. These observations become more useful when you compare them against actual calendars, completed work, and recorded commitments.",
+  followup: { lead: "After a month, ask the AI to look across your reviews:", label: "Follow-up prompt",
+    prompt: `Compare my weekly reviews from the past four weeks.
+
+Identify:
+
+* Goals I’ve consistently made progress toward.
+* Tasks I’ve repeatedly postponed.
+* Recurring obstacles.
+* Areas where my time estimates were inaccurate.
+* Two practical adjustments worth testing next month.
+
+Support your conclusions with examples from the reviews. Avoid inferring motives or personal traits from limited information.` },
+  next: ["Reserve 15 minutes at the end of your workweek. Use the prompt to review what happened, identify unfinished priorities, and choose the three most important outcomes for the following week.", "Save each review in the same place so you can compare progress over time. For an automatic reminder, use a calendar event or your assistant’s scheduled-task feature if it has one."],
+  useful: "It gives you a repeatable process for evaluating your commitments, using evidence from your actual week, and making the next plan more realistic." }
+];
+
+
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const hl = s => esc(s).replace(/\[[^\]\n]+\]/g, m => `<span class="ph">${m}</span>`);
+const areaOf = id => AREAS.find(a => a.id === id);
+const styleFor = id => `--c:var(--${id});--band:var(--${id}-band);--edge:var(--${id}-edge)`;
+const ico = name => `<i data-lucide="${name}"></i>`;
+ITEMS.forEach((it, i) => { it.n = i + 1; [it.icon, it.sub, it.bullets] = TILES[i]; });
+
+/* Overview */
+let html = "";
+AREAS.forEach((a, ai) => {
+  const items = ITEMS.filter(x => x.area === a.id);
+  html += `<section class="band" style="${styleFor(a.id)}" aria-labelledby="h-${a.id}">
+    <div class="band-head"><span class="ico">${ico(a.icon)}</span><h2 id="h-${a.id}">${a.title}</h2>
+      <span class="sep"></span><span class="tag">${a.tag}</span></div>
+    <div class="tiles">${items.map(it => `<button class="tile" type="button" data-open="${it.n}" aria-label="Prompt ${it.n}: ${it.title}">
+      <span class="tile-top"><span class="ico">${ico(it.icon)}</span><span class="num">${String(it.n).padStart(2, "0")}</span></span>
+      <h3>${it.title}</h3><span class="sub">${it.sub}</span>
+      <ul>${it.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+      <span class="open">Open prompt ${ico("arrow-right")}</span></button>`).join("")}</div></section>`;
+});
+document.getElementById("bands").innerHTML = html;
+const SHORT={work:"Work",time:"Time",decide:"Decisions",life:"Everyday life",goals:"Personal goals"};
+document.getElementById("legend").innerHTML = AREAS.map(a => `<span style="${styleFor(a.id)}"><i></i>${SHORT[a.id]}</span>`).join("");
+
+/* Detail */
+const PROMPTS = {};
+function promptBlock(text, label, id) {
+  PROMPTS[id] = text;
+  return `<div class="prompt"><div class="prompt-bar"><span class="label">${label}</span>
+    <button class="copy" type="button" data-copy="${id}">${ico("copy")}<span>Copy</span></button></div>
+    <pre id="${id}-text">${hl(text)}</pre></div>`;
+}
+const table = t => `<div class="table-wrap"><table><thead><tr>${t.head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const nextBlock = (it, one) => `<div class="pair ${one ? "one" : ""}">${one ? "" : `<div><span class="label">Example</span><p>${it.example}</p></div>`}<div class="next"><span class="label">What to do next</span>${it.next.map(p => `<p>${p}</p>`).join("")}</div></div>`;
+
+function detail(it) {
+  const a = areaOf(it.area);
+  let fu = "";
+  if (it.followup) fu = `<p class="lead">${it.followup.lead}</p>${promptBlock(it.followup.prompt, it.followup.label, "f" + it.n)}${it.followup.after ? `<p>${it.followup.after}</p>` : ""}`;
+  const ex = it.table
+    ? `<div class="block"><span class="label">Example: ${it.exampleTitle}</span><p>${it.exampleIntro}</p>${table(it.table)}${it.tableAfter ? `<p>${it.tableAfter}</p>` : ""}${fu}</div>${nextBlock(it, true)}`
+    : nextBlock(it, false);
+  return `<div class="d-head"><span class="num">Prompt ${String(it.n).padStart(2, "0")} of 20 · ${it.sub}</span><h2 id="d-title">${it.title}</h2></div>
+    <div class="block"><span class="label">When to use it</span><p>${it.when}</p>${(it.intro || []).map(p => `<p>${p}</p>`).join("")}</div>
+    ${promptBlock(it.prompt, "Try this prompt", "p" + it.n)}
+    ${ex}
+    ${it.useful ? `<p class="useful"><strong>What makes this useful:</strong> ${it.useful}</p>` : ""}`;
+}
+
+const panel = document.getElementById("panel"), scrim = document.getElementById("scrim"), body = document.getElementById("p-body");
+const prevB = document.getElementById("p-prev"), nextB = document.getElementById("p-next");
+let current = 0, lastFocus = null;
+const draw = () => window.lucide && lucide.createIcons();
+
+function open(n) {
+  const it = ITEMS[n - 1]; if (!it) return;
+  if (!current) lastFocus = document.activeElement;
+  current = n;
+  const a = areaOf(it.area);
+  panel.setAttribute("style", styleFor(a.id));
+  document.getElementById("p-ico").innerHTML = ico(a.icon);
+  document.getElementById("p-area").textContent = a.title;
+  body.innerHTML = detail(it); body.scrollTop = 0;
+  const p = ITEMS[n - 2], q = ITEMS[n];
+  prevB.disabled = !p; nextB.disabled = !q;
+  prevB.querySelector("span").textContent = p ? `${p.n}. ${p.title}` : "";
+  nextB.querySelector("span").textContent = q ? `${q.n}. ${q.title}` : "";
+  panel.hidden = false; scrim.hidden = false; document.body.classList.add("locked");
+  requestAnimationFrame(() => { panel.classList.add("on"); scrim.classList.add("on"); });
+  draw();
+  document.getElementById("p-close").focus({ preventScroll: true });
+  try { history.replaceState(null, "", "#prompt-" + n); } catch {}
+}
+function close() {
+  if (!current) return;
+  current = 0; panel.classList.remove("on"); scrim.classList.remove("on"); document.body.classList.remove("locked");
+  setTimeout(() => { if (!current) { panel.hidden = true; scrim.hidden = true; } }, 250);
+  try { history.replaceState(null, "", location.pathname + location.search); } catch {}
+  if (lastFocus) lastFocus.focus({ preventScroll: true });
+}
+
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-open]"); if (t) return open(+t.dataset.open);
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const id = c.dataset.copy, lbl = c.querySelector("span");
+    try { await navigator.clipboard.writeText(PROMPTS[id]); lbl.textContent = "Copied"; }
+    catch { const r = document.createRange(); r.selectNodeContents(document.getElementById(id + "-text")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); lbl.textContent = "Selected"; }
+    setTimeout(() => lbl.textContent = "Copy", 1800);
+  }
+});
+document.getElementById("p-close").addEventListener("click", close);
+scrim.addEventListener("click", close);
+prevB.addEventListener("click", () => open(current - 1));
+nextB.addEventListener("click", () => open(current + 1));
+document.addEventListener("keydown", e => {
+  if (!current) return;
+  if (e.key === "Escape") close();
+  if (e.key === "ArrowRight" && !e.target.closest("pre")) open(current + 1 <= 20 ? current + 1 : current);
+  if (e.key === "ArrowLeft" && !e.target.closest("pre")) open(current - 1 >= 1 ? current - 1 : current);
+});
+draw();
+const m = /^#prompt-(\d+)$/.exec(location.hash); if (m) open(+m[1]);
+</script>
+
+</body>
+</html>
