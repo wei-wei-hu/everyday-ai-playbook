@@ -18,6 +18,12 @@
   --rule: #FFFFFF;
   --lime: #9BD45C;
   --lime-soft: #C6E3A6;
+  --c-work: #7FC3EE;  --s-work: #C9E5F7;
+  --c-time: #F4C04B;  --s-time: #F9DFA0;
+  --c-decide: #B5A6F0; --s-decide: #DAD2F7;
+  --c-life: #9BD45C;  --s-life: #C6E3A6;
+  --c-goals: #F49AAB; --s-goals: #F9CCD4;
+  --accent: var(--lime); --accent-soft: var(--lime-soft);
   --navy: #26246B;
   --chip: #1C2326;
   --chip-ink: #FFFFFF;
@@ -78,7 +84,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
   display: flex; align-items: stretch; gap: 0; background: var(--chip); color: var(--chip-ink); flex-wrap: wrap;
 }
 .area-label .n {
-  background: var(--lime); color: var(--ink); font-family: var(--f-heavy); font-size: 22px;
+  background: var(--accent); color: var(--ink); font-family: var(--f-heavy); font-size: 22px;
   min-width: 56px; display: grid; place-items: center; padding: 8px 12px;
 }
 .area-label h2 { font-family: var(--f-body); font-weight: 800; font-size: clamp(18px, 2.2vw, 23px); padding: 12px 16px 12px 18px; align-self: center; }
@@ -93,7 +99,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
   background: var(--cell); padding: 0; display: grid; grid-template-rows: auto 1fr; min-width: 0;
 }
 .tile .bar {
-  background: var(--lime); padding: 13px 12px; font-weight: 800; font-size: 16.5px; line-height: 1.22;
+  background: var(--accent); padding: 13px 12px; font-weight: 800; font-size: 16.5px; line-height: 1.22;
   display: grid; place-items: center; min-height: 66px; text-wrap: balance;
 }
 .tile .body { padding: 18px 16px 18px; display: grid; gap: 12px; justify-items: center; align-content: start; }
@@ -106,7 +112,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
 .tile ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-weight: 600; font-size: 14.5px; line-height: 1.3; }
 .tile .open { font-size: 13px; font-weight: 800; color: var(--navy); display: inline-flex; gap: 4px; align-items: center; margin-top: 2px; letter-spacing: .02em; text-transform: uppercase; }
 .grid > .tile { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
-.tile:hover .bar, .tile:focus-visible .bar { background: #8BC94A; }
+.tile:hover .bar, .tile:focus-visible .bar { filter: brightness(.93); }
 .tile:hover { background: #DFE1E1; }
 .tile:hover .open svg { transform: translateX(3px); }
 .tile .open svg { transition: transform .15s ease; }
@@ -115,7 +121,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
 .closing { margin-top: 22px; }
 .closing .grid { --n: 2; }
 .cellx { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
-.cellx .bar { background: var(--lime-soft); padding: 13px 16px; font-weight: 800; font-size: 18px; text-align: center; }
+.cellx .bar { background: #FFFFFF; padding: 13px 16px; font-weight: 800; font-size: 18px; text-align: center; }
 .cellx .body { padding: 20px 24px 24px; display: grid; gap: 12px; align-content: start; font-weight: 500; font-size: 15.5px; }
 .cellx ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .cellx li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; font-weight: 600; }
@@ -150,7 +156,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
   display: flex; align-items: stretch; background: var(--chip); color: var(--chip-ink);
   padding-top: env(safe-area-inset-top, 0px); padding-right: env(safe-area-inset-right, 0px);
 }
-.panel-top .n { background: var(--lime); color: var(--ink); font-family: var(--f-heavy); font-size: 20px; min-width: 56px; display: grid; place-items: center; }
+.panel-top .n { background: var(--accent); color: var(--ink); font-family: var(--f-heavy); font-size: 20px; min-width: 56px; display: grid; place-items: center; }
 .panel-top .t { padding: 13px 16px; font-weight: 700; font-size: 15px; align-self: center; }
 .iconbtn {
   margin: 8px 10px 8px auto; appearance: none; border: 0; background: transparent; color: var(--chip-ink);
@@ -158,7 +164,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
 }
 .iconbtn:hover { background: rgba(255,255,255,.12); }
 .panel-body { overflow-y: auto; min-height: 0; padding: 0 max(0px, env(safe-area-inset-right, 0px)) 28px 0; overscroll-behavior: contain; }
-.panel-body > .d-bar { background: var(--lime); padding: 18px 24px; display: grid; gap: 4px; }
+.panel-body > .d-bar { background: var(--accent); padding: 18px 24px; display: grid; gap: 4px; }
 .panel-body > .inner { padding: 22px 24px 0; }
 .panel-body > .inner > * + * { margin-top: 20px; }
 .d-bar .num { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
@@ -175,7 +181,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
 .block { display: grid; gap: 10px; min-width: 0; }
 .block p, .pair p { font-size: 16px; font-weight: 500; }
 .prompt { background: var(--prompt-bg); border: 4px solid var(--rule); min-width: 0; }
-.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--lime-soft); }
+.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--accent-soft); }
 .prompt-bar .label { margin: 0; color: var(--ink); }
 .copy {
   font-family: var(--f-body); font-weight: 800; font-size: 14px; background: var(--chip); color: var(--chip-ink);
@@ -193,7 +199,7 @@ h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-
 .table-wrap { overflow-x: auto; background: var(--rule); padding: 4px; }
 table { border-collapse: separate; border-spacing: 0 4px; width: 100%; font-size: 14.5px; min-width: 440px; }
 th, td { text-align: left; padding: 9px 12px; vertical-align: top; background: var(--cell); font-weight: 500; }
-th { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; background: var(--lime-soft); }
+th { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; background: var(--accent-soft); }
 td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 800; white-space: nowrap; }
 
 @media (max-width: 980px) {
@@ -210,9 +216,9 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
   .area-label .tag { padding-left: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; } }
-.cta { justify-self: start; background: var(--lime); color: var(--ink); font-weight: 700; font-size: 16px; padding: 8px 14px; max-width: 100%; }
-.cta a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
-.cta a:hover { color: var(--navy); }
+.cta { justify-self: start; background: var(--chip); color: var(--chip-ink); font-weight: 700; font-size: 16px; padding: 8px 14px; max-width: 100%; }
+.cta a { color: var(--chip-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.cta a:hover { color: #C9E5F7; }
 </style>
 
 </head>
@@ -863,7 +869,7 @@ let html = "";
 AREAS.forEach((a, ai) => {
   const items = ITEMS.filter(x => x.area === a.id);
   a.num = ai + 1;
-  html += `<section class="area" aria-labelledby="h-${a.id}">
+  html += `<section class="area" style="--accent:var(--c-${a.id});--accent-soft:var(--s-${a.id})" aria-labelledby="h-${a.id}">
     <div class="area-label"><span class="n">${ai + 1}</span><h2 id="h-${a.id}">${a.title}</h2><span class="tag">${a.tag}</span></div>
     <div class="grid" style="--n:${items.length}">${items.map(it => `<button class="tile" type="button" data-open="${it.n}" aria-label="Prompt ${it.n}: ${it.title}">
       <span class="bar">${it.title}</span>
@@ -908,6 +914,7 @@ function open(n) {
   current = n;
   const a = AREAS.find(x => x.id === it.area);
   document.getElementById("p-n").textContent = a.num;
+  panel.style.setProperty("--accent", `var(--c-${a.id})`); panel.style.setProperty("--accent-soft", `var(--s-${a.id})`);
   document.getElementById("p-area").textContent = a.title;
   body.innerHTML = detail(it); body.scrollTop = 0;
   const p = ITEMS[n - 2], q = ITEMS[n];
