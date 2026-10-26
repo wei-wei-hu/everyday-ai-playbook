@@ -1,20 +1,24 @@
-# 20 Practical Ways to Use AI Beyond Writing Emails
+<a href="https://wei-wei-hu.github.io/everyday-ai-playbook/"><img src="assets/banner.png" alt="20 Practical Ways to Use AI Beyond Writing Emails" width="100%"></a>
 
-20 practical applications for ChatGPT, Claude, Gemini, and other AI assistants.
+**By Weiwei Hu**
 
-**By Weiwei Hu** · [LinkedIn](https://www.linkedin.com/in/weiweihu)
+[![Open the interactive page](https://img.shields.io/badge/Open_the_interactive_page-1C2326?style=for-the-badge&logo=googlechrome&logoColor=white)](https://wei-wei-hu.github.io/everyday-ai-playbook/)
+[![One-page PDF](https://img.shields.io/badge/One--page_PDF-1C2326?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](20-Practical-Ways-to-Use-AI.pdf)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-1C2326?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/weiweihu)
 
-### 👉 [Open the interactive page](https://wei-wei-hu.github.io/everyday-ai-playbook/)
-
-**https://wei-wei-hu.github.io/everyday-ai-playbook/** · Tap any tile to open its prompt and copy it.
-
-📄 [One-page overview (PDF)](20-Practical-Ways-to-Use-AI.pdf)
+Interactive page: **https://wei-wei-hu.github.io/everyday-ai-playbook/** · Tap any tile to open its prompt and copy it.
 
 Most of us started using AI for simple things: drafting an email, summarizing a document, rewriting a message. AI becomes far more useful when you give it a specific task, enough context, and an outcome you can actually use. Below are 20 practical applications in five areas. Each comes with a prompt you can copy, customize, and try. Replace every `[placeholder]` with your own details.
 
+<details>
+<summary><b>See the one-page infographic</b></summary>
+<br>
+<a href="https://wei-wei-hu.github.io/everyday-ai-playbook/"><img src="assets/infographic.png" alt="One-page infographic of all 20 applications in five color-coded sections" width="100%"></a>
+</details>
+
 ## Contents
 
-**1. Get Things Done at Work**
+🟦 **1. Get Things Done at Work**
 
 - [1. Break a complicated project into manageable tasks](#1-break-a-complicated-project-into-manageable-tasks)
 - [2. Extract important information from long documents](#2-extract-important-information-from-long-documents)
@@ -22,20 +26,20 @@ Most of us started using AI for simple things: drafting an email, summarizing a 
 - [4. Practice a difficult conversation](#4-practice-a-difficult-conversation)
 - [5. Organize scattered notes into useful actions](#5-organize-scattered-notes-into-useful-actions)
 
-**2. Take Control of Your Time**
+🟨 **2. Take Control of Your Time**
 
 - [6. Plan your week around your priorities](#6-plan-your-week-around-your-priorities)
 - [7. Decide what to do first](#7-decide-what-to-do-first)
 - [8. Reorganize your day when plans fall apart](#8-reorganize-your-day-when-plans-fall-apart)
 - [9. Manage recurring responsibilities](#9-manage-recurring-responsibilities)
 
-**3. Make Better Decisions**
+🟪 **3. Make Better Decisions**
 
 - [10. Compare several options side by side](#10-compare-several-options-side-by-side)
 - [11. Find risks you may have overlooked](#11-find-risks-you-may-have-overlooked)
 - [12. Explore what-if scenarios](#12-explore-what-if-scenarios)
 
-**4. Make Everyday Life Easier**
+🟩 **4. Make Everyday Life Easier**
 
 - [13. Understand where your money goes](#13-understand-where-your-money-goes)
 - [14. Plan meals using what you already have](#14-plan-meals-using-what-you-already-have)
@@ -43,7 +47,7 @@ Most of us started using AI for simple things: drafting an email, summarizing a 
 - [16. Organize home maintenance and responsibilities](#16-organize-home-maintenance-and-responsibilities)
 - [17. Prepare for a sensitive personal conversation](#17-prepare-for-a-sensitive-personal-conversation)
 
-**5. Make Progress on Your Personal Goals**
+🟥 **5. Make Progress on Your Personal Goals**
 
 - [18. Learn a new skill with a structured practice plan](#18-learn-a-new-skill-with-a-structured-practice-plan)
 - [19. Turn a personal goal into a realistic action plan](#19-turn-a-personal-goal-into-a-realistic-action-plan)
@@ -51,7 +55,7 @@ Most of us started using AI for simple things: drafting an email, summarizing a 
 
 ---
 
-## 1. Get Things Done at Work
+<img src="assets/section-1.png" alt="1. Get Things Done at Work" width="100%">
 
 ### 1. Break a complicated project into manageable tasks
 
@@ -207,7 +211,7 @@ Finish with the three actions I should focus on first.
 
 ---
 
-## 2. Take Control of Your Time
+<img src="assets/section-2.png" alt="2. Take Control of Your Time" width="100%">
 
 ### 6. Plan your week around your priorities
 
@@ -329,7 +333,7 @@ Suggest which parts could be automated and which require my review.
 
 ---
 
-## 3. Make Better Decisions
+<img src="assets/section-3.png" alt="3. Make Better Decisions" width="100%">
 
 ### 10. Compare several options side by side
 
@@ -426,7 +430,7 @@ Identify which assumptions have the greatest influence on the result.
 
 ---
 
-## 4. Make Everyday Life Easier
+<img src="assets/section-4.png" alt="4. Make Everyday Life Easier" width="100%">
 
 ### 13. Understand where your money goes
 
@@ -580,7 +584,7 @@ Role-play two possible responses, including one where the other person disagrees
 
 ---
 
-## 5. Make Progress on Your Personal Goals
+<img src="assets/section-5.png" alt="5. Make Progress on Your Personal Goals" width="100%">
 
 ### 18. Learn a new skill with a structured practice plan
 
