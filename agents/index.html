@@ -281,6 +281,19 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .checklist li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-weight: 500; }
 .checklist li::before { content: "✓"; background: var(--accent); width: 20px; height: 20px; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+.feat { margin-top: 26px; border: 4px solid var(--rule); }
+.feat-bar { background: var(--chip); color: var(--chip-ink); padding: 12px 16px; display: grid; gap: 2px; }
+.feat-bar span { font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.feat-bar h3 { font-size: 20px; font-weight: 800; }
+.feat-body { padding: 16px; display: grid; gap: 18px; background: var(--prompt-bg); }
+.feat-steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 8px; }
+.feat-steps li { counter-increment: s; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; }
+.feat-steps li::before { content: counter(s); grid-row: span 2; background: var(--accent); width: 24px; height: 24px; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+.feat-steps b { font-weight: 800; }
+.feat-steps span { color: var(--muted); font-size: 14.5px; }
+.sample { background: #FFFFFF; border: 1px dashed var(--muted); padding: 14px; display: grid; gap: 8px; font-size: 14.5px; }
+.sample-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.sample-head span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .wtable td:first-child { white-space: normal; }
 .cfg td:first-child { width: 110px; }
 @media (max-width: 980px) { .agents .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .flow .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .stages { grid-template-columns: 1fr 1fr; } }
@@ -821,6 +834,143 @@ const CONFIG = {
   finance: ["Monthly", "Exported statements or a spending spreadsheet (read-only), optional budgeting app", "Categorize transactions, spot recurring charges, compare with budget and goals", "Monthly summary with tables and calculations", "The agent never moves money, pays bills, or changes accounts", "Spot-check transactions, category totals, and calculations"],
   learning: ["When you start a skill, scheduled practice times, and weekly", "Notes app or learning log, calendar, optional course materials", "Assess your level, plan lessons, give feedback, adjust from demonstrated progress", "Learning plan, practice sessions, weekly progress log", "You approve the plan and schedule", "Check feedback quality and verify factual content against trusted sources"]
 };
+const FEATURED = {
+  project: {
+    name: "Monthly Research & Insights",
+    does: "Collects customer feedback, identifies recurring issues, and prepares a monthly report with evidence and recommended actions.",
+    config: [
+      ["Platform", "Agent-capable platform with file access, structured-data processing, and document creation"],
+      ["Where to configure", "Agent task or workflow instructions field"],
+      ["Trigger", "Monthly, after the reporting period closes"],
+      ["Connect", "Customer surveys, interview notes, support feedback, previous reports, approved reporting templates"],
+      ["Execute", "Retrieve data, check coverage, organize feedback, group recurring issues, count occurrences, connect findings to original evidence, generate charts and report"],
+      ["Deliver", "Monthly Research Report, source-backed findings table, evidence register, P0/P1/P2 recommendations for review"],
+      ["Approval", "Before assigning final priorities, publishing findings, or distributing reports"],
+      ["Verify", "Source references, unique-customer counts, reporting period, supporting quotes, calculations, and report completeness"]
+    ],
+    steps: [
+      ["Collect the research", "Retrieve survey responses, interview notes, and support records for the specified reporting period."],
+      ["Check the information", "Identify missing sources, duplicate records, inconsistent customer identifiers, and incomplete dates."],
+      ["Organize customer feedback", "Group related comments while preserving original quotes, source IDs, and important differences."],
+      ["Analyze recurring issues", "Calculate issue frequencies where the data supports counting, identify positive and negative feedback, and compare results with the previous report."],
+      ["Prepare the report", "Create the five-section report, evidence tables, verified charts, and proposed P0/P1/P2 priorities."],
+      ["Save and report completion", "Save the report and evidence register, then identify findings and decisions requiring human review."]
+    ],
+    instructions: `You are my Monthly Research & Insights Agent.
+
+OBJECTIVE
+Prepare a monthly customer research report using original survey responses, interview notes, and customer support feedback.
+
+REPORT CONFIGURATION
+Reporting period: [month and year]
+Audience: [executives, product team, customer experience team]
+Purpose: [decision the report supports]
+Analysis areas: [features, usability, service, satisfaction]
+Previous report location: [file or folder]
+Output destination: [folder]
+
+AUTHORIZED SOURCES
+- Customer survey responses
+- Interview notes and transcripts
+- Customer support records
+- Approved research datasets
+- Previous monthly research reports
+- Approved report template
+
+EXECUTION
+
+STEP 1 — COLLECT
+Retrieve records for the reporting period.
+Record source, date, source ID, and customer ID where available.
+Report missing or inaccessible sources.
+
+STEP 2 — VALIDATE
+Check reporting-period coverage, duplicates, missing values, and inconsistent identifiers.
+Distinguish total feedback records from unique customers.
+Do not assume every comment represents a different customer.
+
+STEP 3 — ORGANIZE
+Group related feedback into meaningful categories.
+Preserve original customer statements and source references.
+Include positive and negative feedback.
+Avoid merging comments that describe materially different problems.
+
+STEP 4 — ANALYZE
+For each major issue, identify:
+- Problem category
+- Original supporting feedback
+- Source IDs
+- Frequency, where reliably measurable
+- Number of unique customers, where identifiable
+- Customer impact
+- Possible causes, clearly labeled as hypotheses
+
+Compare findings with the previous month only when the datasets are sufficiently comparable.
+
+STEP 5 — PREPARE REPORT
+Create five sections:
+1. Background and purpose
+2. Key findings
+3. Problem analysis
+4. Recommendations
+5. Conclusions and next steps
+
+Include evidence tables and verified charts where appropriate.
+
+STEP 6 — PRIORITIZE
+Propose:
+P0 — Urgent problems
+P1 — Important improvements
+P2 — Lower-priority experience opportunities
+
+For each proposed priority, include:
+- Supporting evidence
+- Frequency and severity
+- Affected customers
+- Expected benefit
+- Assumptions and uncertainties
+- Recommended next action
+
+Do not force a priority category if the evidence is insufficient.
+
+STEP 7 — VERIFY
+Check findings against original feedback.
+Verify counts, charts, quotations, and source references.
+Separate verified findings, interpretations, and unanswered questions.
+
+STEP 8 — SAVE
+Save:
+1. Monthly Research Report
+2. Findings and evidence table
+3. Source register
+4. Charts and supporting calculations
+5. Proposed action and priority list
+
+APPROVAL RULES
+Do not publish the report, distribute customer information, or assign final business priorities without approval.
+Do not invent customer quotes, source IDs, statistics, or business outcomes.
+If source access, data quality, or calculations are insufficient, flag the limitation.
+
+COMPLETION REPORT
+Tell me:
+- Sources reviewed
+- Reporting-period coverage
+- Main findings
+- Files created or updated
+- Validation issues
+- Items requiring human review
+
+Only claim that a file or record was saved when the connected tool confirms it.`,
+    sample: { title: "Monthly Customer Research Report", note: "Example structure, not actual research findings",
+      summary: "Executive summary: the three most important customer findings and the decisions they inform.",
+      head: ["Finding", "Supporting evidence", "Customer impact", "Proposed priority"],
+      rows: [["Issue A", "Quotes and source IDs", "Impact to verify", "P0"], ["Issue B", "Quotes and source IDs", "Impact to verify", "P1"], ["Issue C", "Quotes and source IDs", "Impact to verify", "P2"]],
+      support: "Supporting deliverables: source register, issue frequency table, charts, previous-month comparison, and proposed action tracker.",
+      approval: "Requires approval: final priorities, recommendations, and distribution." },
+    why: "The agent reuses the same reporting setup every month. Once sources, criteria, template, and approval rules are in place, you mainly review exceptions and approve the final report. Completion time depends on data quality, volume, and review needs."
+  }
+};
+AGENTS[1].workflows.push(["Monthly Research & Insights", "Monthly, after the reporting period closes", "Monthly Research Report with an evidence register and proposed P0/P1/P2 priorities (full setup below)"]);
 
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const hl = s => esc(s).replace(/\[[^\]\n]+\]/g, m => `<span class="ph">${m}</span>`);
@@ -843,6 +993,23 @@ function promptBlock(text, label, id) {
     <pre id="${id}-text">${hl(text)}</pre></div>`;
 }
 const h = (k, t) => `<div class="sec-h"><span class="k">${k}</span><h3>${t}</h3></div>`;
+function featured(a, n) {
+  const f = FEATURED[a.id]; if (!f) return "";
+  const s = f.sample;
+  return `<div class="feat"><div class="feat-bar"><span>Featured workflow</span><h3>${f.name}</h3></div>
+    <div class="feat-body">
+    <p>${f.does}</p>
+    <div class="block"><span class="label">Agent configuration</span><div class="table-wrap"><table class="wtable cfg"><thead><tr><th>Component</th><th>Recommended setup</th></tr></thead><tbody>${f.config.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div></div>
+    <div class="block"><span class="label">What the agent executes</span><ol class="feat-steps">${f.steps.map(x => `<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join("")}</ol></div>
+    ${promptBlock(f.instructions, "Agent instructions: " + f.name, "f" + n)}
+    <div class="block"><span class="label">What the completed output looks like</span>
+      <div class="sample"><div class="sample-head"><b>${s.title}</b><span>${s.note}</span></div>
+      <p>Reporting period: [Month, Year]</p><p>${s.summary}</p>
+      <div class="table-wrap"><table><thead><tr>${s.head.map(x => `<th>${x}</th>`).join("")}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+      <p>${s.support}</p><p><b>${s.approval}</b></p></div></div>
+    <p class="note">${f.why}</p>
+    </div></div>`;
+}
 function detail(a, n) {
   const stages = a.stages ? `<div class="block"><span class="label">Five-stage process</span><div class="stages">${a.stages.map((s, i) => `<div><b><i>${pad(i + 1)}</i>${s[0]}</b><span>${s[1]}</span></div>`).join("")}</div></div>` : "";
   const ex = a.example ? `<div class="block"><span class="label">${a.example.title}</span><p>${a.example.lead}</p><div class="table-wrap"><table class="wtable"><thead><tr><th>Expert profile</th><th>Responsibility</th></tr></thead><tbody>${a.example.rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div><p>${a.example.after}</p></div>` : "";
@@ -871,6 +1038,7 @@ function detail(a, n) {
     ${ex}
     ${h(8, "Test and verify")}
     <ul class="checklist">${a.test.map(t => `<li><span>${t}</span></li>`).join("")}</ul>
+    ${featured(a, n)}
   </div>`;
 }
 
