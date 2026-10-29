@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>9 Practical AI Agents</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an infographic poster — light-to-charcoal ground, a ruled grid of cells with lime header bars, dark area labels, dark footer band. Single deliberate light look. */
+:root {
+  --ground-top: #F1F1F1;
+  --ground-mid: #C9CCCD;
+  --ground-low: #2A3134;
+  --ink: #111416;
+  --cell: #E7E8E8;
+  --rule: #FFFFFF;
+  --lime: #9BD45C;
+  --lime-soft: #C6E3A6;
+  --c-work: #7FC3EE;  --s-work: #C9E5F7;
+  --c-time: #F4C04B;  --s-time: #F9DFA0;
+  --c-decide: #B5A6F0; --s-decide: #DAD2F7;
+  --c-life: #9BD45C;  --s-life: #C6E3A6;
+  --c-goals: #F49AAB; --s-goals: #F9CCD4;
+  --accent: var(--lime); --accent-soft: var(--lime-soft);
+  --navy: #26246B;
+  --chip: #1C2326;
+  --chip-ink: #FFFFFF;
+  --muted: #4A5154;
+  --footer: #1B2124;
+  --footer-ink: #F2F3F3;
+  --strip: #E9EAEA;
+  --prompt-bg: #FFFFFF;
+  --ph-bg: #E3F4CF;
+  --ph-fg: #2D4A0E;
+  --scrim: rgba(17, 20, 22, .5);
+  --f-light: "Poppins", "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  --f-heavy: "Archivo Black", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--ground-low); }
+body {
+  background: linear-gradient(180deg, var(--ground-top) 0%, var(--ground-mid) 38%, #8E9496 70%, var(--ground-low) 100%);
+  color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased;
+}
+body.locked { overflow: hidden; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+svg.lucide { width: 1em; height: 1em; flex: none; }
+
+.wrap {
+  max-width: 1340px; margin: 0 auto;
+  padding-left: max(clamp(16px, 6vw, 80px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(16px, 6vw, 80px), env(safe-area-inset-right, 0px));
+  padding-block: 48px 0;
+}
+
+/* Title block */
+header { display: grid; gap: 18px; padding: 0 clamp(4px, 2.5vw, 34px) 34px; }
+h1 { line-height: .98; }
+h1 .light { display: block; font-family: var(--f-light); font-weight: 300; font-size: clamp(30px, 5vw, 62px); letter-spacing: -0.005em; }
+h1 .heavy { display: block; font-family: var(--f-heavy); font-weight: 400; font-size: clamp(42px, 8.4vw, 106px); letter-spacing: -0.035em; margin-top: 6px; }
+.dek { font-size: clamp(17px, 2vw, 21px); font-weight: 600; }
+.byline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.byline .by { font-weight: 700; font-size: 16px; margin-right: 4px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; text-decoration: none;
+  color: var(--chip-ink); background: var(--chip); border-radius: 3px; padding: 6px 12px 6px 10px;
+}
+.pill:hover { background: var(--navy); }
+.pill svg { width: 15px; height: 15px; }
+.how { font-size: 14.5px; font-weight: 600; color: var(--muted); }
+
+/* Areas */
+.areas { display: grid; gap: 22px; }
+.area { display: grid; }
+.area-label {
+  display: flex; align-items: stretch; gap: 0; background: var(--chip); color: var(--chip-ink); flex-wrap: wrap;
+}
+.area-label .n {
+  background: var(--accent); color: var(--ink); font-family: var(--f-heavy); font-size: 22px;
+  min-width: 56px; display: grid; place-items: center; padding: 8px 12px;
+}
+.area-label h2 { font-family: var(--f-body); font-weight: 800; font-size: clamp(18px, 2.2vw, 23px); padding: 12px 16px 12px 18px; align-self: center; }
+.area-label .tag { font-weight: 500; font-size: 15px; opacity: .78; padding: 12px 18px 12px 0; align-self: center; margin-left: auto; }
+
+.grid {
+  display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 4px; background: var(--rule); padding: 4px; border-top: 0;
+}
+.tile {
+  appearance: none; border: 0; font: inherit; color: inherit; text-align: center; cursor: pointer;
+  background: var(--cell); padding: 0; display: grid; grid-template-rows: auto 1fr; min-width: 0;
+}
+.tile .bar {
+  background: var(--accent); padding: 13px 12px; font-weight: 800; font-size: 16.5px; line-height: 1.22;
+  display: grid; place-items: center; min-height: 66px; text-wrap: balance;
+}
+.tile .body { padding: 18px 16px 18px; display: grid; gap: 12px; justify-items: center; align-content: start; }
+.tile .ico { color: var(--navy); font-size: 50px; display: inline-flex; }
+.tile .ico svg { stroke-width: 1.3; }
+.tile .sub {
+  background: var(--chip); color: var(--chip-ink); font-weight: 800; font-size: 13px; letter-spacing: .02em;
+  padding: 5px 10px; border-radius: 2px;
+}
+.tile ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-weight: 600; font-size: 14.5px; line-height: 1.3; }
+.tile .open { font-size: 13px; font-weight: 800; color: var(--navy); display: inline-flex; gap: 4px; align-items: center; margin-top: 2px; letter-spacing: .02em; text-transform: uppercase; }
+.grid > .tile { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+.tile:hover .bar, .tile:focus-visible .bar { filter: brightness(.93); }
+.tile:hover { background: #DFE1E1; }
+.tile:hover .open svg { transform: translateX(3px); }
+.tile .open svg { transition: transform .15s ease; }
+
+/* Closing cells reuse the grid */
+.closing { margin-top: 22px; }
+.closing .grid { --n: 2; }
+.cellx { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
+.cellx .bar { background: #FFFFFF; padding: 13px 16px; font-weight: 800; font-size: 18px; text-align: center; }
+.cellx .body { padding: 20px 24px 24px; display: grid; gap: 12px; align-content: start; font-weight: 500; font-size: 15.5px; }
+.cellx ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.cellx li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; font-weight: 600; }
+.cellx li b { width: 28px; height: 28px; border-radius: 50%; background: var(--chip); color: var(--chip-ink); display: grid; place-items: center; font-size: 13px; }
+.cellx .pull { font-weight: 800; font-size: 18px; line-height: 1.35; color: var(--navy); }
+
+/* Footer band */
+.footer { background: var(--footer); color: var(--footer-ink); margin-top: 22px; }
+.footer-inner {
+  max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: clamp(20px, 6vw, 80px); flex-wrap: wrap;
+  padding: 26px max(16px, env(safe-area-inset-right, 0px)) 26px max(16px, env(safe-area-inset-left, 0px));
+}
+.footer a { color: inherit; text-decoration: none; font-family: var(--f-light); font-size: 19px; }
+.footer a:hover { text-decoration: underline; }
+.mark { border-left: 2px solid var(--footer-ink); border-bottom: 2px solid var(--footer-ink); padding: 4px 12px 6px; display: grid; line-height: 1.05; position: relative; }
+.mark::before { content: ""; position: absolute; left: -2px; top: 0; width: 60%; height: 2px; background: var(--footer-ink); }
+.mark small { font-size: 12px; letter-spacing: .14em; font-weight: 600; padding-top: 6px; }
+.mark strong { font-family: var(--f-heavy); font-size: 22px; letter-spacing: -0.03em; font-weight: 400; }
+.mark em { font-style: normal; font-size: 12px; letter-spacing: .14em; font-weight: 600; text-align: right; }
+.strip { background: var(--strip); color: var(--ink); text-align: center; font-size: 15px; font-weight: 500; padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+
+/* Detail panel */
+.scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 40; opacity: 0; transition: opacity .2s ease; }
+.scrim.on { opacity: 1; }
+.panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; width: min(760px, 100%); background: var(--cell);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr);
+  transform: translateX(100%); transition: transform .25s ease; box-shadow: -20px 0 50px -20px rgba(0,0,0,.45);
+}
+.panel.on { transform: none; }
+.panel-top {
+  display: flex; align-items: stretch; background: var(--chip); color: var(--chip-ink);
+  padding-top: env(safe-area-inset-top, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+.panel-top .n { background: var(--accent); color: var(--ink); font-family: var(--f-heavy); font-size: 20px; min-width: 56px; display: grid; place-items: center; }
+.panel-top .t { padding: 13px 16px; font-weight: 700; font-size: 15px; align-self: center; }
+.iconbtn {
+  margin: 8px 10px 8px auto; appearance: none; border: 0; background: transparent; color: var(--chip-ink);
+  width: 38px; height: 38px; display: grid; place-items: center; cursor: pointer; font-size: 20px;
+}
+.iconbtn:hover { background: rgba(255,255,255,.12); }
+.panel-body { overflow-y: auto; min-height: 0; padding: 0 max(0px, env(safe-area-inset-right, 0px)) 28px 0; overscroll-behavior: contain; }
+.panel-body > .d-bar { background: var(--accent); padding: 18px 24px; display: grid; gap: 4px; }
+.panel-body > .inner { padding: 22px 24px 0; }
+.panel-body > .inner > * + * { margin-top: 20px; }
+.d-bar .num { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.d-bar h2 { font-weight: 800; font-size: clamp(22px, 3.2vw, 28px); line-height: 1.15; }
+.panel-foot { display: flex; justify-content: space-between; gap: 10px; background: var(--rule); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) 16px; }
+.navbtn {
+  appearance: none; font: inherit; font-size: 14px; font-weight: 700; color: var(--chip-ink); background: var(--chip);
+  border: 0; border-radius: 3px; padding: 9px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 48%;
+}
+.navbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.navbtn:hover { background: var(--navy); }
+.navbtn[disabled] { visibility: hidden; }
+.label { font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--navy); display: block; margin-bottom: 4px; }
+.block { display: grid; gap: 10px; min-width: 0; }
+.block p, .pair p { font-size: 16px; font-weight: 500; }
+.prompt { background: var(--prompt-bg); border: 4px solid var(--rule); min-width: 0; }
+.prompt-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 8px 8px 14px; background: var(--accent-soft); }
+.prompt-bar .label { margin: 0; color: var(--ink); }
+.copy {
+  font-family: var(--f-body); font-weight: 800; font-size: 14px; background: var(--chip); color: var(--chip-ink);
+  border: 0; border-radius: 3px; padding: 7px 14px; cursor: pointer; min-width: 92px; display: inline-flex; gap: 6px; align-items: center; justify-content: center;
+}
+.copy:hover { background: var(--navy); }
+.prompt pre { margin: 0; padding: 16px; font-family: var(--f-mono); font-size: 13.5px; line-height: 1.65; white-space: pre-wrap; word-wrap: break-word; color: var(--ink); }
+.ph { background: var(--ph-bg); color: var(--ph-fg); border-radius: 2px; padding: 0 3px; }
+.lead { color: var(--muted); font-style: italic; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--rule); padding: 4px; }
+.pair.one { grid-template-columns: 1fr; }
+.pair > div { background: var(--cell); padding: 14px 16px; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.useful { font-size: 15.5px; font-weight: 500; color: var(--muted); }
+.useful strong { color: var(--ink); }
+.table-wrap { overflow-x: auto; background: var(--rule); padding: 4px; }
+table { border-collapse: separate; border-spacing: 0 4px; width: 100%; font-size: 14.5px; min-width: 440px; }
+th, td { text-align: left; padding: 9px 12px; vertical-align: top; background: var(--cell); font-weight: 500; }
+th { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; background: var(--accent-soft); }
+td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 800; white-space: nowrap; }
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .areas .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .area-label .tag { margin-left: 0; padding: 0 18px 12px 74px; flex-basis: 100%; }
+}
+@media (max-width: 620px) {
+  .closing .grid { grid-template-columns: 1fr; }
+  .pair { grid-template-columns: 1fr; }
+  .tile ul { display: none; }
+  .tile .bar { font-size: 15px; min-height: 76px; padding: 10px 8px; }
+  .tile .ico { font-size: 40px; }
+  .area-label .tag { padding-left: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; } }
+.cta { justify-self: start; background: var(--chip); color: var(--chip-ink); font-weight: 700; font-size: 16px; padding: 8px 14px; max-width: 100%; }
+.cta a { color: var(--chip-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.cta a:hover { color: #C9E5F7; }
+.strip a { color: inherit; font-weight: 700; }
+.howto { margin-top: 22px; }
+.howto .grid { grid-template-columns: 1.3fr 1fr 1fr 1fr; }
+.path { background: var(--cell); display: grid; grid-template-rows: auto 1fr; }
+.path .bar { background: #FFFFFF; padding: 12px 14px; font-weight: 800; font-size: 16px; text-align: center; display: grid; place-items: center; }
+.path .body { padding: 16px 16px 18px; display: grid; align-content: start; justify-items: center; }
+.path ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.path li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-weight: 600; font-size: 15px; }
+.path li b { width: 24px; height: 24px; border-radius: 50%; background: var(--chip); color: var(--chip-ink); display: grid; place-items: center; font-size: 12px; }
+.path .steps { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.path .arrow { color: var(--muted); font-weight: 700; }
+.step { appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 14px; color: var(--ink); background: var(--accent); padding: 6px 10px; border-radius: 2px; }
+.step:hover { filter: brightness(.93); }
+@media (max-width: 980px) { .howto .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .howto .grid { grid-template-columns: 1fr; } }
+
+/* Agent playbook additions */
+.eyebrow-chip { justify-self: start; background: var(--chip); color: var(--chip-ink); font-weight: 800; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; }
+.flow { margin-bottom: 22px; }
+.flow .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.fcell { background: var(--cell); padding: 14px 10px 16px; display: grid; justify-items: center; gap: 6px; text-align: center; }
+.fcell .ico { color: var(--navy); font-size: 30px; display: inline-flex; }
+.fcell b { font-size: 15px; font-weight: 800; }
+.fcell span { font-size: 13px; color: var(--muted); font-weight: 500; }
+.agents .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.acard { appearance: none; border: 0; font: inherit; color: inherit; text-align: center; cursor: pointer; background: var(--cell); padding: 0; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.acard .bar { background: var(--accent); padding: 14px 12px; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.acard .bar .num { font-family: var(--f-heavy); font-size: 18px; }
+.acard .body { padding: 18px 18px 20px; display: grid; gap: 12px; justify-items: center; align-content: start; }
+.acard .ico { color: var(--navy); font-size: 50px; display: inline-flex; }
+.acard .ico svg { stroke-width: 1.3; }
+.acard p { font-size: 14.5px; font-weight: 600; line-height: 1.35; max-width: 34ch; }
+.wchips { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.wchips span { background: var(--chip); color: var(--chip-ink); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 2px; }
+.acard .open { font-size: 13px; font-weight: 800; color: var(--navy); display: inline-flex; gap: 4px; align-items: center; letter-spacing: .02em; text-transform: uppercase; }
+.acard:hover { background: #DFE1E1; }
+.acard:hover .bar { filter: brightness(.95); }
+.back { margin-top: 22px; }
+.back a { display: block; background: var(--cell); border: 4px solid var(--rule); padding: 18px 20px; text-decoration: none; color: var(--ink); font-weight: 700; text-align: center; }
+.back a:hover { background: #DFE1E1; }
+.back a b { color: var(--navy); }
+/* panel content */
+.sec-h { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.sec-h .k { background: var(--chip); color: var(--chip-ink); font-family: var(--f-heavy); font-size: 13px; min-width: 28px; height: 28px; display: grid; place-items: center; }
+.sec-h h3 { font-size: 17px; font-weight: 800; }
+.stages { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; background: var(--rule); padding: 4px; }
+.stages div { background: var(--prompt-bg); padding: 10px; display: grid; gap: 4px; align-content: start; }
+.stages b { font-size: 13px; font-weight: 800; }
+.stages b i { font-style: normal; background: var(--accent); padding: 1px 5px; margin-right: 4px; }
+.stages span { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.plats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; background: var(--rule); padding: 4px; }
+.plats div { background: var(--prompt-bg); padding: 10px 12px; font-size: 14px; }
+.plats b { display: block; font-weight: 800; margin-bottom: 2px; }
+.note { font-size: 13px; color: var(--muted); font-style: italic; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { background: var(--accent-soft); font-weight: 700; font-size: 13.5px; padding: 5px 10px; }
+.steps-ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; font-weight: 500; }
+.approval { background: var(--chip); color: var(--chip-ink); padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: 15px; }
+.approval .ico { color: var(--accent); font-size: 20px; display: inline-flex; padding-top: 2px; }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.checklist li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-weight: 500; }
+.checklist li::before { content: "✓"; background: var(--accent); width: 20px; height: 20px; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+.wtable td:first-child { white-space: normal; }
+.cfg td:first-child { width: 110px; }
+@media (max-width: 980px) { .agents .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .flow .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .stages { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .agents .grid { grid-template-columns: 1fr; } .flow .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .plats { grid-template-columns: 1fr; } .stages { grid-template-columns: 1fr; } }
+@media print {
+  @page { margin: 0.3in; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap, .footer, .strip { zoom: 0.6; }
+  .wrap { max-width: none; padding: 10px 24px 0; }
+  .how, .byline, .acard .open, .scrim, .panel, .back { display: none !important; }
+  .agents .grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .flow .grid { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+  .area-label .tag { margin-left: auto !important; padding: 12px 18px 12px 0 !important; flex-basis: auto !important; }
+  .agents, .flow { break-inside: avoid; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow-chip">Companion playbook</span>
+    <h1><span class="light">From AI Prompts to AI Agents</span><span class="heavy">9 Practical AI Agents</span></h1>
+    <p class="dek">Set up AI agents that get everyday work done, with steps for ChatGPT, Claude, Gemini, and Microsoft Copilot.</p>
+    <div class="byline"><span class="by">By Weiwei Hu</span>
+      <a class="pill" href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
+      <a class="pill" href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>GitHub</a>
+      <a class="pill" href="https://wei-wei-hu.github.io/everyday-ai-playbook/">← 25 Practical Ways to Use AI</a></div>
+    <p class="how">Tap any agent to see its setup.</p>
+  </header>
+
+  <section class="flow" aria-label="How every agent is set up">
+    <div class="area-label"><span class="n" style="background:#FFFFFF">→</span><h2>How every agent is set up</h2><span class="tag">The same six parts for each one</span></div>
+    <div class="grid" id="flow"></div>
+  </section>
+
+  <section class="agents" aria-label="The nine agents">
+    <div class="area-label"><span class="n" style="background:var(--lime)">9</span><h2>The agents</h2><span class="tag">Each runs several workflows</span></div>
+    <div class="grid" id="agents"></div>
+  </section>
+
+  <section class="back"><a href="https://wei-wei-hu.github.io/everyday-ai-playbook/">Start with prompts first? <b>Open 25 Practical Ways to Use AI Beyond Writing Emails →</b></a></section>
+</div>
+
+<div class="footer"><div class="footer-inner">
+  <a href="https://www.linkedin.com/in/weiweihu" target="_blank" rel="noopener">in/weiweihu</a>
+  <div class="mark" aria-label="Everyday AI Playbook"><small>EVERYDAY</small><strong>AI PLAYBOOK</strong></div>
+  <a href="https://github.com/wei-wei-hu/everyday-ai-playbook" target="_blank" rel="noopener">github/everyday-ai-playbook</a>
+</div></div>
+<div class="strip">Created by Weiwei Hu · © 2026 · Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a></div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="d-title" hidden>
+  <div class="panel-top"><span class="n" id="p-n"></span><span class="t" id="p-area"></span>
+    <button class="iconbtn" type="button" id="p-close" aria-label="Close"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="panel-body" id="p-body"></div>
+  <div class="panel-foot">
+    <button class="navbtn" type="button" id="p-prev"><i data-lucide="arrow-left"></i><span></span></button>
+    <button class="navbtn" type="button" id="p-next"><span></span><i data-lucide="arrow-right"></i></button>
+  </div>
+</aside>
+
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script>
+const AGENTS = [
+{ id: "meeting", name: "Meeting & Communication", icon: "messages-square", color: "#7FC3EE", soft: "#C9E5F7",
+  does: "Prepares you for meetings, captures decisions and owners afterward, and drafts follow-ups for you to review.",
+  workflows: [
+    ["Pre-meeting brief", "A meeting on your calendar in the next 24 hours", "One-page brief: purpose, attendees, open items, and questions to raise"],
+    ["Recap and follow-ups", "Meeting notes or a transcript are saved", "Decisions, action items with owners and dates, and a draft follow-up email"],
+    ["Weekly inbox triage", "Friday afternoon", "Messages grouped by reply needed, waiting on others, and FYI"]
+  ],
+  connect: ["Calendar", "Email", "Meeting notes or transcripts", "Shared documents"],
+  execute: ["Find the relevant meeting or messages.", "Read the agenda, notes, and related documents.", "Pull out decisions, owners, deadlines, and open questions.", "Draft the brief, recap, or follow-up in the requested format."],
+  deliver: "A brief or recap in chat or a saved document, plus follow-up emails saved as drafts.",
+  approval: "Never send an email, accept an invite, or share a document without your confirmation. All messages stay as drafts.",
+  instructions: `You are my Meeting & Communication agent.
+
+Context: I work as [role] and usually meet with [teams or stakeholders].
+
+When I ask for a pre-meeting brief:
+1. Find the meeting on my calendar and read its agenda and attached documents.
+2. Summarize the purpose, attendees, open items from earlier meetings, and three questions I should raise.
+
+When I share meeting notes or a transcript:
+1. List decisions, action items with owners and due dates, and unresolved questions.
+2. Mark any owner or date that was not stated as "unconfirmed."
+3. Draft a short follow-up email in my tone: [tone, for example warm and direct].
+
+When I ask for inbox triage:
+1. Group messages into: needs my reply, waiting on others, and FYI.
+2. Suggest a one-line response for each message that needs my reply.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Save every message as a draft. Do not send anything.
+- Use only information from my calendar, email, and documents. Do not invent attendees, decisions, or dates.
+- Keep briefs to one page.`,
+  test: ["Run the recap workflow on one past meeting where you already know the outcome.", "Check every decision, owner, and date against your own notes.", "Confirm the follow-up email is saved as a draft and nothing was sent.", "Adjust tone or format in the instructions, then run it again."] },
+
+{ id: "project", name: "Project & Operations", icon: "clipboard-list", color: "#F4C04B", soft: "#F9DFA0",
+  does: "Keeps projects moving by preparing status updates, spotting risks and blockers early, and running recurring operations checklists.",
+  workflows: [
+    ["Weekly status report", "Every Thursday", "Status summary with progress, risks, decisions needed, and next steps"],
+    ["Risk and blocker scan", "Twice a week, or on request", "List of overdue items, blocked tasks, and items missing an owner"],
+    ["Recurring operations checklist", "Monthly or quarterly cycle start", "Checklist with steps, owners, deadlines, and what can be automated"]
+  ],
+  connect: ["Project tracker or task list", "Shared documents and spreadsheets", "Team chat", "Calendar"],
+  execute: ["Read current tasks, owners, due dates, and recent updates.", "Compare progress with the plan and milestones.", "Flag overdue, blocked, or unowned work.", "Draft the status report or checklist."],
+  deliver: "A status report or checklist in a shared document, plus a draft message for your team channel.",
+  approval: "Do not change tasks, owners, or dates, and do not post to team channels without your confirmation.",
+  instructions: `You are my Project & Operations agent.
+
+Project: [name and goal]. Key milestones: [list with dates]. Team: [names or roles].
+
+Weekly status report:
+1. Read the project tracker and recent updates.
+2. Summarize progress against milestones, the top three risks, decisions needed from leadership, and next week's priorities.
+3. Use this format: Status (on track / at risk / off track), Highlights, Risks, Decisions needed, Next steps.
+
+Risk and blocker scan:
+1. List tasks that are overdue, blocked, or missing an owner or due date.
+2. For each one, suggest the next action and who should take it.
+
+Recurring checklist:
+1. Build a checklist for [process] with preparation, steps, owners, deadlines, and completion criteria.
+2. Mark which steps could be automated and which need a person's review.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Base status only on what the tracker and documents show. Mark anything you infer as "assumption."
+- Do not edit tasks or post messages. Prepare drafts for my review.`,
+  test: ["Run the status report on last week's data and compare it with what actually happened.", "Check that every risk and overdue item matches the tracker.", "Confirm no tasks were edited and no message was posted.", "Refine the report format, then schedule the weekly run."] },
+
+{ id: "research", name: "Research & Decision", icon: "search", color: "#B5A6F0", soft: "#DAD2F7",
+  does: "Researches competitors, analyzes actual evidence, maintains an up-to-date comparison, and prepares an executive decision brief.",
+  workflows: [
+    ["Competitive analysis", "On demand, monthly, or when an important competitor update is detected", "Comparison table, evidence register, P0/P1/P2 recommendations, and a one-page executive decision brief"],
+    ["Analysis update", "A previous analysis exists and new evidence is available", "What is new, removed, or materially different, with the comparison table updated and earlier versions preserved"],
+    ["Decision brief", "A product, marketing, or business decision needs support", "Options, supporting evidence, open questions, and the decisions that need your input"]
+  ],
+  connect: ["Competitor websites, product and pricing pages", "Marketing and campaign materials", "Customer reviews and feedback", "Approved internal product information", "Previous competitive analyses"],
+  execute: ["Collect evidence and record source URLs and dates.", "Analyze each competitor's customers, selling points, features, pricing, and recent moves.", "Compare competitors with your product on consistent criteria.", "Update the previous analysis and preserve earlier versions.", "Recommend P0, P1, and P2 actions where the evidence justifies them."],
+  deliver: "Comparison table, evidence register with sources and dates, findings and unresolved questions, P0/P1/P2 recommendations, and a one-page executive decision brief.",
+  approval: "Required before distributing findings, modifying product plans, or acting on recommendations. The agent never contacts competitors or makes purchases.",
+  instructions: `You are my Competitive Analysis Agent.
+
+OBJECTIVE
+Maintain an evidence-backed competitive analysis that supports product, marketing, and business decisions.
+
+BUSINESS CONTEXT
+My product: [name and description]
+Target customers: [audience]
+Competitors: [2–3 competitors]
+Market: [geography or segment]
+Research period: [e.g., last six months]
+Decision I need to support: [question]
+
+AUTHORIZED SOURCES
+- Public competitor websites and product pages
+- Published pricing and product specifications
+- Advertising and campaign materials
+- Customer reviews and feedback
+- Approved internal product information
+- Previous competitive analysis, if available
+
+EXECUTION
+
+STEP 1 — COLLECT
+Retrieve relevant competitor information.
+Record source URLs, publication dates, retrieval dates, and geographic applicability.
+Identify inaccessible or missing sources.
+
+STEP 2 — ANALYZE
+For each competitor, determine:
+- Target customers and three supporting pieces of evidence
+- Main selling point and supporting evidence
+- Product features and pricing
+- Recent product or marketing developments
+- Potential weaknesses supported by evidence
+
+Separate competitor claims from independently verified facts and interpretations.
+
+STEP 3 — COMPARE
+Create a side-by-side comparison of our product and competitors using consistent criteria.
+
+Include:
+- Target customers
+- Features
+- Pricing
+- Positioning
+- Recent developments
+- Potential weaknesses
+- Evidence references
+
+Mark missing information as unknown.
+
+STEP 4 — UPDATE
+If a previous analysis exists:
+- Compare new findings with the previous version.
+- Identify new, removed, or materially different information.
+- Update the comparison table.
+- Preserve previous versions and source dates.
+
+Do not describe a difference as confirmed unless the evidence supports it.
+
+STEP 5 — RECOMMEND
+Prepare three proposed actions:
+
+P0: High-impact issue requiring urgent attention.
+P1: Core product improvement to evaluate.
+P2: New opportunity to test.
+
+For each, include:
+- Supporting evidence
+- Affected customers
+- Expected benefit and assumptions
+- Recommended next action
+- Questions requiring validation
+
+Do not force an action into a priority category if the evidence does not justify it.
+
+STEP 6 — DELIVER
+Save:
+1. Updated competitor comparison table
+2. Evidence register with sources and dates
+3. Findings and unresolved questions
+4. P0/P1/P2 recommendations, where justified
+5. One-page executive decision brief
+
+STEP 7 — VERIFY
+Check important claims, pricing, dates, and calculations against the sources.
+
+Do not invent market statistics, customer demand, competitor facts, or financial outcomes.
+
+APPROVAL RULES
+Do not contact competitors, make purchases, modify product plans, publish findings, or send reports without my approval.
+
+If a required source or tool is unavailable, report the limitation.
+
+COMPLETION REPORT
+Tell me:
+- What information was collected
+- Which records were updated
+- What is new since the previous analysis
+- Where outputs were saved
+- What requires my decision
+
+Only claim an action was completed when the connected tool confirms success.`,
+  test: ["Start with two competitors and a narrow research question.", "Verify that the agent retrieves real sources and records publication dates.", "Confirm the comparison is saved and that confirmed findings are clearly separated from assumptions.", "Run the workflow again using the previous analysis. Confirm that it identifies genuine developments and preserves the earlier version."] },
+
+{ id: "expert", name: "Expert Knowledge", icon: "book-marked", color: "#7FD6CF", soft: "#C7EEEA",
+  does: "Organizes reusable expert knowledge, selects the right specialist perspectives, coordinates their analysis, and improves the knowledge system through reviewed feedback.",
+  workflows: [
+    ["Expert decision brief", "A new question, project review, or decision that needs specialist knowledge", "Evidence-backed brief with sources, specialist disagreements, unanswered questions, and recommended actions"],
+    ["Specialist review", "A plan or proposal needs input from several domains", "Findings from each relevant expert profile, compared side by side"],
+    ["Knowledge improvement", "After each analysis, or on a regular review cycle", "Proposed knowledge and configuration updates, submitted for human approval"]
+  ],
+  stages: [
+    ["Collect Knowledge", "Gather internal documents, external research, previous meetings, and domain knowledge."],
+    ["Configure Expert Profiles", "Define each expert’s domain, skills, knowledge sources, reasoning approach, responsibilities, and limitations."],
+    ["Select Relevant Specialists", "Identify the expertise required for the question and select the appropriate expert profiles."],
+    ["Conduct Expert Discussion", "Provide the task context, retrieve supporting evidence, compare specialist perspectives, and identify disagreements."],
+    ["Evaluate and Improve", "Review output quality, capture validated feedback, and update approved knowledge and expert configurations."]
+  ],
+  example: { title: "Example: product launch decision", lead: "The coordinator could select four specialist profiles:",
+    rows: [["Customer Expert", "Customer needs, feedback, and supporting evidence"], ["Market Expert", "Competitors, positioning, and market developments"], ["Finance Expert", "Costs, financial assumptions, and commercial implications"], ["Operations Expert", "Delivery feasibility, dependencies, and operational risks"]],
+    after: "Final deliverable: a consolidated product-launch decision brief with supporting evidence, disagreements between specialist perspectives, risks, and leadership decisions required." },
+  connect: ["Approved knowledge base and documents", "Structured data", "Previous decisions", "Expert profiles"],
+  execute: ["Retrieve evidence from authorized sources.", "Identify the knowledge domains required.", "Select the relevant specialist profiles.", "Coordinate their analysis and compare findings.", "Consolidate findings into a brief."],
+  deliver: "Evidence-backed expert brief with supporting sources, disagreements, unanswered questions, and recommended actions.",
+  approval: "Required before consequential decisions, publication, operational actions, or knowledge-base updates. AI-generated conclusions are never added to the authoritative knowledge base automatically.",
+  instructions: `You are my Expert Knowledge Coordinator.
+
+OBJECTIVE
+Assemble relevant specialist perspectives and prepare an evidence-backed analysis.
+
+QUESTION OR TASK
+[Describe the business question]
+
+AUTHORIZED KNOWLEDGE SOURCES
+[List connected documents, databases, previous decisions, and approved research sources]
+
+EXPERT PROFILES
+[List expert roles, domains, approved knowledge sources, and responsibilities]
+
+EXECUTION
+
+STAGE 1 — COLLECT KNOWLEDGE
+1. Retrieve relevant information from authorized sources.
+2. Record source references, dates, versions, and reliability limitations.
+3. Identify missing or conflicting information.
+
+STAGE 2 — CONFIGURE EXPERT PROFILES
+1. Identify the knowledge domains required.
+2. Use approved expert profiles for each domain.
+3. Respect each profile's responsibilities and limitations.
+4. Do not invent expert credentials or claim human expertise.
+
+STAGE 3 — SELECT SPECIALISTS
+1. Select the expert profiles relevant to the question.
+2. Explain why each specialist was selected.
+3. Identify any missing expertise.
+
+STAGE 4 — CONDUCT EXPERT REVIEW
+1. Provide the task context and relevant evidence to each specialist.
+2. Ask each specialist to analyze the question within its domain.
+3. Require separation of evidence, assumptions, and recommendations.
+4. Compare specialist findings.
+5. Identify disagreements, dependencies, and unanswered questions.
+6. Prepare a consolidated recommendation supported by sources.
+
+STAGE 5 — EVALUATE AND IMPROVE
+1. Check the analysis against available evidence.
+2. Identify unsupported or conflicting conclusions.
+3. Record feedback and proposed improvements.
+4. Submit knowledge or configuration updates for human approval.
+5. Preserve previous versions and the reasons for approved updates.
+
+DELIVERABLES
+Save:
+- Consolidated expert decision brief
+- Source and evidence register
+- Specialist findings and disagreements
+- Unanswered questions
+- Recommended next actions
+- Proposed knowledge improvements, if applicable
+
+APPROVAL RULES
+Do not automatically add AI-generated conclusions to the authoritative knowledge base.
+
+Do not publish findings, modify important business records, or execute consequential decisions without approval.
+
+If a source or required specialist capability is unavailable, explain the limitation.
+
+COMPLETION REPORT
+Tell me:
+- Which sources were reviewed
+- Which expert profiles participated
+- What findings were supported by evidence
+- Where specialists disagreed
+- What remains unresolved
+- What outputs were saved
+- What requires human approval
+
+Only claim an action was completed when the connected tools confirm success.`,
+  test: ["Provide a sample business question with known source documents.", "Verify that the agent selects relevant profiles, retrieves the correct evidence, and identifies conflicts.", "Check that the brief is accurate against the sources.", "Test the feedback process separately: confirm proposed knowledge updates require approval and preserve version history."] },
+
+{ id: "planning", name: "Personal Planning", icon: "calendar-check", color: "#F49AAB", soft: "#F9CCD4",
+  does: "Plans your week around your priorities and energy, gives you a short daily focus, and runs a Friday review.",
+  workflows: [
+    ["Weekly plan", "Sunday evening or Monday morning", "A day-by-day plan with focus blocks, buffers, and trade-offs"],
+    ["Daily focus brief", "Each workday morning", "Today's top three priorities, meetings, and one thing to prepare"],
+    ["Friday review", "Friday afternoon", "Accomplishments, unfinished work, and three priorities for next week"]
+  ],
+  connect: ["Calendar", "Task list or notes app", "Optional: email for deadlines"],
+  execute: ["Read your calendar, tasks, and deadlines.", "Match important work to your focus hours.", "Flag overload and suggest what to move.", "Draft the plan, brief, or review."],
+  deliver: "A plan or review in chat or a note, plus suggested calendar blocks.",
+  approval: "Do not create, move, or decline calendar events without your confirmation.",
+  instructions: `You are my Personal Planning agent.
+
+My priorities this quarter: [list]. My best focus hours: [times]. Commitments to protect: [list].
+
+Weekly plan:
+1. Read my calendar and task list for the coming week.
+2. Place focus blocks for important work during my best hours, with buffers between meetings.
+3. Compare planned hours with available hours, and list trade-offs if the week is overloaded.
+
+Daily focus brief:
+1. List today's top three priorities, my meetings, and one thing to prepare.
+
+Friday review:
+1. Compare my planned priorities with what I completed.
+2. Create a short accomplishment record without inventing results.
+3. Suggest three priorities for next week.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Suggest calendar changes. Do not make them.
+- Keep each brief short enough to read in two minutes.`,
+  test: ["Run the weekly plan for the current week and compare it with your real calendar.", "Check that no events were created or moved.", "Run the Friday review once and confirm nothing was invented.", "Then schedule the daily and weekly runs."] },
+
+{ id: "home", name: "Home & Family", icon: "home", color: "#9BD45C", soft: "#C6E3A6",
+  does: "Handles household planning, from meal plans and grocery lists to home maintenance reminders and shared schedules.",
+  workflows: [
+    ["Meal plan and grocery list", "Weekly, before shopping", "Five dinners using what you have, plus one shopping list"],
+    ["Home maintenance reminders", "Monthly", "Upcoming tasks, what's due, and what needs a professional"],
+    ["Household schedule", "Sunday evening", "The week's activities, pickups, and conflicts in one view"]
+  ],
+  connect: ["Shared calendar", "Notes or lists app", "Optional: grocery app or shared shopping list"],
+  execute: ["Read the calendar, pantry list, and maintenance log.", "Plan meals or tasks around the week's schedule.", "Spot conflicts and items that are due.", "Draft the plan and lists."],
+  deliver: "A meal plan, shopping list, or weekly schedule in a shared note.",
+  approval: "Do not place orders, book services, or message anyone without your confirmation.",
+  instructions: `You are my Home & Family agent.
+
+Household: [number of people, dietary preferences]. Home: [type, key appliances or systems].
+
+Meal plan:
+1. Plan five weeknight dinners using ingredients I already have: [list or link].
+2. Keep each meal under [minutes] and reuse ingredients where practical.
+3. Create one shopping list grouped by store section.
+
+Maintenance reminders:
+1. From my maintenance list, show what's due this month and what's coming up next month.
+2. Mark which tasks need a professional.
+
+Household schedule:
+1. Combine the week's activities from the shared calendar into one view.
+2. Flag conflicts and anything that needs planning ahead.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Do not buy, order, or book anything.
+- Flag allergy or nutrition details that need checking.`,
+  test: ["Run the meal plan once and check it against what's actually in your kitchen.", "Confirm no order or booking was placed.", "Check the schedule view against the shared calendar.", "Adjust preferences, then schedule the weekly run."] },
+
+{ id: "travel", name: "Travel", icon: "plane", color: "#F7B98B", soft: "#FBDCC4",
+  does: "Builds trip itineraries, keeps confirmations organized, and prepares checklists and travel-day briefs.",
+  workflows: [
+    ["Itinerary builder", "A trip is planned", "Day-by-day plan with timing, costs, and backup options"],
+    ["Confirmation organizer", "A booking confirmation arrives", "One trip summary with flights, hotels, reservations, and reference numbers"],
+    ["Travel-day brief", "The day before departure", "Checklist, timings, and documents to have ready"]
+  ],
+  connect: ["Email (for confirmations)", "Calendar", "Web search and maps"],
+  execute: ["Collect trip details and confirmations.", "Build or update the itinerary.", "Check timings, gaps, and conflicts.", "Prepare the summary, checklist, or brief."],
+  deliver: "A trip summary or itinerary document and a checklist, with calendar suggestions.",
+  approval: "Never book, pay, cancel, or change a reservation. Those steps are always yours.",
+  instructions: `You are my Travel agent.
+
+Trip: [destination, dates, travelers]. Budget: [amount]. Interests: [list]. Pace: [relaxed, moderate, busy].
+
+Itinerary:
+1. Build a day-by-day plan that groups nearby places, with estimated costs and transport.
+2. Include one backup option per day.
+3. Mark opening hours, prices, and reservations that need checking.
+
+Confirmation organizer:
+1. Find booking confirmations in my email for this trip.
+2. Create one summary with flights, hotels, reservations, times, and reference numbers.
+
+Travel-day brief:
+1. The day before departure, list what to pack, documents to carry, and when to leave.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Do not book, pay, cancel, or change anything.
+- Label anything time-sensitive as "check before you go."`,
+  test: ["Run the confirmation organizer on a past trip and check every time and reference number.", "Confirm nothing was booked or changed.", "Review the itinerary for realistic travel times.", "Use it for your next trip."] },
+
+{ id: "finance", name: "Personal Finance", icon: "wallet", color: "#E3C98F", soft: "#F1E3C4",
+  does: "Reviews your spending, tracks bills and subscriptions, and shows progress toward savings goals, using data you choose to share.",
+  workflows: [
+    ["Monthly spending review", "First week of each month", "Spending by category, changes from last month, and savings ideas"],
+    ["Bills and subscriptions", "Monthly", "Upcoming bills, recurring charges, and subscriptions to review"],
+    ["Savings goal check", "Monthly", "Progress toward each goal and the monthly amount needed to stay on track"]
+  ],
+  connect: ["Exported statements or a spending spreadsheet (read-only)", "Optional: a budgeting app you already use"],
+  execute: ["Read the exported transactions or spreadsheet.", "Categorize spending and spot recurring charges.", "Compare with your budget and goals.", "Show calculations and draft the summary."],
+  deliver: "A monthly summary with tables and calculations in a document or spreadsheet.",
+  approval: "The agent never moves money, pays bills, or changes accounts. Share exports rather than banking passwords.",
+  instructions: `You are my Personal Finance agent. You are not a financial advisor.
+
+Data: the exported transactions in [file or folder]. Budget: [amounts by category]. Goals: [savings goals and target dates].
+
+Monthly spending review:
+1. Categorize transactions and total each category.
+2. Compare with last month and with my budget.
+3. List unusual expenses and ambiguous transactions instead of guessing.
+
+Bills and subscriptions:
+1. List recurring charges with amounts and dates.
+2. Mark subscriptions I may want to review.
+
+Savings goal check:
+1. Show progress toward each goal and the monthly amount needed to stay on track.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Show your calculations.
+- Do not treat missing data as zero, and do not present projections as guaranteed.
+- Never move money, make payments, or change accounts.`,
+  test: ["Run the spending review on one month you already know well.", "Spot-check five transactions and the category totals.", "Confirm the agent has read-only access to an export.", "Then schedule the monthly run."] },
+
+{ id: "learning", name: "Learning & Development", icon: "graduation-cap", color: "#A9B8C9", soft: "#D5DDE6",
+  does: "Builds a learning plan from your starting level, runs practice sessions with feedback, and tracks progress each week.",
+  workflows: [
+    ["Learning plan", "You start a new skill", "A plan based on a short starting assessment, with weekly goals"],
+    ["Practice session", "Scheduled sessions, for example three times a week", "One lesson, one exercise, and specific feedback"],
+    ["Progress review", "Weekly", "What you practiced, what improved, and next week's focus"]
+  ],
+  connect: ["Notes app or learning log", "Calendar", "Optional: course materials or reading list"],
+  execute: ["Assess your current level with a few questions.", "Plan lessons and practice that fit your time.", "Give feedback on each exercise.", "Update the plan from what you've shown you understand."],
+  deliver: "A learning plan, practice sessions in chat, and a weekly progress log.",
+  approval: "You approve the plan and schedule. Check technical or factual content against trusted sources.",
+  instructions: `You are my Learning & Development agent, acting as a patient tutor.
+
+Skill: [skill]. Goal: [what I want to be able to do]. Time: [minutes per day, days per week, number of weeks].
+
+Learning plan:
+1. Start with three to five questions or a short exercise to assess my level.
+2. Build a weekly plan with objectives and daily exercises that fit my time.
+
+Practice sessions:
+1. Teach one concept, then give me an exercise.
+2. Explain mistakes with specific examples and let me try again.
+
+Weekly progress review:
+1. Summarize what I practiced, what improved, and what needs more work.
+2. Adjust next week based on what I've shown I understand, not just the calendar.
+
+Rules:
+- Only claim an action was completed when the connected tool confirms success.
+- Tell me when you can't reliably assess my work and what feedback I'd need from a person.`,
+  test: ["Complete the starting assessment honestly and review the plan it produces.", "Do one practice session and check the feedback is specific.", "Verify any factual content against a trusted source.", "Schedule sessions on your calendar."] }
+];
+const FLOW = [
+  ["Trigger", "When it runs", "zap"],
+  ["Connect", "What it can read", "plug"],
+  ["Execute", "The steps it takes", "cog"],
+  ["Deliver", "Where results go", "send"],
+  ["Approval", "What needs your OK", "shield-check"],
+  ["Verify", "How you test it", "badge-check"]
+];
+const PLATFORMS = [
+  ["ChatGPT", "Create a custom GPT or a Project, paste the instructions, and turn on the connectors you need. Use scheduled tasks for recurring runs."],
+  ["Claude", "Create a Project and paste the instructions, or save them as a skill. Turn on connectors, and use scheduled tasks for recurring runs."],
+  ["Gemini", "Create a Gem with the instructions, and connect Google Workspace apps such as Gmail, Calendar, and Drive. Use scheduled actions for recurring runs."],
+  ["Microsoft Copilot", "Create an agent with the Copilot agent builder, paste the instructions, and add Outlook, Teams, or SharePoint as knowledge sources."]
+];
+const CONFIG = {
+  meeting: ["Before a meeting, after notes are saved, or Friday afternoon", "Calendar, email, meeting notes or transcripts, shared documents", "Find meetings and messages, extract decisions and owners, draft briefs and follow-ups", "Pre-meeting brief, recap with action items, follow-up emails saved as drafts", "Before sending any message, accepting invites, or sharing documents", "Check decisions, owners, and dates against your own notes; confirm nothing was sent"],
+  project: ["Weekly, twice a week, or at the start of each cycle", "Project tracker, shared documents, team chat, calendar", "Read tasks and updates, compare with milestones, flag risks, draft reports and checklists", "Status report, risk and blocker list, operations checklist", "Before changing tasks, owners, or dates, or posting to team channels", "Check status and risks against the tracker; confirm no tasks were edited"],
+  research: ["On demand, monthly, or when an important competitor update is detected", "Competitor websites, product and pricing pages, marketing materials, customer feedback, approved internal product information, previous analyses", "Collect evidence, analyze competitors, compare findings, update records, prepare recommendations", "Comparison table, evidence register, P0/P1/P2 recommendations, one-page executive decision brief", "Before distributing findings, modifying product plans, or acting on recommendations", "Check source links, dates, pricing, calculations, and saved outputs"],
+  expert: ["A new question, project review, or decision requiring specialist knowledge", "Approved knowledge base, documents, structured data, previous decisions, expert profiles", "Retrieve evidence, identify required domains, select specialists, coordinate analysis, consolidate findings", "Evidence-backed expert brief with supporting sources, disagreements, unanswered questions, and recommended actions", "Before consequential decisions, publication, operational actions, or knowledge-base updates", "Check source reliability, document versions, expert coverage, conflicting findings, and unsupported conclusions"],
+  planning: ["Sunday or Monday, each workday morning, and Friday afternoon", "Calendar, task list or notes app, optional email for deadlines", "Read calendar and tasks, match work to focus hours, flag overload, draft plans and reviews", "Weekly plan, daily focus brief, Friday review with accomplishment record", "Before creating, moving, or declining calendar events", "Compare the plan with your real calendar; confirm no events were changed"],
+  home: ["Weekly before shopping, monthly, and Sunday evening", "Shared calendar, notes or lists app, optional grocery list", "Read schedules and lists, plan meals and tasks, spot conflicts and due items", "Meal plan, shopping list, maintenance reminders, weekly schedule", "Before placing orders, booking services, or messaging anyone", "Check plans against what you have and the shared calendar; confirm nothing was ordered"],
+  travel: ["When a trip is planned, a confirmation arrives, or the day before departure", "Email for confirmations, calendar, web search and maps", "Collect trip details, build the itinerary, check timings and conflicts", "Itinerary, trip summary with reference numbers, travel-day checklist", "Before any booking, payment, cancellation, or change", "Check times and reference numbers against confirmations; confirm nothing was booked"],
+  finance: ["Monthly", "Exported statements or a spending spreadsheet (read-only), optional budgeting app", "Categorize transactions, spot recurring charges, compare with budget and goals", "Monthly summary with tables and calculations", "The agent never moves money, pays bills, or changes accounts", "Spot-check transactions, category totals, and calculations"],
+  learning: ["When you start a skill, scheduled practice times, and weekly", "Notes app or learning log, calendar, optional course materials", "Assess your level, plan lessons, give feedback, adjust from demonstrated progress", "Learning plan, practice sessions, weekly progress log", "You approve the plan and schedule", "Check feedback quality and verify factual content against trusted sources"]
+};
+
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const hl = s => esc(s).replace(/\[[^\]\n]+\]/g, m => `<span class="ph">${m}</span>`);
+const ico = name => `<i data-lucide="${name}"></i>`;
+const pad = n => String(n).padStart(2, "0");
+const col = a => `--accent:${a.color};--accent-soft:${a.soft}`;
+
+document.getElementById("flow").innerHTML = FLOW.map(([t, d, i]) => `<div class="fcell"><span class="ico">${ico(i)}</span><b>${t}</b><span>${d}</span></div>`).join("");
+document.getElementById("agents").innerHTML = AGENTS.map((a, i) => `<button class="acard" type="button" data-open="${i + 1}" style="${col(a)}" aria-label="Agent ${i + 1}: ${a.name}">
+  <span class="bar"><span class="num">${pad(i + 1)}</span>${a.name}</span>
+  <span class="body"><span class="ico">${ico(a.icon)}</span><p>${a.does.split(". ")[0].replace(/\.$/, "")}.</p>
+  <span class="wchips">${a.workflows.map(w => `<span>${w[0]}</span>`).join("")}</span>
+  <span class="open">View setup ${ico("arrow-right")}</span></span></button>`).join("");
+
+const PROMPTS = {};
+function promptBlock(text, label, id) {
+  PROMPTS[id] = text;
+  return `<div class="prompt"><div class="prompt-bar"><span class="label">${label}</span>
+    <button class="copy" type="button" data-copy="${id}">${ico("copy")}<span>Copy</span></button></div>
+    <pre id="${id}-text">${hl(text)}</pre></div>`;
+}
+const h = (k, t) => `<div class="sec-h"><span class="k">${k}</span><h3>${t}</h3></div>`;
+function detail(a, n) {
+  const stages = a.stages ? `<div class="block"><span class="label">Five-stage process</span><div class="stages">${a.stages.map((s, i) => `<div><b><i>${pad(i + 1)}</i>${s[0]}</b><span>${s[1]}</span></div>`).join("")}</div></div>` : "";
+  const ex = a.example ? `<div class="block"><span class="label">${a.example.title}</span><p>${a.example.lead}</p><div class="table-wrap"><table class="wtable"><thead><tr><th>Expert profile</th><th>Responsibility</th></tr></thead><tbody>${a.example.rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div><p>${a.example.after}</p></div>` : "";
+  return `<div class="d-bar"><span class="num">Agent ${pad(n)} of ${pad(AGENTS.length)}</span><h2 id="d-title">${a.name} Agent</h2></div>
+  <div class="inner">
+    <div class="block"><span class="label">What it does</span><p>${a.does}</p></div>
+    <div class="block"><span class="label">Agent configuration</span><div class="table-wrap"><table class="wtable cfg"><thead><tr><th>Component</th><th>Details</th></tr></thead><tbody>${["Trigger","Connect","Execute","Deliver","Approval","Verify"].map((k, i) => `<tr><td>${k}</td><td>${CONFIG[a.id][i]}</td></tr>`).join("")}</tbody></table></div></div>
+    ${stages}
+    <div class="block"><span class="label">Workflows</span><div class="table-wrap"><table class="wtable"><thead><tr><th>Workflow</th><th>Trigger</th><th>Output</th></tr></thead><tbody>${a.workflows.map(w => `<tr><td>${w[0]}</td><td>${w[1]}</td><td>${w[2]}</td></tr>`).join("")}</tbody></table></div></div>
+    ${h(1, "Platform and where to configure")}
+    <div class="plats">${PLATFORMS.map(p => `<div><b>${p[0]}</b>${p[1]}</div>`).join("")}</div>
+    <p class="note">Feature names and availability vary by plan and change often. Check what your plan includes.</p>
+    ${h(2, "Trigger")}
+    <p>Set each workflow's trigger from the table above. Recurring ones run as scheduled tasks; the rest run when you ask.</p>
+    ${h(3, "Connect")}
+    <div class="chips">${a.connect.map(c => `<span>${c}</span>`).join("")}</div>
+    <p class="note">Connect only what the agent needs, with read-only access where possible.</p>
+    ${h(4, "Execute")}
+    <ol class="steps-ol">${a.execute.map(s => `<li>${s}</li>`).join("")}</ol>
+    ${h(5, "Deliver")}
+    <p>${a.deliver}</p>
+    ${h(6, "Approval")}
+    <div class="approval"><span class="ico">${ico("shield-check")}</span><span>${a.approval}</span></div>
+    ${h(7, "Copy agent instructions")}
+    ${promptBlock(a.instructions, "Agent instructions", "a" + n)}
+    ${ex}
+    ${h(8, "Test and verify")}
+    <ul class="checklist">${a.test.map(t => `<li><span>${t}</span></li>`).join("")}</ul>
+  </div>`;
+}
+
+const panel = document.getElementById("panel"), scrim = document.getElementById("scrim"), body = document.getElementById("p-body");
+const prevB = document.getElementById("p-prev"), nextB = document.getElementById("p-next");
+let current = 0, lastFocus = null;
+const draw = () => window.lucide && lucide.createIcons();
+function open(n) {
+  const a = AGENTS[n - 1]; if (!a) return;
+  if (!current) lastFocus = document.activeElement;
+  current = n;
+  panel.setAttribute("style", col(a));
+  document.getElementById("p-n").textContent = pad(n);
+  document.getElementById("p-area").textContent = a.name;
+  body.innerHTML = detail(a, n); body.scrollTop = 0;
+  const p = AGENTS[n - 2], q = AGENTS[n];
+  prevB.disabled = !p; nextB.disabled = !q;
+  prevB.querySelector("span").textContent = p ? `${pad(n - 1)}. ${p.name}` : "";
+  nextB.querySelector("span").textContent = q ? `${pad(n + 1)}. ${q.name}` : "";
+  panel.hidden = false; scrim.hidden = false; document.body.classList.add("locked");
+  requestAnimationFrame(() => { panel.classList.add("on"); scrim.classList.add("on"); });
+  draw();
+  document.getElementById("p-close").focus({ preventScroll: true });
+  try { history.replaceState(null, "", "#agent-" + n); } catch {}
+}
+function close() {
+  if (!current) return;
+  current = 0; panel.classList.remove("on"); scrim.classList.remove("on"); document.body.classList.remove("locked");
+  setTimeout(() => { if (!current) { panel.hidden = true; scrim.hidden = true; } }, 250);
+  try { history.replaceState(null, "", location.pathname + location.search); } catch {}
+  if (lastFocus) lastFocus.focus({ preventScroll: true });
+}
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-open]"); if (t) return open(+t.dataset.open);
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const id = c.dataset.copy, lbl = c.querySelector("span");
+    try { await navigator.clipboard.writeText(PROMPTS[id]); lbl.textContent = "Copied"; }
+    catch { const r = document.createRange(); r.selectNodeContents(document.getElementById(id + "-text")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); lbl.textContent = "Selected"; }
+    setTimeout(() => lbl.textContent = "Copy", 1800);
+  }
+});
+document.getElementById("p-close").addEventListener("click", close);
+scrim.addEventListener("click", close);
+prevB.addEventListener("click", () => open(current - 1));
+nextB.addEventListener("click", () => open(current + 1));
+document.addEventListener("keydown", e => {
+  if (!current) return;
+  if (e.key === "Escape") close();
+  if (e.key === "ArrowRight") open(Math.min(AGENTS.length, current + 1));
+  if (e.key === "ArrowLeft") open(Math.max(1, current - 1));
+});
+draw();
+const m = /^#agent-(\d+)$/.exec(location.hash); if (m) open(+m[1]);
+</script>
+
+</body>
+</html>

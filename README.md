@@ -4,6 +4,8 @@
 
 🔗 [25 Practical Ways to Use AI Beyond Writing Emails](https://wei-wei-hu.github.io/everyday-ai-playbook/)
 
+🤖 Companion: [9 Practical AI Agents](https://wei-wei-hu.github.io/everyday-ai-playbook/agents/), setup guides for everyday AI agents
+
 📄 [Download PDF](25-Practical-Ways-to-Use-AI.pdf) · 🖨️ Print-ready: [Letter](25-Practical-Ways-to-Use-AI-Letter.pdf) | [A4](25-Practical-Ways-to-Use-AI-A4.pdf)
 
 Much of my work involves AI transformation, data and analytics, and improving business processes and workflows. Along the way, I’ve also been exploring how AI can help us in our everyday work and life.
