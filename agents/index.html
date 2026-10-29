@@ -254,6 +254,7 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .wchips { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
 .wchips span { background: var(--chip); color: var(--chip-ink); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 2px; }
 .acard .open { font-size: 13px; font-weight: 800; color: var(--navy); display: inline-flex; gap: 4px; align-items: center; letter-spacing: .02em; text-transform: uppercase; }
+.agents .grid > .acard { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
 .acard:hover { background: #DFE1E1; }
 .acard:hover .bar { filter: brightness(.95); }
 .back { margin-top: 22px; }
@@ -281,6 +282,31 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .checklist li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-weight: 500; }
 .checklist li::before { content: "✓"; background: var(--accent); width: 20px; height: 20px; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+.ftag { background: var(--chip); color: var(--accent); font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; }
+.dash { background: #FFFFFF; border: 1px dashed var(--muted); padding: 14px; display: grid; gap: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: var(--rule); }
+.tiles div { background: var(--chip); color: var(--chip-ink); padding: 12px 8px; display: grid; justify-items: center; gap: 2px; }
+.tiles b { font-family: var(--f-heavy); font-size: 30px; color: var(--accent); line-height: 1; }
+.tiles span { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.attn { display: grid; gap: 8px; }
+.attn > div { border-left: 4px solid var(--accent); padding: 4px 0 4px 10px; display: grid; gap: 2px; }
+.attn b { font-weight: 800; font-size: 15px; }
+.attn span { font-size: 14px; color: var(--muted); }
+.orch { display: grid; justify-items: center; gap: 4px; text-align: center; }
+.orch > div:not(.o-arrow) { width: 100%; padding: 10px 12px; display: grid; gap: 2px; }
+.orch b { font-weight: 800; }
+.orch span { font-size: 13px; }
+.o-you { background: var(--chip); color: var(--chip-ink); }
+.o-pm { background: var(--accent); }
+.o-agents { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px !important; padding: 0 !important; }
+.o-agents span { background: var(--accent-soft); border: 1px solid var(--accent); padding: 8px 4px; font-weight: 700; font-size: 12.5px; }
+.o-reg { background: #FFFFFF; border: 2px solid var(--chip); }
+.o-arrow { color: var(--muted); font-weight: 800; line-height: 1; }
+.stat3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; background: var(--rule); padding: 4px; }
+.stat3 div { padding: 10px; display: grid; gap: 4px; align-content: start; background: #FFFFFF; border-top: 5px solid; }
+.stat3 .s0 { border-color: #3E9B63; } .stat3 .s1 { border-color: #E2A33A; } .stat3 .s2 { border-color: #C8473F; }
+.stat3 b { font-weight: 800; } .stat3 span { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 620px) { .tiles, .o-agents { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } .stat3 { grid-template-columns: 1fr; } }
 .feat { margin-top: 26px; border: 4px solid var(--rule); }
 .feat-bar { background: var(--chip); color: var(--chip-ink); padding: 12px 16px; display: grid; gap: 2px; }
 .feat-bar span { font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
@@ -301,7 +327,8 @@ td:first-child { background: var(--chip); color: var(--chip-ink); font-weight: 8
 @media print {
   @page { margin: 0.3in; }
   html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .wrap, .footer, .strip { zoom: 0.6; }
+  .wrap, .footer, .strip { zoom: 0.52; }
+  .wchips, .ftag { display: none !important; }
   .wrap { max-width: none; padding: 10px 24px 0; }
   .how, .byline, .acard .open, .scrim, .panel, .back { display: none !important; }
   .agents .grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
@@ -394,41 +421,131 @@ Rules:
 - Keep briefs to one page.`,
   test: ["Run the recap workflow on one past meeting where you already know the outcome.", "Check every decision, owner, and date against your own notes.", "Confirm the follow-up email is saved as a draft and nothing was sent.", "Adjust tone or format in the instructions, then run it again."] },
 
-{ id: "project", name: "Project & Operations", icon: "clipboard-list", color: "#F4C04B", soft: "#F9DFA0",
-  does: "Keeps projects moving by preparing status updates, spotting risks and blockers early, and running recurring operations checklists.",
+{ id: "project", name: "Project Manager & Agent Coordinator", short: "Project Manager", icon: "network", color: "#F4C04B", soft: "#F9DFA0", featured: true,
+  does: "Manages projects, tasks, deadlines, and dependencies, and coordinates your specialized AI agents, so you can see what is done, what is blocked, and what needs your attention.",
   workflows: [
-    ["Weekly status report", "Every Thursday", "Status summary with progress, risks, decisions needed, and next steps"],
-    ["Risk and blocker scan", "Twice a week, or on request", "List of overdue items, blocked tasks, and items missing an owner"],
-    ["Recurring operations checklist", "Monthly or quarterly cycle start", "Checklist with steps, owners, deadlines, and what can be automated"]
+    ["Project registry", "A new project or request", "Tasks, owners, dependencies, and deadlines recorded in one shared registry"],
+    ["Agent coordination", "An agent task is assigned or completed", "Workflow status tracked, with each output checked for evidence of completion"],
+    ["Daily Control Center", "Daily scheduled review", "Dashboard of items due today, due soon, stalled, and needing escalation"],
+    ["Blocker handling", "A missed deadline or unresolved blocker", "Blocker record, proposed next action, and an escalation draft for approval"]
   ],
-  connect: ["Project tracker or task list", "Shared documents and spreadsheets", "Team chat", "Calendar"],
-  execute: ["Read current tasks, owners, due dates, and recent updates.", "Compare progress with the plan and milestones.", "Flag overdue, blocked, or unowned work.", "Draft the status report or checklist."],
-  deliver: "A status report or checklist in a shared document, plus a draft message for your team channel.",
-  approval: "Do not change tasks, owners, or dates, and do not post to team channels without your confirmation.",
-  instructions: `You are my Project & Operations agent.
+  connect: ["Shared project registry", "Task management system", "Authorized agent outputs", "Project documents", "Decision log", "Error log"],
+  execute: ["Create and update tasks in the registry.", "Coordinate authorized agent workflows.", "Monitor deadlines and identify blockers.", "Consolidate deliverables and check evidence of completion.", "Update project records and logs."],
+  deliver: "Updated project registry, daily control dashboard, completed deliverables, exception report, and decision and error logs.",
+  approval: "Required before assigning work to people, escalating externally, changing deadlines, or executing consequential actions.",
+  control: {
+    tiles: [["2", "Due today"], ["3", "Due soon"], ["4", "Stalled"], ["1", "Escalate"]],
+    attention: [["Project B — Approval pending", "Finance approval required before the next activity can proceed."], ["Project A — Analysis due", "Research Agent output expected today. Confirm completion or identify a blocker."]],
+    note: "Illustrative values, not live project data.",
+    agents: ["Research & Decision", "Expert Knowledge", "Monthly Research", "Meeting & Communication"],
+    platform: "This requires an orchestration platform or workflow system that can invoke other agents, read their outputs, and update a shared registry. Pasting the coordinator instructions into a chat does not create those connections.",
+    statuses: [["Completed", "The required output exists and passes the agreed checks."], ["Blocked", "Work cannot continue because a dependency, approval, or required input is missing."], ["Failed", "An attempted action or workflow did not complete successfully."]],
+    evidence: "Every completed task needs evidence of completion. For example, an agent reporting “Monthly Research Report completed” should provide a link to the saved report and confirm the required sections and supporting files exist. Without this, the dashboard can look healthy while the work is incomplete or inaccurate."
+  },
+  instructions: `You are my Project Manager and AI Agent Coordinator.
 
-Project: [name and goal]. Key milestones: [list with dates]. Team: [names or roles].
+OBJECTIVE
+Coordinate authorized projects and AI agent workflows, maintain one accurate project registry, and identify where human attention is required.
 
-Weekly status report:
-1. Read the project tracker and recent updates.
-2. Summarize progress against milestones, the top three risks, decisions needed from leadership, and next week's priorities.
-3. Use this format: Status (on track / at risk / off track), Highlights, Risks, Decisions needed, Next steps.
+AUTHORIZED SOURCES
+- Shared project registry
+- Task management system
+- Authorized AI agent outputs
+- Project documents and milestones
+- Decision log and error log
 
-Risk and blocker scan:
-1. List tasks that are overdue, blocked, or missing an owner or due date.
-2. For each one, suggest the next action and who should take it.
+EXECUTION
 
-Recurring checklist:
-1. Build a checklist for [process] with preparation, steps, owners, deadlines, and completion criteria.
-2. Mark which steps could be automated and which need a person's review.
+STEP 1 — REGISTER
+For each project or agent task, record:
+- Project and task ID
+- Objective and expected deliverable
+- Owner or responsible agent
+- Status (Completed, In progress, Blocked, or Failed)
+- Deadline
+- Dependencies
+- Current blocker
+- Next action and due date
+- Escalation owner
+- Evidence of completion
 
-Rules:
-- Only claim an action was completed when the connected tool confirms success.
-- Base status only on what the tracker and documents show. Mark anything you infer as "assumption."
-- Do not edit tasks or post messages. Prepare drafts for my review.`,
-  test: ["Run the status report on last week's data and compare it with what actually happened.", "Check that every risk and overdue item matches the tracker.", "Confirm no tasks were edited and no message was posted.", "Refine the report format, then schedule the weekly run."] },
+STEP 2 — COORDINATE
+When a new project request arrives:
+1. Identify the required tasks.
+2. Identify which configured agents can perform them.
+3. Create approved task assignments.
+4. Record dependencies and deadlines.
+5. Start agent workflows only through authorized tools.
+6. Track each workflow’s status and output.
 
-{ id: "research", name: "Research & Decision", icon: "search", color: "#B5A6F0", soft: "#DAD2F7",
+STEP 3 — MONITOR
+On each scheduled review:
+1. Check completed tasks.
+2. Identify overdue work and approaching deadlines.
+3. Detect blocked tasks and missing information.
+4. Compare reported completion against actual output evidence.
+5. Update the shared registry.
+
+STEP 4 — HANDLE BLOCKERS
+For each blocker:
+1. Identify the affected task.
+2. Record the reason and supporting evidence.
+3. Identify who can resolve it.
+4. Propose a next action and deadline.
+5. Prepare an escalation if required.
+
+Do not send escalations without approval.
+
+STEP 5 — CONSOLIDATE
+Collect outputs from specialized agents.
+Check whether required deliverables are present.
+Flag conflicting or incomplete results.
+Prepare a consolidated project status report.
+
+STEP 6 — DAILY CONTROL CENTER
+Prepare a dashboard showing:
+- Due today
+- Due soon
+- Stalled
+- Requires escalation
+
+Highlight the two or three items requiring immediate attention.
+
+STEP 7 — DAILY REVIEW
+Answer:
+1. What was completed today?
+2. What needs improvement tomorrow?
+3. What was resolved independently?
+4. What new ideas are worth exploring?
+
+Run two checks:
+- Accountability: Who needs a reminder or follow-up?
+- Self-review: Which decisions or processes need improvement?
+
+STEP 8 — MAINTAIN RECORDS
+Update the decision log with approved decisions and their rationale.
+Update the error log with confirmed failures, their causes when established, and corrective actions.
+
+STEP 9 — REPORT
+Tell me:
+- What was completed and verified
+- What remains in progress
+- What is blocked
+- What requires approval
+- Which records were updated
+- Where completed outputs are saved
+
+APPROVAL RULES
+Do not assign work to people, modify agreed deadlines, send external communications, publish reports, or execute consequential actions without approval.
+
+Mark a task Completed only when the required output exists and passes the agreed checks. Do not claim another agent completed a task unless its output and execution evidence confirm success.
+
+If an agent is unavailable or a workflow fails, record the issue as Failed and report it.
+
+Never invent task statuses, owners, deadlines, or completed work.`,
+  test: ["Register one real project with three tasks, including one handled by another agent.", "Mark a task as reported complete without a saved output, and confirm the coordinator does not count it as Completed.", "Add a blocker and confirm the escalation stays a draft until you approve it.", "Check the Control Center counts against the registry, then schedule the daily review."] },
+
+{ id: "research", featured: true, name: "Research & Decision", icon: "search", color: "#B5A6F0", soft: "#DAD2F7",
   does: "Researches competitors, analyzes actual evidence, maintains an up-to-date comparison, and prepares an executive decision brief.",
   workflows: [
     ["Competitive analysis", "On demand, monthly, or when an important competitor update is detected", "Comparison table, evidence register, P0/P1/P2 recommendations, and a one-page executive decision brief"],
@@ -545,7 +662,7 @@ Tell me:
 Only claim an action was completed when the connected tool confirms success.`,
   test: ["Start with two competitors and a narrow research question.", "Verify that the agent retrieves real sources and records publication dates.", "Confirm the comparison is saved and that confirmed findings are clearly separated from assumptions.", "Run the workflow again using the previous analysis. Confirm that it identifies genuine developments and preserves the earlier version."] },
 
-{ id: "expert", name: "Expert Knowledge", icon: "book-marked", color: "#7FD6CF", soft: "#C7EEEA",
+{ id: "expert", featured: true, name: "Expert Knowledge", icon: "book-marked", color: "#7FD6CF", soft: "#C7EEEA",
   does: "Organizes reusable expert knowledge, selects the right specialist perspectives, coordinates their analysis, and improves the knowledge system through reviewed feedback.",
   workflows: [
     ["Expert decision brief", "A new question, project review, or decision that needs specialist knowledge", "Evidence-backed brief with sources, specialist disagreements, unanswered questions, and recommended actions"],
@@ -825,7 +942,7 @@ const PLATFORMS = [
 ];
 const CONFIG = {
   meeting: ["Before a meeting, after notes are saved, or Friday afternoon", "Calendar, email, meeting notes or transcripts, shared documents", "Find meetings and messages, extract decisions and owners, draft briefs and follow-ups", "Pre-meeting brief, recap with action items, follow-up emails saved as drafts", "Before sending any message, accepting invites, or sharing documents", "Check decisions, owners, and dates against your own notes; confirm nothing was sent"],
-  project: ["Weekly, twice a week, or at the start of each cycle", "Project tracker, shared documents, team chat, calendar", "Read tasks and updates, compare with milestones, flag risks, draft reports and checklists", "Status report, risk and blocker list, operations checklist", "Before changing tasks, owners, or dates, or posting to team channels", "Check status and risks against the tracker; confirm no tasks were edited"],
+  project: ["New project, agent task completion, missed deadline, unresolved blocker, or daily scheduled review", "Shared project registry, task management system, authorized agent outputs, project documents, decision log, error log", "Create and update tasks, coordinate authorized agent workflows, monitor deadlines, identify blockers, consolidate deliverables, update project records", "Updated project registry, daily control dashboard, completed deliverables, exception report, decision and error logs", "Before assigning work to people, escalating externally, changing deadlines, or executing consequential actions", "Confirm task status against actual records and agent completion evidence"],
   research: ["On demand, monthly, or when an important competitor update is detected", "Competitor websites, product and pricing pages, marketing materials, customer feedback, approved internal product information, previous analyses", "Collect evidence, analyze competitors, compare findings, update records, prepare recommendations", "Comparison table, evidence register, P0/P1/P2 recommendations, one-page executive decision brief", "Before distributing findings, modifying product plans, or acting on recommendations", "Check source links, dates, pricing, calculations, and saved outputs"],
   expert: ["A new question, project review, or decision requiring specialist knowledge", "Approved knowledge base, documents, structured data, previous decisions, expert profiles", "Retrieve evidence, identify required domains, select specialists, coordinate analysis, consolidate findings", "Evidence-backed expert brief with supporting sources, disagreements, unanswered questions, and recommended actions", "Before consequential decisions, publication, operational actions, or knowledge-base updates", "Check source reliability, document versions, expert coverage, conflicting findings, and unsupported conclusions"],
   planning: ["Sunday or Monday, each workday morning, and Friday afternoon", "Calendar, task list or notes app, optional email for deadlines", "Read calendar and tasks, match work to focus hours, flag overload, draft plans and reviews", "Weekly plan, daily focus brief, Friday review with accomplishment record", "Before creating, moving, or declining calendar events", "Compare the plan with your real calendar; confirm no events were changed"],
@@ -981,7 +1098,7 @@ const col = a => `--accent:${a.color};--accent-soft:${a.soft}`;
 document.getElementById("flow").innerHTML = FLOW.map(([t, d, i]) => `<div class="fcell"><span class="ico">${ico(i)}</span><b>${t}</b><span>${d}</span></div>`).join("");
 document.getElementById("agents").innerHTML = AGENTS.map((a, i) => `<button class="acard" type="button" data-open="${i + 1}" style="${col(a)}" aria-label="Agent ${i + 1}: ${a.name}">
   <span class="bar"><span class="num">${pad(i + 1)}</span>${a.name}</span>
-  <span class="body"><span class="ico">${ico(a.icon)}</span><p>${a.does.split(". ")[0].replace(/\.$/, "")}.</p>
+  <span class="body">${a.featured ? `<span class="ftag">★ Featured</span>` : ""}<span class="ico">${ico(a.icon)}</span><p>${a.does.split(". ")[0].replace(/\.$/, "")}.</p>
   <span class="wchips">${a.workflows.map(w => `<span>${w[0]}</span>`).join("")}</span>
   <span class="open">View setup ${ico("arrow-right")}</span></span></button>`).join("");
 
@@ -993,6 +1110,30 @@ function promptBlock(text, label, id) {
     <pre id="${id}-text">${hl(text)}</pre></div>`;
 }
 const h = (k, t) => `<div class="sec-h"><span class="k">${k}</span><h3>${t}</h3></div>`;
+function control(a) {
+  const c = a.control; if (!c) return "";
+  return `<div class="feat"><div class="feat-bar"><span>Featured output</span><h3>Project Control Center</h3></div>
+    <div class="feat-body">
+      <div class="block"><span class="label">Illustrative dashboard</span>
+        <div class="dash"><div class="tiles">${c.tiles.map(x => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>
+        <div class="attn"><span class="label">Needs your attention</span>${c.attention.map(x => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>
+        <p class="note">${c.note}</p></div></div>
+      <div class="block"><span class="label">How the coordinator works with your other agents</span>
+        <div class="orch">
+          <div class="o-you"><b>You · Project owner</b><span>Priorities · Decisions · Approvals</span></div>
+          <div class="o-arrow">↓</div>
+          <div class="o-pm"><b>Project Manager & Agent Coordinator</b><span>Assign · Monitor · Consolidate · Escalate</span></div>
+          <div class="o-arrow">↓</div>
+          <div class="o-agents">${c.agents.map(x => `<span>${x}</span>`).join("")}</div>
+          <div class="o-arrow">↓</div>
+          <div class="o-reg"><b>Shared project registry</b><span>Tasks · Owners · Status · Evidence · Decisions</span></div>
+        </div>
+        <p class="note">${c.platform}</p></div>
+      <div class="block"><span class="label">Three statuses</span>
+        <div class="stat3">${c.statuses.map((x, i) => `<div class="s${i}"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>
+        <div class="approval"><span class="ico">${ico("badge-check")}</span><span>${c.evidence}</span></div></div>
+    </div></div>`;
+}
 function featured(a, n) {
   const f = FEATURED[a.id]; if (!f) return "";
   const s = f.sample;
@@ -1038,6 +1179,7 @@ function detail(a, n) {
     ${ex}
     ${h(8, "Test and verify")}
     <ul class="checklist">${a.test.map(t => `<li><span>${t}</span></li>`).join("")}</ul>
+    ${control(a)}
     ${featured(a, n)}
   </div>`;
 }
